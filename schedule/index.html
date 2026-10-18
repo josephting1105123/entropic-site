@@ -22,7 +22,7 @@
 <body>
 
   <!-- Icons. One sprite, referenced by <use> everywhere below. -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
     <symbol id="i-today" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V9h14v10Zm0-12H5V5h14v2Zm-2 5h-5v5h5v-5Z"/></symbol>
     <symbol id="i-week" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h4v14H3V5Zm7 0h4v14h-4V5Zm7 0h4v14h-4V5Z"/></symbol>
     <symbol id="i-month" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V9h14v10ZM7 11h4v2H7v-2Zm6 0h4v2h-4v-2Zm-6 4h4v2H7v-2Zm6 0h4v2h-4v-2Z"/></symbol>
@@ -93,7 +93,7 @@
           </p>
           <div class="actions">
             <a class="btn btn-primary" href="https://github.com/josephting1105123/Schedule/releases/latest/download/Schedule.apk">
-              <svg width="20" height="20" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-dl"></use></svg>
+              <svg class="btn__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-dl"></use></svg>
               Download the APK
             </a>
             <a class="btn btn-secondary" href="https://github.com/josephting1105123/Schedule" rel="noopener">Source</a>
@@ -112,21 +112,21 @@
 
                 <div class="a-card a-card--raised">
                   <p class="a-cap">Current event</p>
-                  <p style="font-size:.95em;margin:.15em 0 0">Design review</p>
-                  <p class="a-accent" style="font-size:.76em;margin:.1em 0 0">Until 14:30 &middot; 1h 10m left</p>
-                  <p style="font-size:.74em;margin:.3em 0 0;color:var(--a-text2)">Then: Budget call at 14:00</p>
+                  <p class="now__title">Design review</p>
+                  <p class="a-accent now__left">Until 14:30 &middot; 1h 10m left</p>
+                  <p class="now__then">Then: Budget call at 14:00</p>
                 </div>
 
                 <div class="a-card">
                   <p class="a-cap">Day at a glance</p>
-                  <div class="hg" style="margin-top:.35em">
+                  <div class="hg">
                     <div>
                       <div class="hg__nums"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div>
                       <div class="hg__half">
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:75%;width:8.33%;background:var(--ev-peacock);color:var(--ink-peacock)"></div>
-                          <div class="hg__bar" style="left:95.83%;width:4.17%;background:var(--ev-tangerine);color:var(--ink-tangerine)"></div>
+                          <div class="hg__bar ev-peacock hg-at-9 hg-span-1"></div>
+                          <div class="hg__bar ev-tangerine hg-at-11-5 hg-span-0-5"></div>
                         </div>
                       </div>
                     </div>
@@ -135,37 +135,37 @@
                       <div class="hg__half">
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
-                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
-                          <span class="hg__tick" style="left:41.67%"></span>
-                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                          <div class="hg__bar ev-grape hg-at-1 hg-span-1-5">Design review</div>
+                          <div class="hg__bar ev-basil hg-at-6 hg-span-1-5">Climbing</div>
+                          <span class="hg__tick hg-at-5"></span>
+                          <span class="hg__now hg-at-1 hg-span-1"></span>
                         </div>
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:16.67%;width:8.33%;background:var(--ev-tomato);color:var(--ink-tomato)"></div>
-                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                          <div class="hg__bar ev-tomato hg-at-2 hg-span-1"></div>
+                          <span class="hg__now hg-at-1 hg-span-1"></span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                  <p class="a-cap">Tap a free hour to add an event. A line marks a task deadline.</p>
                 </div>
 
                 <div class="a-card">
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-bar ev-grape"></span>
                     <span class="a-time"><b>13:00</b><i>14:30</i></span>
                     <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-bar ev-tomato"></span>
                     <span class="a-time"><b>14:00</b><i>15:00</i></span>
                     <span class="a-row__b"><b>Budget call</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-bar ev-basil"></span>
                     <span class="a-time"><b>18:00</b><i>19:30</i></span>
                     <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
                   </div>
@@ -218,14 +218,14 @@
 
                 <div class="a-card">
                   <p class="a-cap">Day at a glance</p>
-                  <div class="hg" style="margin-top:.35em">
+                  <div class="hg">
                     <div>
                       <div class="hg__nums"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div>
                       <div class="hg__half">
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:75%;width:8.33%;background:var(--ev-peacock);color:var(--ink-peacock)"></div>
-                          <div class="hg__bar" style="left:95.83%;width:4.17%;background:var(--ev-tangerine);color:var(--ink-tangerine)"></div>
+                          <div class="hg__bar ev-peacock hg-at-9 hg-span-1"></div>
+                          <div class="hg__bar ev-tangerine hg-at-11-5 hg-span-0-5"></div>
                         </div>
                       </div>
                     </div>
@@ -234,20 +234,20 @@
                       <div class="hg__half">
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
-                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
-                          <span class="hg__tick" style="left:41.67%"></span>
-                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                          <div class="hg__bar ev-grape hg-at-1 hg-span-1-5">Design review</div>
+                          <div class="hg__bar ev-basil hg-at-6 hg-span-1-5">Climbing</div>
+                          <span class="hg__tick hg-at-5"></span>
+                          <span class="hg__now hg-at-1 hg-span-1"></span>
                         </div>
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:16.67%;width:8.33%;background:var(--ev-tomato);color:var(--ink-tomato)"></div>
-                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                          <div class="hg__bar ev-tomato hg-at-2 hg-span-1"></div>
+                          <span class="hg__now hg-at-1 hg-span-1"></span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                  <p class="a-cap">Tap a free hour to add an event. A line marks a task deadline.</p>
                 </div>
 
                 <div class="a-card">
@@ -255,12 +255,12 @@
                   <div class="a-rule"></div>
                   <p class="a-cap a-warn">Double-booked 14:00&ndash;14:30 &middot; 2 events</p>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-bar ev-grape"></span>
                     <span class="a-time"><b>13:00</b><i>14:30</i></span>
                     <span class="a-row__b"><b>Design review</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-bar ev-tomato"></span>
                     <span class="a-time"><b>14:00</b><i>15:00</i></span>
                     <span class="a-row__b"><b>Budget call</b></span>
                   </div>
@@ -270,7 +270,7 @@
                   <p class="a-card__t">All day</p>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-lavender)"></span>
+                    <span class="a-bar ev-lavender"></span>
                     <span class="a-time"><i>all day</i></span>
                     <span class="a-row__b"><b>Term starts</b></span>
                   </div>
@@ -280,27 +280,27 @@
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-peacock)"></span>
+                    <span class="a-bar ev-peacock"></span>
                     <span class="a-time"><b>09:00</b><i>10:00</i></span>
                     <span class="a-row__b"><b>Standup</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-tangerine)"></span>
+                    <span class="a-bar ev-tangerine"></span>
                     <span class="a-time"><b>11:30</b><i>12:00</i></span>
                     <span class="a-row__b"><b>1:1 with Priya</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-bar ev-grape"></span>
                     <span class="a-time"><b>13:00</b><i>14:30</i></span>
                     <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-bar ev-tomato"></span>
                     <span class="a-time"><b>14:00</b><i>15:00</i></span>
                     <span class="a-row__b"><b>Budget call</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-bar ev-basil"></span>
                     <span class="a-time"><b>18:00</b><i>19:30</i></span>
                     <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
                   </div>
@@ -364,46 +364,46 @@
                     <span>Sat<b>24</b></span>
                   </div>
                   <!-- The visible window is 08:00 to 21:00, thirteen hours. -->
-                  <div class="wk__grid" style="--hour:7.69%">
+                  <div class="wk__grid">
                     <div class="wk__gutter">
-                      <span style="top:0%">0800</span>
-                      <span style="top:7.69%">0900</span>
-                      <span style="top:15.38%">1000</span>
-                      <span style="top:23.08%">1100</span>
-                      <span style="top:30.77%">1200</span>
-                      <span style="top:38.46%">1300</span>
-                      <span style="top:46.15%">1400</span>
-                      <span style="top:53.85%">1500</span>
-                      <span style="top:61.54%">1600</span>
-                      <span style="top:69.23%">1700</span>
-                      <span style="top:76.92%">1800</span>
-                      <span style="top:84.62%">1900</span>
-                      <span style="top:92.31%">2000</span>
+                      <span class="wk-at-0">0800</span>
+                      <span class="wk-at-1">0900</span>
+                      <span class="wk-at-2">1000</span>
+                      <span class="wk-at-3">1100</span>
+                      <span class="wk-at-4">1200</span>
+                      <span class="wk-at-5">1300</span>
+                      <span class="wk-at-6">1400</span>
+                      <span class="wk-at-7">1500</span>
+                      <span class="wk-at-8">1600</span>
+                      <span class="wk-at-9">1700</span>
+                      <span class="wk-at-10">1800</span>
+                      <span class="wk-at-11">1900</span>
+                      <span class="wk-at-12">2000</span>
                     </div>
                     <div class="wk__col today">
-                      <div class="wk__blk" style="top:38.46%;height:11.54%;background:var(--ev-grape);color:var(--ink-grape)">Design re&shy;view<i>1300</i></div>
-                      <div class="wk__blk" style="top:76.92%;height:11.54%;background:var(--ev-basil);color:var(--ink-basil)">Climb&shy;ing<i>1800</i></div>
-                      <div class="wk__now" style="top:40.9%"></div>
+                      <div class="wk__blk ev-grape wk-at-5 wk-span-1-5">Design re&shy;view<i>1300</i></div>
+                      <div class="wk__blk ev-basil wk-at-10 wk-span-1-5">Climb&shy;ing<i>1800</i></div>
+                      <div class="wk__now wk-at-now"></div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk" style="top:15.38%;height:15.38%;background:var(--ev-peacock);color:var(--ink-peacock)">Lecture<i>1000</i><i>-</i><i>1200</i></div>
+                      <div class="wk__blk ev-peacock wk-at-2 wk-span-2">Lecture<i>1000</i><i>-</i><i>1200</i></div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk" style="top:7.69%;height:11.54%;background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic<i>0900</i></div>
-                      <div class="wk__blk" style="top:69.23%;height:7.69%;background:var(--ev-lavender);color:var(--ink-lavender)">Gym<i>1700</i></div>
+                      <div class="wk__blk ev-tangerine wk-at-1 wk-span-1-5">Clinic<i>0900</i></div>
+                      <div class="wk__blk ev-lavender wk-at-9 wk-span-1">Gym<i>1700</i></div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk wk__blk--l" style="top:46.15%;height:15.38%;background:var(--ev-peacock);color:var(--ink-peacock)">Lab<i>1400</i></div>
-                      <div class="wk__blk wk__blk--r" style="top:53.85%;height:7.69%;background:var(--ev-tomato);color:var(--ink-tomato)">Stand&shy;up</div>
+                      <div class="wk__blk wk__blk--l ev-peacock wk-at-6 wk-span-2">Lab<i>1400</i></div>
+                      <div class="wk__blk wk__blk--r ev-tomato wk-at-7 wk-span-1">Stand&shy;up</div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk" style="top:30.77%;height:7.69%;background:var(--ev-grape);color:var(--ink-grape)">Lunch<i>1200</i></div>
+                      <div class="wk__blk ev-grape wk-at-4 wk-span-1">Lunch<i>1200</i></div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk" style="top:84.62%;height:11.54%;background:var(--ev-basil);color:var(--ink-basil)">Dinner<i>1900</i></div>
+                      <div class="wk__blk ev-basil wk-at-11 wk-span-1-5">Dinner<i>1900</i></div>
                     </div>
                     <div class="wk__col">
-                      <div class="wk__blk" style="top:23.08%;height:23.08%;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orienta&shy;tion<i>1100</i><i>-</i><i>1400</i></div>
+                      <div class="wk__blk ev-tangerine wk-at-3 wk-span-3">Orienta&shy;tion<i>1100</i><i>-</i><i>1400</i></div>
                     </div>
                   </div>
                 </div>
@@ -460,47 +460,47 @@
                       <div class="mo__d off"><p class="mo__n"><b>28</b></p></div>
                       <div class="mo__d off"><p class="mo__n"><b>29</b></p></div>
                       <div class="mo__d off"><p class="mo__n"><b>30</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>1</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Standup</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>1</b></p><span class="mo__chip ev-peacock">Standup</span></div>
                       <div class="mo__d"><p class="mo__n"><b>2</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>3</b></p><span class="mo__chip" style="background:var(--ev-basil);color:var(--ink-basil)">Climbing</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>3</b></p><span class="mo__chip ev-basil">Climbing</span></div>
                     </div>
                     <div class="mo__wk">
-                      <div class="mo__band" style="left:14.29%;width:71.43%;top:1.15em;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orientation week</div>
+                      <div class="mo__band ev-tangerine col-at-1 col-span-5">Orientation week</div>
                       <div class="mo__d"><p class="mo__n"><b>4</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>5</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>6</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>7</b></p><span class="mo__chip" style="visibility:hidden">.</span><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Dentist</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>8</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>9</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>5</b></p><span class="mo__chip mo__chip--hold">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>6</b></p><span class="mo__chip mo__chip--hold">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>7</b></p><span class="mo__chip mo__chip--hold">.</span><span class="mo__chip ev-grape">Dentist</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>8</b></p><span class="mo__chip mo__chip--hold">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>9</b></p><span class="mo__chip mo__chip--hold">.</span></div>
                       <div class="mo__d"><p class="mo__n"><b>10</b></p></div>
                     </div>
                     <div class="mo__wk">
                       <div class="mo__d"><p class="mo__n"><b>11</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>12</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lecture</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>13</b></p><span class="mo__chip" style="background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>12</b></p><span class="mo__chip ev-peacock">Lecture</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>13</b></p><span class="mo__chip ev-tangerine">Clinic</span></div>
                       <div class="mo__d"><p class="mo__n"><b>14</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>15</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Lunch</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>15</b></p><span class="mo__chip ev-grape">Lunch</span></div>
                       <div class="mo__d"><p class="mo__n"><b>16</b></p></div>
                       <div class="mo__d"><p class="mo__n"><b>17</b></p></div>
                     </div>
                     <div class="mo__wk">
-                      <div class="mo__d today"><p class="mo__n"><b>18</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Design re</span><span class="mo__chip" style="background:var(--ev-tomato);color:var(--ink-tomato)">Budget c</span><span class="mo__more">&bull;&bull;&bull;</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>19</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lecture</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>20</b></p><span class="mo__chip" style="background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic</span><span class="mo__chip" style="background:var(--ev-lavender);color:var(--ink-lavender)">Gym</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>21</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lab</span></div>
+                      <div class="mo__d today"><p class="mo__n"><b>18</b></p><span class="mo__chip ev-grape">Design re</span><span class="mo__chip ev-tomato">Budget c</span><span class="mo__more">&bull;&bull;&bull;</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>19</b></p><span class="mo__chip ev-peacock">Lecture</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>20</b></p><span class="mo__chip ev-tangerine">Clinic</span><span class="mo__chip ev-lavender">Gym</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>21</b></p><span class="mo__chip ev-peacock">Lab</span></div>
                       <div class="mo__d"><p class="mo__n"><b>22</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>23</b></p><span class="mo__chip" style="background:var(--ev-basil);color:var(--ink-basil)">Dinner</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>23</b></p><span class="mo__chip ev-basil">Dinner</span></div>
                       <div class="mo__d"><p class="mo__n"><b>24</b></p></div>
                     </div>
                     <div class="mo__wk">
-                      <div class="mo__band" style="left:0;width:42.86%;top:1.15em;background:var(--ev-lavender);color:var(--ink-lavender)">Half term</div>
-                      <div class="mo__d"><p class="mo__n"><b>25</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>26</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
-                      <div class="mo__d"><p class="mo__n"><b>27</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__band ev-lavender col-at-0 col-span-3">Half term</div>
+                      <div class="mo__d"><p class="mo__n"><b>25</b></p><span class="mo__chip mo__chip--hold">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>26</b></p><span class="mo__chip mo__chip--hold">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>27</b></p><span class="mo__chip mo__chip--hold">.</span></div>
                       <div class="mo__d"><p class="mo__n"><b>28</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>29</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Recital</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>29</b></p><span class="mo__chip ev-grape">Recital</span></div>
                       <div class="mo__d"><p class="mo__n"><b>30</b></p></div>
-                      <div class="mo__d"><p class="mo__n"><b>31</b></p><span class="mo__chip" style="background:var(--ev-tomato);color:var(--ink-tomato)">Party</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>31</b></p><span class="mo__chip ev-tomato">Party</span></div>
                     </div>
                     <div class="mo__wk">
                       <div class="mo__d off"><p class="mo__n"><b>1</b></p></div>
@@ -570,12 +570,12 @@
                     <div class="mw__d off"><b>28</b></div>
                     <div class="mw__d off"><b>29</b></div>
                     <div class="mw__d off"><b>30</b></div>
-                    <div class="mw__d"><b>1</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d"><b>1</b><div class="mw__dots"><s class="ev-peacock"></s></div></div>
                     <div class="mw__d"><b>2</b></div>
-                    <div class="mw__d"><b>3</b><div class="mw__dots"><s style="background:var(--ev-basil)"></s></div></div>
+                    <div class="mw__d"><b>3</b><div class="mw__dots"><s class="ev-basil"></s></div></div>
                   </div>
                   <div class="mw__wk">
-                    <div class="mw__band" style="left:14.29%;width:71.43%;top:1.15em;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orientation week</div>
+                    <div class="mw__band ev-tangerine col-at-1 col-span-5">Orientation week</div>
                     <div class="mw__d"><b>4</b></div>
                     <div class="mw__d"><b>5</b></div>
                     <div class="mw__d"><b>6</b></div>
@@ -586,31 +586,31 @@
                   </div>
                   <div class="mw__wk">
                     <div class="mw__d"><b>11</b></div>
-                    <div class="mw__d"><b>12</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
-                    <div class="mw__d"><b>13</b><div class="mw__dots"><s style="background:var(--ev-tangerine)"></s></div></div>
+                    <div class="mw__d"><b>12</b><div class="mw__dots"><s class="ev-peacock"></s></div></div>
+                    <div class="mw__d"><b>13</b><div class="mw__dots"><s class="ev-tangerine"></s></div></div>
                     <div class="mw__d"><b>14</b></div>
-                    <div class="mw__d"><b>15</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s></div></div>
+                    <div class="mw__d"><b>15</b><div class="mw__dots"><s class="ev-grape"></s></div></div>
                     <div class="mw__d"><b>16</b></div>
                     <div class="mw__d"><b>17</b></div>
                   </div>
                   <div class="mw__wk">
-                    <div class="mw__d today"><b>18</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s><s style="background:var(--ev-tomato)"></s><s style="background:var(--ev-basil)"></s><em>+2</em></div></div>
-                    <div class="mw__d"><b>19</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
-                    <div class="mw__d"><b>20</b><div class="mw__dots"><s style="background:var(--ev-tangerine)"></s><s style="background:var(--ev-lavender)"></s></div></div>
-                    <div class="mw__d"><b>21</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d today"><b>18</b><div class="mw__dots"><s class="ev-grape"></s><s class="ev-tomato"></s><s class="ev-basil"></s><em>+2</em></div></div>
+                    <div class="mw__d"><b>19</b><div class="mw__dots"><s class="ev-peacock"></s></div></div>
+                    <div class="mw__d"><b>20</b><div class="mw__dots"><s class="ev-tangerine"></s><s class="ev-lavender"></s></div></div>
+                    <div class="mw__d"><b>21</b><div class="mw__dots"><s class="ev-peacock"></s></div></div>
                     <div class="mw__d"><b>22</b></div>
-                    <div class="mw__d"><b>23</b><div class="mw__dots"><s style="background:var(--ev-basil)"></s></div></div>
+                    <div class="mw__d"><b>23</b><div class="mw__dots"><s class="ev-basil"></s></div></div>
                     <div class="mw__d"><b>24</b></div>
                   </div>
                   <div class="mw__wk">
-                    <div class="mw__band" style="left:0;width:42.86%;top:1.15em;background:var(--ev-lavender);color:var(--ink-lavender)">Half term</div>
+                    <div class="mw__band ev-lavender col-at-0 col-span-3">Half term</div>
                     <div class="mw__d"><b>25</b></div>
                     <div class="mw__d"><b>26</b></div>
-                    <div class="mw__d"><b>27</b><div class="mw__ell" style="padding-top:1.1em">&bull;&bull;&bull;</div></div>
+                    <div class="mw__d"><b>27</b><div class="mw__ell mw__ell--below-band">&bull;&bull;&bull;</div></div>
                     <div class="mw__d"><b>28</b></div>
-                    <div class="mw__d"><b>29</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s></div></div>
+                    <div class="mw__d"><b>29</b><div class="mw__dots"><s class="ev-grape"></s></div></div>
                     <div class="mw__d"><b>30</b></div>
-                    <div class="mw__d"><b>31</b><div class="mw__dots"><s style="background:var(--ev-tomato)"></s></div></div>
+                    <div class="mw__d"><b>31</b><div class="mw__dots"><s class="ev-tomato"></s></div></div>
                   </div>
                   <div class="mw__wk">
                     <div class="mw__d off"><b>1</b></div>
@@ -625,9 +625,9 @@
 
                 <div class="tw app">
                   <p class="tw__t">Sun 18 Oct</p>
-                  <div class="tw__row"><s style="background:var(--ev-grape)"></s><i>13:00</i><b>Design review</b></div>
-                  <div class="tw__row"><s style="background:var(--ev-tomato)"></s><i>14:00</i><b>Budget call</b></div>
-                  <div class="tw__row"><s style="background:var(--ev-basil)"></s><i>18:00</i><b>Climbing</b></div>
+                  <div class="tw__row"><s class="ev-grape"></s><i>13:00</i><b>Design review</b></div>
+                  <div class="tw__row"><s class="ev-tomato"></s><i>14:00</i><b>Budget call</b></div>
+                  <div class="tw__row"><s class="ev-basil"></s><i>18:00</i><b>Climbing</b></div>
                   <p class="tw__foot">+2 more</p>
                 </div>
               </div>
@@ -671,47 +671,47 @@
 
                 <div class="a-card">
                   <p class="a-cap">Day at a glance</p>
-                  <div class="hg" style="margin-top:.35em">
+                  <div class="hg">
                     <div>
                       <div class="hg__nums"><span>12</span><span class="now">13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span></div>
                       <div class="hg__half">
                         <div class="hg__lane">
                           <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
-                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
-                          <span class="hg__tick" style="left:41.67%"></span>
-                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                          <div class="hg__bar ev-grape hg-at-1 hg-span-1-5">Design review</div>
+                          <div class="hg__bar ev-basil hg-at-6 hg-span-1-5">Climbing</div>
+                          <span class="hg__tick hg-at-5"></span>
+                          <span class="hg__now hg-at-1 hg-span-1"></span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                  <p class="a-cap">Tap a free hour to add an event. A line marks a task deadline.</p>
                 </div>
 
                 <div class="a-card">
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-task"></use></svg>Tasks<span class="tail">3 left</span></p>
                   <div class="a-rule"></div>
-                  <p class="a-cap" style="color:var(--a-error)">Overdue</p>
+                  <p class="a-cap a-error">Overdue</p>
                   <div class="a-row">
-                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
-                    <span class="a-time"><b>09:00</b><i style="color:var(--a-error)">9 Oct</i></span>
+                    <span class="a-check"></span>
+                    <span class="a-time"><b>09:00</b><i class="a-error">9 Oct</i></span>
                     <span class="a-row__b"><b>Renew parking permit</b></span>
                   </div>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
+                    <span class="a-check"></span>
                     <span class="a-time"><b>17:00</b></span>
                     <span class="a-row__b"><b>Submit the report</b></span>
                   </div>
                   <div class="a-row">
-                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
+                    <span class="a-check"></span>
                     <span class="a-time"><i>any time</i></span>
                     <span class="a-row__b"><b>Call the bank</b></span>
                   </div>
-                  <div class="a-row">
-                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border-radius:.2em;background:var(--a-accent)"></span>
-                    <span class="a-time"><b style="color:var(--a-text2)">08:30</b></span>
-                    <span class="a-row__b"><b style="color:var(--a-text2);text-decoration:line-through">Book the van</b></span>
+                  <div class="a-row is-done">
+                    <span class="a-check"></span>
+                    <span class="a-time"><b>08:30</b></span>
+                    <span class="a-row__b"><b>Book the van</b></span>
                   </div>
                 </div>
 
@@ -719,8 +719,8 @@
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-cake"></use></svg>Birthdays</p>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-lavender)"></span>
-                    <span class="a-row__b" style="padding-top:.15em"><b>Hannah &mdash; turns 30</b></span>
+                    <span class="a-bar ev-lavender"></span>
+                    <span class="a-row__b a-row__b--untimed"><b>Hannah &mdash; turns 30</b></span>
                   </div>
                 </div>
 
@@ -728,17 +728,17 @@
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
                   <div class="a-rule"></div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-peacock)"></span>
+                    <span class="a-bar ev-peacock"></span>
                     <span class="a-time"><b>09:00</b><i>10:00</i></span>
                     <span class="a-row__b"><b>Standup</b></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-bar ev-grape"></span>
                     <span class="a-time"><b>13:00</b><i>14:30</i></span>
                     <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
                   </div>
                   <div class="a-row">
-                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-bar ev-basil"></span>
                     <span class="a-time"><b>18:00</b><i>19:30</i></span>
                     <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
                   </div>
@@ -770,12 +770,12 @@
           </p>
           <figure class="palette app">
             <div class="swatches" aria-hidden="true">
-              <s style="background:var(--ev-peacock)" class="pick"></s>
-              <s style="background:var(--ev-tomato)"></s>
-              <s style="background:var(--ev-basil)" class="used"></s>
-              <s style="background:var(--ev-grape)"></s>
-              <s style="background:var(--ev-tangerine)"></s>
-              <s style="background:var(--ev-lavender)"></s>
+              <s class="pick ev-peacock"></s>
+              <s class="ev-tomato"></s>
+              <s class="used ev-basil"></s>
+              <s class="ev-grape"></s>
+              <s class="ev-tangerine"></s>
+              <s class="ev-lavender"></s>
             </div>
             <figcaption>The six an uncoloured event can be given, at Google's own values.</figcaption>
           </figure>
@@ -806,7 +806,7 @@
                   <p class="a-card__t"><svg aria-hidden="true"><use href="#i-month"></use></svg>Calendar</p>
                   <div class="a-rule"></div>
                   <div class="set-row"><b>Default calendar</b><span>Personal</span></div>
-                  <p class="a-cap" style="margin-top:.3em">New events are added here and sync through that account.</p>
+                  <p class="a-cap">New events are added here and sync through that account.</p>
                 </div>
 
                 <div class="a-card">
@@ -822,15 +822,15 @@
                     <span class="warn">Calendar auto-sync: off</span>
                     <span class="warn">Waiting to upload: 3</span>
                   </div>
-                  <p class="a-cap" style="margin-top:.3em">Changes you make here are uploaded by the phone's own Google sync. If &ldquo;Waiting to upload&rdquo; stays above zero, check that auto-sync is on for Calendar and that battery saving isn't stopping background sync.</p>
+                  <p class="a-cap">Changes you make here are uploaded by the phone's own Google sync. If &ldquo;Waiting to upload&rdquo; stays above zero, check that auto-sync is on for Calendar and that battery saving isn't stopping background sync.</p>
                   <div class="set-btns"><span>Sync now</span><span>Phone sync settings</span></div>
                 </div>
 
                 <div class="a-card">
                   <p class="a-card__t">About</p>
                   <div class="a-rule"></div>
-                  <p style="font-size:.76em;color:var(--a-text2)">Schedule reads the calendars already synced to this device. No account, no server, no analytics &mdash; nothing typed or scheduled here leaves the phone.</p>
-                  <p style="font-size:.72em;color:var(--a-text2);margin-top:.4em">Version 1.3.0</p>
+                  <p class="a-body">Schedule reads the calendars already synced to this device. No account, no server, no analytics &mdash; nothing typed or scheduled here leaves the phone.</p>
+                  <p class="a-meta">Version 1.3.0</p>
                 </div>
               </div>
               <div class="phone__nav" aria-hidden="true">
@@ -848,7 +848,7 @@
     <!-- ============================= 08 INSTALL ============================= -->
     <section class="scene scene--install" id="install" data-chapter="Install" aria-labelledby="install-title">
       <div class="container scene__grid">
-        <div class="scene__copy" style="max-width:none">
+        <div class="scene__copy">
           <p class="eyebrow"><b>08</b> <span>Install</span></p>
           <h2 id="install-title">Install it</h2>
           <p class="lead">
@@ -857,15 +857,15 @@
           </p>
 
           <div class="install-card">
-            <div class="actions" style="margin-top:0">
+            <div class="actions">
               <!-- /releases/latest/download/ resolves to the newest non-draft release, so this
                    link keeps working across rebuilds as long as the asset stays Schedule.apk. -->
               <a class="btn btn-primary" href="https://github.com/josephting1105123/Schedule/releases/latest/download/Schedule.apk">
-                <svg width="20" height="20" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-dl"></use></svg>
+                <svg class="btn__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-dl"></use></svg>
                 Download Schedule.apk
               </a>
               <a class="btn btn-secondary" href="https://github.com/josephting1105123/Schedule" rel="noopener">
-                <svg width="18" height="18" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-git"></use></svg>
+                <svg class="btn__icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-git"></use></svg>
                 Source on GitHub
               </a>
             </div>

@@ -699,7 +699,7 @@ html.is-segmented .story__pin .phone {
    the part of the hour its event covers, and a second lane under the first
    is what a clash looks like. ------------------------------------------- */
 
-.hg { display: grid; gap: .3em; }
+.hg { display: grid; gap: .3em; margin-top: .35em; }
 
 .hg__nums {
   display: grid;
@@ -809,6 +809,7 @@ html.is-segmented .story__pin .phone {
 
 .wk__grid {
   position: relative;
+  --hour: calc(100% / 13);
   flex: 1;
   min-height: 0;
   margin-top: .35em;
@@ -1223,3 +1224,119 @@ html.is-segmented .stage:not(.in) { opacity: 1; transform: none; }
     transition: none;
   }
 }
+
+/* --- Values the mock-ups would otherwise carry in style="" ---------------
+   The site's Content-Security-Policy is style-src 'self' (see _headers),
+   which drops every style attribute in the markup — positions and colours
+   included — so they live here as classes. A local preview served without
+   _headers will not show the breakage. Never put a style attribute on
+   these pages; setting element.style from a script is unaffected. ------- */
+
+/* Event colours: the fill, and the ink the app picks for text on it. */
+.ev-peacock   { background: var(--ev-peacock);   color: var(--ink-peacock); }
+.ev-tomato    { background: var(--ev-tomato);    color: var(--ink-tomato); }
+.ev-basil     { background: var(--ev-basil);     color: var(--ink-basil); }
+.ev-grape     { background: var(--ev-grape);     color: var(--ink-grape); }
+.ev-tangerine { background: var(--ev-tangerine); color: var(--ink-tangerine); }
+.ev-lavender  { background: var(--ev-lavender);  color: var(--ink-lavender); }
+
+/* Hour grid: where a run starts and how long it is, in hours along a row
+   of twelve. */
+.hg__bar,
+.hg__now { left: calc(var(--hg-at, 0) / 12 * 100%); width: calc(var(--hg-span, 1) / 12 * 100%); }
+.hg__tick { left: calc(var(--hg-at, 0) / 12 * 100%); }
+
+.hg-at-1    { --hg-at: 1; }
+.hg-at-2    { --hg-at: 2; }
+.hg-at-5    { --hg-at: 5; }
+.hg-at-6    { --hg-at: 6; }
+.hg-at-9    { --hg-at: 9; }
+.hg-at-11-5 { --hg-at: 11.5; }
+
+.hg-span-0-5 { --hg-span: .5; }
+.hg-span-1   { --hg-span: 1; }
+.hg-span-1-5 { --hg-span: 1.5; }
+
+/* Week timetable: hours from 08:00, thirteen of them in view. */
+.wk__gutter span,
+.wk__blk,
+.wk__now { top: calc(var(--wk-at, 0) / 13 * 100%); }
+.wk__blk { height: calc(var(--wk-span, 1) / 13 * 100%); }
+
+.wk-at-0  { --wk-at: 0; }
+.wk-at-1  { --wk-at: 1; }
+.wk-at-2  { --wk-at: 2; }
+.wk-at-3  { --wk-at: 3; }
+.wk-at-4  { --wk-at: 4; }
+.wk-at-5  { --wk-at: 5; }
+.wk-at-6  { --wk-at: 6; }
+.wk-at-7  { --wk-at: 7; }
+.wk-at-8  { --wk-at: 8; }
+.wk-at-9  { --wk-at: 9; }
+.wk-at-10 { --wk-at: 10; }
+.wk-at-11 { --wk-at: 11; }
+.wk-at-12 { --wk-at: 12; }
+/* 13:20, the time on the status bar. */
+.wk-at-now { --wk-at: 5.333; }
+
+.wk-span-1   { --wk-span: 1; }
+.wk-span-1-5 { --wk-span: 1.5; }
+.wk-span-2   { --wk-span: 2; }
+.wk-span-3   { --wk-span: 3; }
+
+/* Month bands, on the page and on the widget: day columns across a week of
+   seven, on the row under the day numbers. */
+.mo__band,
+.mw__band {
+  top: 1.15em;
+  left: calc(var(--col-at, 0) / 7 * 100%);
+  width: calc(var(--col-span, 1) / 7 * 100%);
+}
+
+.col-at-0   { --col-at: 0; }
+.col-at-1   { --col-at: 1; }
+.col-span-3 { --col-span: 3; }
+.col-span-5 { --col-span: 5; }
+
+/* A chip that holds its row under a band without showing. */
+.mo__chip--hold { visibility: hidden; }
+
+.mw__ell--below-band { padding-top: 1.1em; }
+
+/* Today's "current event" card. */
+.a-card .now__title { font-size: .95em; margin: .15em 0 0; }
+.a-card .now__left  { font-size: .76em; margin: .1em 0 0; }
+.a-card .now__then  { font-size: .74em; margin: .3em 0 0; color: var(--a-text2); }
+
+.hg + .a-cap { margin-top: .4em; }
+.set-row + .a-cap { margin-top: .3em; }
+
+.a-cap.a-error,
+.a-time .a-error { color: var(--a-error); }
+
+/* A task's checkbox; ticked, it is filled and borderless. */
+.a-check {
+  flex: none;
+  width: .95em;
+  height: .95em;
+  margin-top: .15em;
+  border: 1.5px solid var(--a-text2);
+  border-radius: .2em;
+}
+
+.a-row.is-done .a-check { border: 0; background: var(--a-accent); }
+.a-row.is-done .a-time b,
+.a-row.is-done .a-row__b b { color: var(--a-text2); }
+.a-row.is-done .a-row__b b { text-decoration: line-through; }
+
+/* A row with no time column, such as a birthday. */
+.a-row__b--untimed { padding-top: .15em; }
+
+.a-card .a-body { font-size: .76em; color: var(--a-text2); }
+.a-card .a-meta { font-size: .72em; color: var(--a-text2); margin-top: .4em; }
+
+/* Page furniture outside the mock-ups. */
+.sprite { position: absolute; }
+.btn__icon { margin-right: 10px; }
+.scene--install .scene__copy { max-width: none; }
+.install-card .actions { margin-top: 0; }
