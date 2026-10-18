@@ -4,20 +4,44 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Schedule &middot; Entropic Software Labs</title>
-  <meta name="description" content="Schedule: a dashboard over the calendars already on your phone, with home-screen widgets for today and the month. In development for Android.">
+  <meta name="description" content="Schedule is an Android app that reads the calendars already synced to your phone and lays out the day, the week and the month so you can read them. Home-screen widgets, no account, no server.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/schedule/">
   <meta property="og:title" content="Schedule &middot; Entropic Software Labs">
-  <meta property="og:description" content="Schedule: a dashboard over the calendars already on your phone, with home-screen widgets for today and the month. In development for Android.">
+  <meta property="og:description" content="An Android app that reads the calendars already synced to your phone and lays out the day, the week and the month so you can read them.">
   <meta property="og:url" content="https://entropicsoftwarelabs.com/schedule/">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/schedule.css">
   <script src="/js/site.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body>
+
+  <!-- Icons. One sprite, referenced by <use> everywhere below. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-today" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V9h14v10Zm0-12H5V5h14v2Zm-2 5h-5v5h5v-5Z"/></symbol>
+    <symbol id="i-week" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h4v14H3V5Zm7 0h4v14h-4V5Zm7 0h4v14h-4V5Z"/></symbol>
+    <symbol id="i-month" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V9h14v10ZM7 11h4v2H7v-2Zm6 0h4v2h-4v-2Zm-6 4h4v2H7v-2Zm6 0h4v2h-4v-2Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path fill="currentColor" d="M19.14 12.94a7.07 7.07 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.62l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.49.49 0 0 0-.49-.41h-3.84a.49.49 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.74 8.86a.5.5 0 0 0 .12.62l2.03 1.58a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.62l1.92 3.32c.12.22.37.29.6.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.41.47.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.62l-2.03-1.58ZM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2Z"/></symbol>
+    <symbol id="i-add" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path fill="currentColor" d="M1 21h22L12 2 1 21Zm12-3h-2v-2h2v2Zm0-4h-2v-4h2v4Z"/></symbol>
+    <symbol id="i-task" viewBox="0 0 24 24"><path fill="currentColor" d="m22.3 6.7-1.4-1.4L15 11.2l-2.1-2.1-1.4 1.4 3.5 3.5 7.3-7.3ZM2 5h8v2H2V5Zm0 6h8v2H2v-2Zm0 6h12v2H2v-2Z"/></symbol>
+    <symbol id="i-cake" viewBox="0 0 24 24"><path fill="currentColor" d="M12 6a2 2 0 0 0 2-2c0-.9-.7-1.6-2-3.2-1.3 1.6-2 2.3-2 3.2a2 2 0 0 0 2 2Zm6 2h-5V6.5h-2V8H6a3 3 0 0 0-3 3v2c1 0 1.6.5 2.2 1 .5.4.9.7 1.6.7s1.1-.3 1.6-.7c.6-.5 1.2-1 2.3-1s1.7.5 2.3 1c.5.4.9.7 1.6.7s1.1-.3 1.6-.7c.6-.5 1.2-1 2.2-1v-2a3 3 0 0 0-3-3Zm.9 8.2c-.6.5-1 .8-1.9.8s-1.3-.3-1.9-.8c-.5-.4-.8-.6-1.3-.6s-.8.2-1.3.6c-.6.5-1 .8-1.9.8s-1.3-.3-1.9-.8c-.5-.4-.8-.6-1.3-.6s-.8.2-1.3.6c-.6.5-1 .8-1.9.8v3h18v-3c-.9 0-1.3.3-1.9.8l-.4-.8Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7Z"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4V1L8 5l4 4V6a6 6 0 0 1 5.2 9l1.5 1.5A8 8 0 0 0 12 4Zm0 14a6 6 0 0 1-5.2-9L5.3 7.5A8 8 0 0 0 12 20v3l4-4-4-4v3Z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><path fill="currentColor" d="M17 12h-5v5h5v-5ZM16 1v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1h-2Zm3 18H5V8h14v11Z"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4-4.6-4.6 4.6-4.6Z"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path fill="currentColor" d="M8.6 7.4 10 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6Z"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path fill="currentColor" d="m1 9 2 2a12.7 12.7 0 0 1 18 0l2-2A15.6 15.6 0 0 0 1 9Zm8 8 3 3 3-3a4.2 4.2 0 0 0-6 0Zm-4-4 2 2a7.1 7.1 0 0 1 10 0l2-2a9.9 9.9 0 0 0-14 0Z"/></symbol>
+    <symbol id="i-batt" viewBox="0 0 24 24"><path fill="currentColor" d="M15.7 4H14V2h-4v2H8.3C7.6 4 7 4.6 7 5.3v15.4c0 .7.6 1.3 1.3 1.3h7.4c.7 0 1.3-.6 1.3-1.3V5.3c0-.7-.6-1.3-1.3-1.3Z"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7ZM5 18v2h14v-2H5Z"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></symbol>
+  </svg>
+
   <div class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="/">
@@ -48,50 +72,819 @@
     </div>
   </div>
 
-  <header class="hero product-hero">
-    <div class="container">
-      <div class="project-text">
-        <h1>Schedule</h1>
-        <div class="chips">
-          <span class="chip">Android</span>
-          <span class="chip chip-warn">In development</span>
-        </div>
-        <p class="lead">A dashboard over the calendars already on your phone, with home-screen widgets for today and the month.</p>
-        <p class="small">Not released yet.</p>
-      </div>
-      <div class="media media-schedule">
-        <p class="sr-only">Mock-up of the Schedule Today widget</p>
-        <div class="mock" aria-hidden="true">
-          <div class="widget">
-            <p class="widget-title">Tomorrow &middot; Tue 20 Oct</p>
-            <ul class="widget-rows">
-              <li><span class="bar"></span><span class="time">09:00</span><span>Design review</span></li>
-              <li><span class="bar"></span><span class="time">12:30</span><span>Lunch with Sam</span></li>
-              <li><span class="bar"></span><span class="time">18:00</span><span>Climbing</span></li>
-            </ul>
-            <p class="widget-foot">Next due in 27 h: Rent</p>
-          </div>
-          <div class="month">
-            <span class="cell empty"></span><span class="cell empty"></span><span class="cell empty"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
-            <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
-            <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell today"></span>
-            <span class="cell"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span>
-            <span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell empty"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  <main data-story="today week month widgets tasks google">
+    <span id="top"></span>
 
-  <main>
-    <section class="detail">
-      <div class="container">
-        <h2>What it does</h2>
-        <ul class="facts">
-          <li>Type something like &ldquo;lunch with Sam Friday 1pm&rdquo; and it drafts the event.</li>
-          <li>Ask whether you're free on Thursday afternoon.</li>
-          <li>Nothing is added to your calendar until you confirm it.</li>
-        </ul>
+    <!-- ============================== 01 INTRO ============================== -->
+    <section class="scene scene--hero" id="intro" data-chapter="Intro" aria-labelledby="intro-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <h1 id="intro-title">The calendar you already have, laid out so you can read it.</h1>
+          <div class="chips">
+            <span class="chip">Android 10+</span>
+            <span class="chip">Free</span>
+            <span class="chip">No account</span>
+          </div>
+          <p class="lead">
+            Schedule reads the calendars already synced to your phone &mdash; Google, work,
+            whatever is on there &mdash; and draws the day, the week and the month properly.
+            Edits go back to the same calendars, so everything else you use keeps working.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://github.com/josephting1105123/Schedule/releases/latest/download/Schedule.apk">
+              <svg width="20" height="20" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-dl"></use></svg>
+              Download the APK
+            </a>
+            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Schedule" rel="noopener">Source</a>
+          </div>
+          <p class="hero-meta">No account, no server. Android 10 or later.</p>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="The Schedule app showing Today: a card reading Current event, Design review, Until 14:30, then the day drawn as two rows of twelve hour cells with coloured bars on them.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>Today</h3><p>Sunday 18 October</p></div>
+                </div>
+
+                <div class="a-card a-card--raised">
+                  <p class="a-cap">Current event</p>
+                  <p style="font-size:.95em;margin:.15em 0 0">Design review</p>
+                  <p class="a-accent" style="font-size:.76em;margin:.1em 0 0">Until 14:30 &middot; 1h 10m left</p>
+                  <p style="font-size:.74em;margin:.3em 0 0;color:var(--a-text2)">Then: Budget call at 14:00</p>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-cap">Day at a glance</p>
+                  <div class="hg" style="margin-top:.35em">
+                    <div>
+                      <div class="hg__nums"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div>
+                      <div class="hg__half">
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:75%;width:8.33%;background:var(--ev-peacock);color:var(--ink-peacock)"></div>
+                          <div class="hg__bar" style="left:95.83%;width:4.17%;background:var(--ev-tangerine);color:var(--ink-tangerine)"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="hg__nums"><span>12</span><span class="now">13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span></div>
+                      <div class="hg__half">
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
+                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
+                          <span class="hg__tick" style="left:41.67%"></span>
+                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                        </div>
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:16.67%;width:8.33%;background:var(--ev-tomato);color:var(--ink-tomato)"></div>
+                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-time"><b>13:00</b><i>14:30</i></span>
+                    <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-time"><b>14:00</b><i>15:00</i></span>
+                    <span class="a-row__b"><b>Budget call</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-time"><b>18:00</b><i>19:30</i></span>
+                    <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
+                  </div>
+                </div>
+              </div>
+              <span class="fab" aria-hidden="true"><svg><use href="#i-add"></use></svg></span>
+              <div class="phone__nav" aria-hidden="true">
+                <span class="on"><i><svg><use href="#i-today"></use></svg></i>Today</span>
+                <span><svg><use href="#i-week"></use></svg>Week</span>
+                <span><svg><use href="#i-month"></use></svg>Month</span>
+                <span><svg><use href="#i-settings"></use></svg>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 02 TODAY ============================== -->
+    <section class="scene" id="today" data-chapter="Today" aria-labelledby="today-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>02</b> <span>Today</span></p>
+          <h2 id="today-title">A day you can take in at a glance.</h2>
+          <p class="lead">
+            The day is twenty-four cells, two rows of twelve. An event fills the part of the
+            hour it actually takes, so a meeting from 19:15 to 19:45 is a short bar inside
+            its cell rather than a block over the whole evening.
+          </p>
+          <ul class="notes">
+            <li><b>What's on now comes before what's next.</b> The top card names the event
+              you're in and how much of it is left &mdash; &ldquo;Until&nbsp;14:30 &middot;
+              1h&nbsp;10m left&rdquo; &mdash; then the one after it.</li>
+            <li><b>A stacked row means a clash.</b> Overlapping events take a lane of their own,
+              and the Clashes card names the contested stretch, not the events' full spans:
+              &ldquo;Double-booked 14:00&ndash;14:30 &middot; 2 events&rdquo;.</li>
+            <li><b>Tap a free hour to add an event there.</b> Tap a busy one and you get that
+              slot's run sheet, with each event's notes in full.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="Today, showing the hour grid with a second lane under the first where two events overlap, and a Clashes card reading Double-booked 14:00 to 14:30, 2 events.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>Today</h3><p>Sunday 18 October</p></div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-cap">Day at a glance</p>
+                  <div class="hg" style="margin-top:.35em">
+                    <div>
+                      <div class="hg__nums"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div>
+                      <div class="hg__half">
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:75%;width:8.33%;background:var(--ev-peacock);color:var(--ink-peacock)"></div>
+                          <div class="hg__bar" style="left:95.83%;width:4.17%;background:var(--ev-tangerine);color:var(--ink-tangerine)"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="hg__nums"><span>12</span><span class="now">13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span></div>
+                      <div class="hg__half">
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
+                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
+                          <span class="hg__tick" style="left:41.67%"></span>
+                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                        </div>
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:16.67%;width:8.33%;background:var(--ev-tomato);color:var(--ink-tomato)"></div>
+                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t a-warn"><svg aria-hidden="true"><use href="#i-warn"></use></svg>Clash</p>
+                  <div class="a-rule"></div>
+                  <p class="a-cap a-warn">Double-booked 14:00&ndash;14:30 &middot; 2 events</p>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-time"><b>13:00</b><i>14:30</i></span>
+                    <span class="a-row__b"><b>Design review</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-time"><b>14:00</b><i>15:00</i></span>
+                    <span class="a-row__b"><b>Budget call</b></span>
+                  </div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t">All day</p>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-lavender)"></span>
+                    <span class="a-time"><i>all day</i></span>
+                    <span class="a-row__b"><b>Term starts</b></span>
+                  </div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-peacock)"></span>
+                    <span class="a-time"><b>09:00</b><i>10:00</i></span>
+                    <span class="a-row__b"><b>Standup</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-tangerine)"></span>
+                    <span class="a-time"><b>11:30</b><i>12:00</i></span>
+                    <span class="a-row__b"><b>1:1 with Priya</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-time"><b>13:00</b><i>14:30</i></span>
+                    <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-tomato)"></span>
+                    <span class="a-time"><b>14:00</b><i>15:00</i></span>
+                    <span class="a-row__b"><b>Budget call</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-time"><b>18:00</b><i>19:30</i></span>
+                    <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
+                  </div>
+                </div>
+              </div>
+              <span class="fab" aria-hidden="true"><svg><use href="#i-add"></use></svg></span>
+              <div class="phone__nav" aria-hidden="true">
+                <span class="on"><i><svg><use href="#i-today"></use></svg></i>Today</span>
+                <span><svg><use href="#i-week"></use></svg>Week</span>
+                <span><svg><use href="#i-month"></use></svg>Month</span>
+                <span><svg><use href="#i-settings"></use></svg>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 03 WEEK =============================== -->
+    <section class="scene" id="week" data-chapter="Week" aria-labelledby="week-title">
+      <div class="container scene__grid scene__grid--flip">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>03</b> <span>Week</span></p>
+          <h2 id="week-title">The week as a timetable, not a list.</h2>
+          <p class="lead">
+            Sunday to Saturday, a column per day, the whole day from 0000 to 2359. Every event
+            is a block as tall as it lasts, so a three-hour lab looks like three hours and a
+            free afternoon looks free.
+          </p>
+          <ul class="notes">
+            <li><b>A block shows as much as it has room for.</b> The full title on a tall one;
+              on a short one the place drops first, then the end time, then the title wraps and
+              hyphenates. Times read <code>1300 / - / 1400</code>, because a column is too narrow
+              for &ldquo;13:00&ndash;14:00&rdquo;.</li>
+            <li><b>Two events at once sit side by side</b> &mdash; but only inside their own
+              overlap, so a clash at 15:00 doesn't narrow a lone 09:00 lecture.</li>
+            <li><b>The dates stay pinned</b> at the top while the page scrolls, so you never read
+              a block against a column whose date has gone off screen.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="The Week page: a timetable with a column per day from Sunday to Saturday, the clock down the left, and events drawn as blocks as tall as they last.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>This week</h3><p>18 &ndash; 24 October</p></div>
+                  <span class="a-icon"><svg><use href="#i-week"></use></svg></span>
+                </div>
+
+                <div class="wk">
+                  <div class="wk__dates">
+                    <span></span>
+                    <span class="today">Sun<b>18</b></span>
+                    <span>Mon<b>19</b></span>
+                    <span>Tue<b>20</b></span>
+                    <span>Wed<b>21</b></span>
+                    <span>Thu<b>22</b></span>
+                    <span>Fri<b>23</b></span>
+                    <span>Sat<b>24</b></span>
+                  </div>
+                  <!-- The visible window is 08:00 to 21:00, thirteen hours. -->
+                  <div class="wk__grid" style="--hour:7.69%">
+                    <div class="wk__gutter">
+                      <span style="top:0%">0800</span>
+                      <span style="top:7.69%">0900</span>
+                      <span style="top:15.38%">1000</span>
+                      <span style="top:23.08%">1100</span>
+                      <span style="top:30.77%">1200</span>
+                      <span style="top:38.46%">1300</span>
+                      <span style="top:46.15%">1400</span>
+                      <span style="top:53.85%">1500</span>
+                      <span style="top:61.54%">1600</span>
+                      <span style="top:69.23%">1700</span>
+                      <span style="top:76.92%">1800</span>
+                      <span style="top:84.62%">1900</span>
+                      <span style="top:92.31%">2000</span>
+                    </div>
+                    <div class="wk__col today">
+                      <div class="wk__blk" style="top:38.46%;height:11.54%;background:var(--ev-grape);color:var(--ink-grape)">Design re&shy;view<i>1300</i></div>
+                      <div class="wk__blk" style="top:76.92%;height:11.54%;background:var(--ev-basil);color:var(--ink-basil)">Climb&shy;ing<i>1800</i></div>
+                      <div class="wk__now" style="top:40.9%"></div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk" style="top:15.38%;height:15.38%;background:var(--ev-peacock);color:var(--ink-peacock)">Lecture<i>1000</i><i>-</i><i>1200</i></div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk" style="top:7.69%;height:11.54%;background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic<i>0900</i></div>
+                      <div class="wk__blk" style="top:69.23%;height:7.69%;background:var(--ev-lavender);color:var(--ink-lavender)">Gym<i>1700</i></div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk wk__blk--l" style="top:46.15%;height:15.38%;background:var(--ev-peacock);color:var(--ink-peacock)">Lab<i>1400</i></div>
+                      <div class="wk__blk wk__blk--r" style="top:53.85%;height:7.69%;background:var(--ev-tomato);color:var(--ink-tomato)">Stand&shy;up</div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk" style="top:30.77%;height:7.69%;background:var(--ev-grape);color:var(--ink-grape)">Lunch<i>1200</i></div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk" style="top:84.62%;height:11.54%;background:var(--ev-basil);color:var(--ink-basil)">Dinner<i>1900</i></div>
+                    </div>
+                    <div class="wk__col">
+                      <div class="wk__blk" style="top:23.08%;height:23.08%;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orienta&shy;tion<i>1100</i><i>-</i><i>1400</i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="fab" aria-hidden="true"><svg><use href="#i-add"></use></svg></span>
+              <div class="phone__nav" aria-hidden="true">
+                <span><svg><use href="#i-today"></use></svg>Today</span>
+                <span class="on"><i><svg><use href="#i-week"></use></svg></i>Week</span>
+                <span><svg><use href="#i-month"></use></svg>Month</span>
+                <span><svg><use href="#i-settings"></use></svg>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 04 MONTH ============================== -->
+    <section class="scene" id="month" data-chapter="Month" aria-labelledby="month-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>04</b> <span>Month</span></p>
+          <h2 id="month-title">Every event named, not three dots.</h2>
+          <p class="lead">
+            The month fills the page: tall days with each event written out, timed ones
+            included. When a day holds more than fits, its last row says
+            <span class="nobr">&bull;&bull;&bull;</span> rather than cutting a title in half.
+          </p>
+          <ul class="notes">
+            <li><b>An event across several days is one band</b>, titled once across the whole
+              run, instead of the same word repeated in seven boxes.</li>
+            <li><b>Long-press a day</b> for its agenda in a pop-up over the page, with
+              <b>Open day</b> and <b>Add event</b>. A tap opens that day on Today.</li>
+            <li><b>Or switch to the list</b> from the header &mdash; the month's days one after
+              another with what's on them. Swiping sideways still changes month.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="The Month page: October 2026 as a full-page grid of six weeks, each day naming its events, with a multi-day band reading Orientation week across five days.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>October 2026</h3><p>14 events this month</p></div>
+                  <span class="a-icon"><svg><use href="#i-cal"></use></svg></span>
+                </div>
+
+                <div class="mo">
+                  <div class="mo__wd"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+                  <div class="mo__grid">
+                    <div class="mo__wk">
+                      <div class="mo__d off"><p class="mo__n"><b>27</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>28</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>29</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>30</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>1</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Standup</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>2</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>3</b></p><span class="mo__chip" style="background:var(--ev-basil);color:var(--ink-basil)">Climbing</span></div>
+                    </div>
+                    <div class="mo__wk">
+                      <div class="mo__band" style="left:14.29%;width:71.43%;top:1.15em;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orientation week</div>
+                      <div class="mo__d"><p class="mo__n"><b>4</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>5</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>6</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>7</b></p><span class="mo__chip" style="visibility:hidden">.</span><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Dentist</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>8</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>9</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>10</b></p></div>
+                    </div>
+                    <div class="mo__wk">
+                      <div class="mo__d"><p class="mo__n"><b>11</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>12</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lecture</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>13</b></p><span class="mo__chip" style="background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>14</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>15</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Lunch</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>16</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>17</b></p></div>
+                    </div>
+                    <div class="mo__wk">
+                      <div class="mo__d today"><p class="mo__n"><b>18</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Design re</span><span class="mo__chip" style="background:var(--ev-tomato);color:var(--ink-tomato)">Budget c</span><span class="mo__more">&bull;&bull;&bull;</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>19</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lecture</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>20</b></p><span class="mo__chip" style="background:var(--ev-tangerine);color:var(--ink-tangerine)">Clinic</span><span class="mo__chip" style="background:var(--ev-lavender);color:var(--ink-lavender)">Gym</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>21</b></p><span class="mo__chip" style="background:var(--ev-peacock);color:var(--ink-peacock)">Lab</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>22</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>23</b></p><span class="mo__chip" style="background:var(--ev-basil);color:var(--ink-basil)">Dinner</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>24</b></p></div>
+                    </div>
+                    <div class="mo__wk">
+                      <div class="mo__band" style="left:0;width:42.86%;top:1.15em;background:var(--ev-lavender);color:var(--ink-lavender)">Half term</div>
+                      <div class="mo__d"><p class="mo__n"><b>25</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>26</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>27</b></p><span class="mo__chip" style="visibility:hidden">.</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>28</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>29</b></p><span class="mo__chip" style="background:var(--ev-grape);color:var(--ink-grape)">Recital</span></div>
+                      <div class="mo__d"><p class="mo__n"><b>30</b></p></div>
+                      <div class="mo__d"><p class="mo__n"><b>31</b></p><span class="mo__chip" style="background:var(--ev-tomato);color:var(--ink-tomato)">Party</span></div>
+                    </div>
+                    <div class="mo__wk">
+                      <div class="mo__d off"><p class="mo__n"><b>1</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>2</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>3</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>4</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>5</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>6</b></p></div>
+                      <div class="mo__d off"><p class="mo__n"><b>7</b></p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="fab" aria-hidden="true"><svg><use href="#i-add"></use></svg></span>
+              <div class="phone__nav" aria-hidden="true">
+                <span><svg><use href="#i-today"></use></svg>Today</span>
+                <span><svg><use href="#i-week"></use></svg>Week</span>
+                <span class="on"><i><svg><use href="#i-month"></use></svg></i>Month</span>
+                <span><svg><use href="#i-settings"></use></svg>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 05 WIDGETS ============================= -->
+    <section class="scene" id="widgets" data-chapter="Widgets" aria-labelledby="widgets-title">
+      <div class="container scene__grid scene__grid--flip">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>05</b> <span>Widgets</span></p>
+          <h2 id="widgets-title">The month on your home screen.</h2>
+          <p class="lead">
+            A six-by-seven grid that redraws whenever your calendar changes, with chevrons for
+            the months either side and a <b>+</b> that opens the add form. Tap a day and its
+            agenda opens over the home screen &mdash; the app never has to start.
+          </p>
+          <ul class="notes">
+            <li><b>All-day and multi-day events are named; timed ones are dots</b> in their own
+              colours. A widget day is about fifty pixels wide, which is six characters &mdash;
+              long enough to render &ldquo;Church service&rdquo; as &ldquo;Churc&hellip;&rdquo;
+              and tell you nothing.</li>
+            <li><b>There's a Today widget as well:</b> the date, the events that haven't ended
+              yet, and &ldquo;+2 more&rdquo; when the day runs past the card.</li>
+            <li><b>Browse to December and tomorrow you're back here.</b> The month you moved to
+              expires by day rather than on a timer, so a glance ten minutes later is still
+              December and a glance tomorrow is this month.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="A home screen holding two widgets: a dark month grid for October with a band and coloured dots, and a white Today widget listing the day's remaining events.">
+            <div class="phone__screen phone__screen--home">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="wall">
+                <div class="mw">
+                  <div class="mw__head">
+                    <b>October</b>
+                    <span class="sp"></span>
+                    <i><svg aria-hidden="true"><use href="#i-left"></use></svg></i>
+                    <i><svg aria-hidden="true"><use href="#i-right"></use></svg></i>
+                    <span class="mw__add"><svg width="10" height="10" aria-hidden="true"><use href="#i-add"></use></svg></span>
+                  </div>
+                  <div class="mw__wd"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+                  <div class="mw__wk">
+                    <div class="mw__d off"><b>27</b></div>
+                    <div class="mw__d off"><b>28</b></div>
+                    <div class="mw__d off"><b>29</b></div>
+                    <div class="mw__d off"><b>30</b></div>
+                    <div class="mw__d"><b>1</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d"><b>2</b></div>
+                    <div class="mw__d"><b>3</b><div class="mw__dots"><s style="background:var(--ev-basil)"></s></div></div>
+                  </div>
+                  <div class="mw__wk">
+                    <div class="mw__band" style="left:14.29%;width:71.43%;top:1.15em;background:var(--ev-tangerine);color:var(--ink-tangerine)">Orientation week</div>
+                    <div class="mw__d"><b>4</b></div>
+                    <div class="mw__d"><b>5</b></div>
+                    <div class="mw__d"><b>6</b></div>
+                    <div class="mw__d"><b>7</b></div>
+                    <div class="mw__d"><b>8</b></div>
+                    <div class="mw__d"><b>9</b></div>
+                    <div class="mw__d"><b>10</b></div>
+                  </div>
+                  <div class="mw__wk">
+                    <div class="mw__d"><b>11</b></div>
+                    <div class="mw__d"><b>12</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d"><b>13</b><div class="mw__dots"><s style="background:var(--ev-tangerine)"></s></div></div>
+                    <div class="mw__d"><b>14</b></div>
+                    <div class="mw__d"><b>15</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s></div></div>
+                    <div class="mw__d"><b>16</b></div>
+                    <div class="mw__d"><b>17</b></div>
+                  </div>
+                  <div class="mw__wk">
+                    <div class="mw__d today"><b>18</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s><s style="background:var(--ev-tomato)"></s><s style="background:var(--ev-basil)"></s><em>+2</em></div></div>
+                    <div class="mw__d"><b>19</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d"><b>20</b><div class="mw__dots"><s style="background:var(--ev-tangerine)"></s><s style="background:var(--ev-lavender)"></s></div></div>
+                    <div class="mw__d"><b>21</b><div class="mw__dots"><s style="background:var(--ev-peacock)"></s></div></div>
+                    <div class="mw__d"><b>22</b></div>
+                    <div class="mw__d"><b>23</b><div class="mw__dots"><s style="background:var(--ev-basil)"></s></div></div>
+                    <div class="mw__d"><b>24</b></div>
+                  </div>
+                  <div class="mw__wk">
+                    <div class="mw__band" style="left:0;width:42.86%;top:1.15em;background:var(--ev-lavender);color:var(--ink-lavender)">Half term</div>
+                    <div class="mw__d"><b>25</b></div>
+                    <div class="mw__d"><b>26</b></div>
+                    <div class="mw__d"><b>27</b><div class="mw__ell" style="padding-top:1.1em">&bull;&bull;&bull;</div></div>
+                    <div class="mw__d"><b>28</b></div>
+                    <div class="mw__d"><b>29</b><div class="mw__dots"><s style="background:var(--ev-grape)"></s></div></div>
+                    <div class="mw__d"><b>30</b></div>
+                    <div class="mw__d"><b>31</b><div class="mw__dots"><s style="background:var(--ev-tomato)"></s></div></div>
+                  </div>
+                  <div class="mw__wk">
+                    <div class="mw__d off"><b>1</b></div>
+                    <div class="mw__d off"><b>2</b></div>
+                    <div class="mw__d off"><b>3</b></div>
+                    <div class="mw__d off"><b>4</b></div>
+                    <div class="mw__d off"><b>5</b></div>
+                    <div class="mw__d off"><b>6</b></div>
+                    <div class="mw__d off"><b>7</b></div>
+                  </div>
+                </div>
+
+                <div class="tw app">
+                  <p class="tw__t">Sun 18 Oct</p>
+                  <div class="tw__row"><s style="background:var(--ev-grape)"></s><i>13:00</i><b>Design review</b></div>
+                  <div class="tw__row"><s style="background:var(--ev-tomato)"></s><i>14:00</i><b>Budget call</b></div>
+                  <div class="tw__row"><s style="background:var(--ev-basil)"></s><i>18:00</i><b>Climbing</b></div>
+                  <p class="tw__foot">+2 more</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 06 TASKS ============================== -->
+    <section class="scene" id="tasks" data-chapter="Tasks" aria-labelledby="tasks-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>06</b> <span>Tasks</span></p>
+          <h2 id="tasks-title">A deadline is a point, not an hour.</h2>
+          <p class="lead">
+            A task is a time and a checkbox, and it never books the hour it falls in. It can't
+            clash with anything, takes no lane on the grid, and shows as a hairline tick at its
+            own minute &mdash; because &ldquo;submit the report by 17:00&rdquo; is when the
+            thing is due, not a second meeting.
+          </p>
+          <ul class="notes">
+            <li><b>A task you never ticked doesn't disappear.</b> Once its deadline has passed
+              it is carried onto today under <b>Overdue</b>, with the date it was due.</li>
+            <li><b>A task with no time gets no mark at all.</b> There is no hour to put it at,
+              and defaulting it to midnight would draw a deadline you never set.</li>
+            <li><b>Birthdays go both ways.</b> One you add here becomes a yearly all-day event
+              on your calendar; one that is already in Google Contacts shows up here, and a
+              rename in Google is read as a rename rather than a deletion.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="Today, scrolled to the Tasks card: an Overdue heading with one dated task, then today's tasks, then a Birthdays card.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>Today</h3><p>Sunday 18 October</p></div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-cap">Day at a glance</p>
+                  <div class="hg" style="margin-top:.35em">
+                    <div>
+                      <div class="hg__nums"><span>12</span><span class="now">13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span></div>
+                      <div class="hg__half">
+                        <div class="hg__lane">
+                          <div class="hg__cells"><span></span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                          <div class="hg__bar" style="left:8.33%;width:12.5%;background:var(--ev-grape);color:var(--ink-grape)">Design review</div>
+                          <div class="hg__bar" style="left:50%;width:12.5%;background:var(--ev-basil);color:var(--ink-basil)">Climbing</div>
+                          <span class="hg__tick" style="left:41.67%"></span>
+                          <span class="hg__now" style="left:8.33%;width:8.33%"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="a-cap" style="margin-top:.4em">Tap a free hour to add an event. A line marks a task deadline.</p>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-task"></use></svg>Tasks<span class="tail">3 left</span></p>
+                  <div class="a-rule"></div>
+                  <p class="a-cap" style="color:var(--a-error)">Overdue</p>
+                  <div class="a-row">
+                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
+                    <span class="a-time"><b>09:00</b><i style="color:var(--a-error)">9 Oct</i></span>
+                    <span class="a-row__b"><b>Renew parking permit</b></span>
+                  </div>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
+                    <span class="a-time"><b>17:00</b></span>
+                    <span class="a-row__b"><b>Submit the report</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border:1.5px solid var(--a-text2);border-radius:.2em"></span>
+                    <span class="a-time"><i>any time</i></span>
+                    <span class="a-row__b"><b>Call the bank</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span style="flex:none;width:.95em;height:.95em;margin-top:.15em;border-radius:.2em;background:var(--a-accent)"></span>
+                    <span class="a-time"><b style="color:var(--a-text2)">08:30</b></span>
+                    <span class="a-row__b"><b style="color:var(--a-text2);text-decoration:line-through">Book the van</b></span>
+                  </div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-cake"></use></svg>Birthdays</p>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-lavender)"></span>
+                    <span class="a-row__b" style="padding-top:.15em"><b>Hannah &mdash; turns 30</b></span>
+                  </div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Agenda</p>
+                  <div class="a-rule"></div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-peacock)"></span>
+                    <span class="a-time"><b>09:00</b><i>10:00</i></span>
+                    <span class="a-row__b"><b>Standup</b></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-grape)"></span>
+                    <span class="a-time"><b>13:00</b><i>14:30</i></span>
+                    <span class="a-row__b"><b>Design review</b><i>Studio 2</i></span>
+                  </div>
+                  <div class="a-row">
+                    <span class="a-bar" style="background:var(--ev-basil)"></span>
+                    <span class="a-time"><b>18:00</b><i>19:30</i></span>
+                    <span class="a-row__b"><b>Climbing</b><i>The Arch</i></span>
+                  </div>
+                </div>
+              </div>
+              <span class="fab" aria-hidden="true"><svg><use href="#i-add"></use></svg></span>
+              <div class="phone__nav" aria-hidden="true">
+                <span class="on"><i><svg><use href="#i-today"></use></svg></i>Today</span>
+                <span><svg><use href="#i-week"></use></svg>Week</span>
+                <span><svg><use href="#i-month"></use></svg>Month</span>
+                <span><svg><use href="#i-settings"></use></svg>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 06 GOOGLE ============================== -->
+    <section class="scene" id="google" data-chapter="Google" aria-labelledby="google-title">
+      <div class="container scene__grid scene__grid--flip">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>07</b> <span>Google</span></p>
+          <h2 id="google-title">It stays Google's calendar.</h2>
+          <p class="lead">
+            A colour you pick here is one of Google's own, written onto the event as its colour
+            key, so Google Calendar shows you the same one. Nothing is kept in a private store
+            that only this phone can read.
+          </p>
+          <figure class="palette app">
+            <div class="swatches" aria-hidden="true">
+              <s style="background:var(--ev-peacock)" class="pick"></s>
+              <s style="background:var(--ev-tomato)"></s>
+              <s style="background:var(--ev-basil)" class="used"></s>
+              <s style="background:var(--ev-grape)"></s>
+              <s style="background:var(--ev-tangerine)"></s>
+              <s style="background:var(--ev-lavender)"></s>
+            </div>
+            <figcaption>The six an uncoloured event can be given, at Google's own values.</figcaption>
+          </figure>
+          <ul class="notes">
+            <li><b>All twenty-four come in; eleven go out.</b> Google only lets other apps set
+              the classic eleven, so those are what the picker offers. The other thirteen, set
+              in Google's own apps, are shown here exactly as they are rather than rounded to
+              the nearest one this app can write.</li>
+            <li><b>Events nobody coloured get a colour anyway</b> &mdash; a different one per
+              event per day, so a day tells itself apart. It is worked out as the screen draws,
+              so no other calendar app ever sees a colour this one invented.</li>
+            <li><b>Pull down to refresh</b> asks your accounts to sync, then asks again after 4,
+              10 and 20 seconds, because an edit you made a moment ago in Google Calendar is
+              usually still on its way up.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone app" role="img" aria-label="The Settings page showing a Sync with Google card: the account, whether Calendar auto-sync is on, how many changes are waiting to upload, and buttons reading Sync now and Phone sync settings.">
+            <div class="phone__screen">
+              <div class="phone__status"><span>13:20</span><span><svg aria-hidden="true"><use href="#i-wifi"></use></svg><svg aria-hidden="true"><use href="#i-batt"></use></svg></span></div>
+              <div class="phone__page">
+                <div class="a-head">
+                  <div><h3>Settings</h3></div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-month"></use></svg>Calendar</p>
+                  <div class="a-rule"></div>
+                  <div class="set-row"><b>Default calendar</b><span>Personal</span></div>
+                  <p class="a-cap" style="margin-top:.3em">New events are added here and sync through that account.</p>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t"><svg aria-hidden="true"><use href="#i-sync"></use></svg>Sync with Google</p>
+                  <div class="a-rule"></div>
+                  <div class="set-row">
+                    <b>you@gmail.com</b>
+                    <span>Calendar auto-sync: on</span>
+                    <span>Waiting to upload: 0</span>
+                  </div>
+                  <div class="set-row">
+                    <b>work@company.com</b>
+                    <span class="warn">Calendar auto-sync: off</span>
+                    <span class="warn">Waiting to upload: 3</span>
+                  </div>
+                  <p class="a-cap" style="margin-top:.3em">Changes you make here are uploaded by the phone's own Google sync. If &ldquo;Waiting to upload&rdquo; stays above zero, check that auto-sync is on for Calendar and that battery saving isn't stopping background sync.</p>
+                  <div class="set-btns"><span>Sync now</span><span>Phone sync settings</span></div>
+                </div>
+
+                <div class="a-card">
+                  <p class="a-card__t">About</p>
+                  <div class="a-rule"></div>
+                  <p style="font-size:.76em;color:var(--a-text2)">Schedule reads the calendars already synced to this device. No account, no server, no analytics &mdash; nothing typed or scheduled here leaves the phone.</p>
+                  <p style="font-size:.72em;color:var(--a-text2);margin-top:.4em">Version 1.3.0</p>
+                </div>
+              </div>
+              <div class="phone__nav" aria-hidden="true">
+                <span><svg><use href="#i-today"></use></svg>Today</span>
+                <span><svg><use href="#i-week"></use></svg>Week</span>
+                <span><svg><use href="#i-month"></use></svg>Month</span>
+                <span class="on"><i><svg><use href="#i-settings"></use></svg></i>Settings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 08 INSTALL ============================= -->
+    <section class="scene scene--install" id="install" data-chapter="Install" aria-labelledby="install-title">
+      <div class="container scene__grid">
+        <div class="scene__copy" style="max-width:none">
+          <p class="eyebrow"><b>08</b> <span>Install</span></p>
+          <h2 id="install-title">Install it</h2>
+          <p class="lead">
+            Schedule isn't on Google Play. The APK is a GitHub release, so you download it and
+            install it yourself.
+          </p>
+
+          <div class="install-card">
+            <div class="actions" style="margin-top:0">
+              <!-- /releases/latest/download/ resolves to the newest non-draft release, so this
+                   link keeps working across rebuilds as long as the asset stays Schedule.apk. -->
+              <a class="btn btn-primary" href="https://github.com/josephting1105123/Schedule/releases/latest/download/Schedule.apk">
+                <svg width="20" height="20" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-dl"></use></svg>
+                Download Schedule.apk
+              </a>
+              <a class="btn btn-secondary" href="https://github.com/josephting1105123/Schedule" rel="noopener">
+                <svg width="18" height="18" aria-hidden="true" focusable="false" style="margin-right:10px"><use href="#i-git"></use></svg>
+                Source on GitHub
+              </a>
+            </div>
+            <ol class="install-steps">
+              <li>Open this page on the phone and tap <b>Download Schedule.apk</b>.</li>
+              <li>Android will ask whether your browser may install apps. Allow it, then open
+                the downloaded file.</li>
+              <li>You'll be warned it's from an unknown developer &mdash; it isn't signed through
+                Google Play. Install anyway.</li>
+              <li>Give it access to your calendar when it asks. That's the whole setup: the
+                calendars already on the phone are what it reads.</li>
+            </ol>
+            <p class="small">
+              Needs Android 10 or later. The only thing it asks you for is your calendar; it
+              also reads whether your accounts are syncing. The APK still declares an internet
+              permission left over from a feature it no longer offers, and makes no network
+              requests at all.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
