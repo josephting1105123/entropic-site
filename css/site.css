@@ -86,6 +86,12 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scrollbar-color: var(--surface) var(--bg);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-on);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -244,19 +250,51 @@ a {
 
 /* Hero */
 .hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   padding-block: clamp(3rem, 2rem + 5vw, 6rem) clamp(2.5rem, 2rem + 3vw, 4.5rem);
 }
 
-.eyebrow {
-  margin-bottom: 1.25rem;
-  color: var(--text-2);
-  font-family: var(--sans);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    min-height: clamp(520px, 78svh, 760px);
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Entropy field: canvas drawn by js/field.js, fades out toward the bottom edge. */
+canvas.field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
 
 .hero h1 { max-width: 16ch; }
+
+/* Hero intro: the lead settles in after the headline starts resolving. */
+@keyframes esl-rise {
+  from { opacity: .25; transform: translateY(14px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero .lead {
+    animation: esl-rise 900ms cubic-bezier(.16, 1, .3, 1) 450ms both;
+  }
+}
 
 .lead {
   margin-top: 1.5rem;
@@ -567,6 +605,103 @@ a {
 }
 
 .notfound p { margin: 1.25rem 0 2rem; color: var(--text-2); font-size: 1.15rem; }
+
+/* Live chip: a status dot with a slow ring. No offset shadow here, it is a status mark. */
+.chip-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@keyframes esl-pulse {
+  from { box-shadow: 0 0 0 0 var(--accent-muted); }
+  to { box-shadow: 0 0 0 6px transparent; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chip-live::before { animation: esl-pulse 2s ease-out infinite; }
+}
+
+/* Tilt: transform is set from js/site.js on fine pointers. */
+.media {
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.media.tilting { transition: none; }
+
+/* Scroll reveals. html.motion is added by js/site.js, so without JS everything stays fully visible.
+   Start states are dimmed, never invisible. */
+.motion .project-text {
+  transition: opacity 700ms cubic-bezier(.16, 1, .3, 1), transform 700ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: 120ms;
+}
+
+.motion .project-text:not(.in) {
+  opacity: .35;
+  transform: translateY(16px);
+}
+
+/* OffBridge: the phone joins the PC. */
+.motion .media-offbridge .shot-win {
+  transition: opacity 900ms cubic-bezier(.16, 1, .3, 1), transform 900ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.motion .media-offbridge .shot-phone {
+  transition: opacity 900ms cubic-bezier(.16, 1, .3, 1), transform 900ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: 150ms;
+}
+
+.motion .media-offbridge.tilting .shot-phone { transition: none; }
+
+.motion .media-offbridge:not(.in) .shot-phone {
+  transform: translate(18%, 10%) rotate(4deg);
+  opacity: .3;
+}
+
+.motion .media-offbridge:not(.in) .shot-win {
+  opacity: .5;
+  transform: scale(.97);
+}
+
+/* Quick Vote: the screen draws down from the top. The clip box is padded so the shadow is not cut off once revealed. */
+.motion .media-phone .phone-shot {
+  clip-path: inset(-40px -80px -120px -80px round 28px);
+  transition: clip-path 1000ms cubic-bezier(.16, 1, .3, 1), opacity 1000ms cubic-bezier(.16, 1, .3, 1), transform 1000ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.motion .media-phone:not(.in) .phone-shot {
+  clip-path: inset(0 0 55% 0 round 28px);
+  opacity: .5;
+  transform: translateY(24px);
+}
+
+/* Schedule: rows slide in one after another, then today lights up. */
+.motion .media-schedule .widget-rows li {
+  transition: opacity 600ms cubic-bezier(.16, 1, .3, 1), transform 600ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.motion .media-schedule .widget-rows li:nth-child(2) { transition-delay: 90ms; }
+.motion .media-schedule .widget-rows li:nth-child(3) { transition-delay: 180ms; }
+
+.motion .media-schedule:not(.in) .widget-rows li {
+  opacity: .2;
+  transform: translateX(-12px);
+}
+
+.motion .media-schedule .cell.today {
+  transition: background-color 600ms cubic-bezier(.16, 1, .3, 1) 400ms;
+}
+
+.motion .media-schedule:not(.in) .cell.today { background: var(--surface); }
 
 /* Desktop: two columns, alternating sides */
 @media (min-width: 900px) {

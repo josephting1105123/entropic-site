@@ -16,6 +16,7 @@
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
   <script src="/js/site.js" defer></script>
+  <script src="/js/field.js" defer></script>
 </head>
 <body>
   <div class="topbar">
@@ -46,9 +47,9 @@
   </div>
 
   <header class="hero">
+    <canvas class="field" aria-hidden="true"></canvas>
     <div class="container">
-      <p class="eyebrow">Entropic Software Labs</p>
-      <h1>Apps for Android, Windows and the web.</h1>
+      <h1><span class="sr-only">Apps for Android, Windows and the web.</span><span class="scramble" aria-hidden="true">Apps for Android, Windows and the web.</span></h1>
       <p class="lead">OffBridge moves files and your clipboard between phone and PC, even with no internet. Quick Vote runs a live poll from a 6-digit PIN. Schedule, a calendar dashboard for Android, is still being built.</p>
     </div>
   </header>
@@ -92,7 +93,7 @@
           <h2 id="quick-vote-title">Quick Vote</h2>
           <div class="chips">
             <span class="chip">Web</span>
-            <span class="chip chip-status">Live</span>
+            <span class="chip chip-status chip-live">Live</span>
           </div>
           <p>Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
           <ul class="facts">
