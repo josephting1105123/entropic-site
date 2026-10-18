@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Entropic Software Labs</title>
-  <meta name="description" content="Entropic Software Labs makes OffBridge, Quick Vote and Schedule: apps for Android, Windows and the web.">
+  <meta name="description" content="Entropic Software Labs is a small studio making OffBridge, Quick Vote and Schedule: apps for Android, Windows and the web.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/">
   <meta property="og:title" content="Entropic Software Labs">
-  <meta property="og:description" content="Entropic Software Labs makes OffBridge, Quick Vote and Schedule: apps for Android, Windows and the web.">
+  <meta property="og:description" content="Entropic Software Labs is a small studio making OffBridge, Quick Vote and Schedule: apps for Android, Windows and the web.">
   <meta property="og:url" content="https://entropicsoftwarelabs.com/">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <script src="/js/theme.js"></script>
@@ -32,7 +32,10 @@
         <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
       </a>
       <nav class="topbar-actions" aria-label="Main">
-        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link nav-full" href="https://offbridge.app/" rel="noopener">OffBridge<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <a class="nav-link nav-full" href="/quick-vote/">Quick Vote</a>
+        <a class="nav-link nav-full" href="/schedule/">Schedule</a>
+        <a class="nav-link nav-compact" href="/#apps">Apps</a>
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
           <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <circle cx="12" cy="12" r="4"/>
@@ -46,107 +49,134 @@
     </div>
   </div>
 
-  <header class="hero">
+  <header class="hero hero-home">
     <canvas class="field" aria-hidden="true"></canvas>
     <div class="container">
-      <h1><span class="sr-only">Apps for Android, Windows and the web.</span><span class="scramble" aria-hidden="true">Apps for Android, Windows and the web.</span></h1>
-      <p class="lead">OffBridge moves files and your clipboard between phone and PC, even with no internet. Quick Vote runs a live poll from a 6-digit PIN. Schedule, a calendar dashboard for Android, is still being built.</p>
+      <span class="mark hero-mark" aria-hidden="true">
+        <svg viewBox="8 8 48 48" fill="currentColor" focusable="false">
+          <rect x="14" y="12" width="36" height="8" rx="4"/>
+          <rect x="14" y="28" width="26" height="8" rx="4"/>
+          <rect x="14" y="44" width="36" height="8" rx="4"/>
+        </svg>
+      </span>
+      <h1 class="typed"><span class="sr-only">Apps for Android, Windows and the web.</span><span class="typed-text" aria-hidden="true">Apps for Android, Windows and the web.</span></h1>
+      <p class="lead">We're a small studio. OffBridge, Quick Vote and Schedule are what we've built so far.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#apps">See the apps</a>
+        <a class="btn btn-secondary" href="https://github.com/josephting1105123" rel="noopener">GitHub</a>
+      </div>
     </div>
   </header>
 
-  <main id="projects">
-    <div class="container">
+  <main>
+    <section class="statement" aria-label="About the studio">
+      <div class="container">
+        <p class="fill">Entropic Software Labs makes small apps that each do one job. They work without an account, and wherever we can, your data stays on your own devices.</p>
+      </div>
+    </section>
 
-      <article class="project" id="offbridge" aria-labelledby="offbridge-title">
-        <div class="media media-offbridge">
-          <img class="shot-win on-dark" src="/assets/shots/windows-main-dark.webp" width="1200" height="636" alt="OffBridge on Windows">
-          <img class="shot-win on-light" src="/assets/shots/windows-main-light.webp" width="1200" height="636" alt="OffBridge on Windows">
-          <img class="shot-phone on-dark" src="/assets/shots/android-clipboard-dark.webp" width="591" height="1280" alt="OffBridge on Android">
-          <img class="shot-phone on-light" src="/assets/shots/android-clipboard-light.webp" width="591" height="1280" alt="OffBridge on Android">
-        </div>
-        <div class="project-text">
-          <h2 id="offbridge-title">OffBridge</h2>
-          <div class="chips">
-            <span class="chip">Android</span>
-            <span class="chip">Windows</span>
-            <span class="chip chip-status">Free</span>
-          </div>
-          <p>Send files and sync your clipboard between an Android phone and a Windows PC, device to device. No router, no internet and no account needed.</p>
-          <ul class="facts">
-            <li>Pair once with a QR code or a 6-digit code that both screens must match.</li>
-            <li>Sends over your own Wi-Fi, or with no network at all through QR, NFC, Wi-Fi Direct or a hotspot.</li>
-            <li>Everything is sealed with AES-256-GCM before it leaves the device. Nothing goes through a server.</li>
-          </ul>
-          <div class="actions">
-            <a class="btn btn-primary" href="https://offbridge.app/" rel="noopener">Visit offbridge.app</a>
-            <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.EntropicSoftwareLab.ClipboardShare" rel="noopener">Get it on Google Play</a>
-          </div>
-        </div>
-      </article>
+    <section class="principles">
+      <div class="container">
+        <h2>How we build</h2>
+        <ul class="principles-list">
+          <li>
+            <h3>No sign-up</h3>
+            <p>OffBridge and Quick Vote work without an account. Open them and start.</p>
+          </li>
+          <li>
+            <h3>Device to device</h3>
+            <p>OffBridge sends straight between your phone and PC, sealed with AES-256-GCM. Nothing goes through a server.</p>
+          </li>
+          <li>
+            <h3>You confirm first</h3>
+            <p>Schedule adds nothing to your calendar until you say so. In Quick Vote, the host decides who gets in and when results show.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-      <article class="project" id="quick-vote" aria-labelledby="quick-vote-title">
-        <div class="media media-phone">
-          <img class="phone-shot on-dark" src="/assets/shots/quickvote-home-dark.png" width="1080" height="2278" alt="Quick Vote home screen" loading="lazy">
-          <img class="phone-shot on-light" src="/assets/shots/quickvote-home-light.png" width="1080" height="2278" alt="Quick Vote home screen" loading="lazy">
-        </div>
-        <div class="project-text">
-          <h2 id="quick-vote-title">Quick Vote</h2>
-          <div class="chips">
-            <span class="chip">Web</span>
-            <span class="chip chip-status chip-live">Live</span>
-          </div>
-          <p>Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
-          <ul class="facts">
-            <li>No accounts and nothing to install.</li>
-            <li>Single or multiple choice, with names shown to the host or fully anonymous.</li>
-            <li>Load-tested with 300 people voting at the same moment.</li>
-          </ul>
-          <div class="actions">
-            <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
-            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
-          </div>
-        </div>
-      </article>
+    <section id="apps" class="apps">
+      <div class="container">
+        <h2>The apps</h2>
 
-      <article class="project" id="schedule" aria-labelledby="schedule-title">
-        <div class="media media-schedule">
-          <p class="sr-only">Mock-up of the Schedule Today widget</p>
-          <div class="mock" aria-hidden="true">
-            <div class="widget">
-              <p class="widget-title">Tomorrow &middot; Tue 20 Oct</p>
-              <ul class="widget-rows">
-                <li><span class="bar"></span><span class="time">09:00</span><span>Design review</span></li>
-                <li><span class="bar"></span><span class="time">12:30</span><span>Lunch with Sam</span></li>
-                <li><span class="bar"></span><span class="time">18:00</span><span>Climbing</span></li>
-              </ul>
-              <p class="widget-foot">Next due in 27 h: Rent</p>
+        <article class="project" id="offbridge" aria-labelledby="offbridge-title">
+          <div class="media media-offbridge">
+            <img class="shot-win on-dark" src="/assets/shots/windows-main-dark.webp" width="1200" height="636" alt="OffBridge on Windows">
+            <img class="shot-win on-light" src="/assets/shots/windows-main-light.webp" width="1200" height="636" alt="OffBridge on Windows">
+            <img class="shot-phone on-dark" src="/assets/shots/android-clipboard-dark.webp" width="591" height="1280" alt="OffBridge on Android">
+            <img class="shot-phone on-light" src="/assets/shots/android-clipboard-light.webp" width="591" height="1280" alt="OffBridge on Android">
+          </div>
+          <div class="project-text">
+            <h3 class="project-name" id="offbridge-title">OffBridge</h3>
+            <div class="chips">
+              <span class="chip">Android</span>
+              <span class="chip">Windows</span>
+              <span class="chip chip-status">Free</span>
             </div>
-            <div class="month">
-              <span class="cell empty"></span><span class="cell empty"></span><span class="cell empty"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
-              <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
-              <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell today"></span>
-              <span class="cell"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span>
-              <span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell empty"></span>
+            <p>Send files and sync your clipboard between an Android phone and a Windows PC, device to device. No router, no internet and no account needed.</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="https://offbridge.app/" rel="noopener">Visit offbridge.app</a>
+              <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.EntropicSoftwareLab.ClipboardShare" rel="noopener">Get it on Google Play</a>
             </div>
           </div>
-        </div>
-        <div class="project-text">
-          <h2 id="schedule-title">Schedule</h2>
-          <div class="chips">
-            <span class="chip">Android</span>
-            <span class="chip chip-warn">In development</span>
-          </div>
-          <p>A dashboard over the calendars already on your phone, with home-screen widgets for today and the month.</p>
-          <ul class="facts">
-            <li>Type something like &ldquo;lunch with Sam Friday 1pm&rdquo; and it drafts the event.</li>
-            <li>Ask whether you're free on Thursday afternoon.</li>
-            <li>Nothing is added to your calendar until you confirm it.</li>
-          </ul>
-          <p class="small">Not released yet.</p>
-        </div>
-      </article>
+        </article>
 
-    </div>
+        <article class="project" id="quick-vote" aria-labelledby="quick-vote-title">
+          <div class="media media-phone">
+            <img class="phone-shot on-dark" src="/assets/shots/quickvote-home-dark.png" width="1080" height="2278" alt="Quick Vote home screen" loading="lazy">
+            <img class="phone-shot on-light" src="/assets/shots/quickvote-home-light.png" width="1080" height="2278" alt="Quick Vote home screen" loading="lazy">
+          </div>
+          <div class="project-text">
+            <h3 class="project-name" id="quick-vote-title">Quick Vote</h3>
+            <div class="chips">
+              <span class="chip">Web</span>
+              <span class="chip chip-status chip-live">Live</span>
+            </div>
+            <p>Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="/quick-vote/">About Quick Vote</a>
+              <a class="btn btn-secondary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open the app</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project" id="schedule" aria-labelledby="schedule-title">
+          <div class="media media-schedule">
+            <p class="sr-only">Mock-up of the Schedule Today widget</p>
+            <div class="mock" aria-hidden="true">
+              <div class="widget">
+                <p class="widget-title">Tomorrow &middot; Tue 20 Oct</p>
+                <ul class="widget-rows">
+                  <li><span class="bar"></span><span class="time">09:00</span><span>Design review</span></li>
+                  <li><span class="bar"></span><span class="time">12:30</span><span>Lunch with Sam</span></li>
+                  <li><span class="bar"></span><span class="time">18:00</span><span>Climbing</span></li>
+                </ul>
+                <p class="widget-foot">Next due in 27 h: Rent</p>
+              </div>
+              <div class="month">
+                <span class="cell empty"></span><span class="cell empty"></span><span class="cell empty"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+                <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+                <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell today"></span>
+                <span class="cell"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span>
+                <span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell empty"></span>
+              </div>
+            </div>
+          </div>
+          <div class="project-text">
+            <h3 class="project-name" id="schedule-title">Schedule</h3>
+            <div class="chips">
+              <span class="chip">Android</span>
+              <span class="chip chip-warn">In development</span>
+            </div>
+            <p>A dashboard over the calendars already on your phone, with home-screen widgets for today and the month.</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="/schedule/">About Schedule</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
   </main>
 
   <footer class="footer">

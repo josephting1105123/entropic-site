@@ -1,0 +1,3 @@
+/offbridge https://offbridge.app/ 301
+/offbridge/ https://offbridge.app/ 301
+/offbridge/* https://offbridge.app/:splat 301

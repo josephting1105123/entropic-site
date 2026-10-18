@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Vote &middot; Entropic Software Labs</title>
+  <meta name="description" content="Quick Vote: make a poll, read out the PIN, and everyone votes from their phone. No accounts and nothing to install.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+  <link rel="canonical" href="https://entropicsoftwarelabs.com/quick-vote/">
+  <meta property="og:title" content="Quick Vote &middot; Entropic Software Labs">
+  <meta property="og:description" content="Quick Vote: make a poll, read out the PIN, and everyone votes from their phone. No accounts and nothing to install.">
+  <meta property="og:url" content="https://entropicsoftwarelabs.com/quick-vote/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/site.js" defer></script>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="8 8 48 48" fill="currentColor" focusable="false">
+            <rect x="14" y="12" width="36" height="8" rx="4"/>
+            <rect x="14" y="28" width="26" height="8" rx="4"/>
+            <rect x="14" y="44" width="36" height="8" rx="4"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
+      </a>
+      <nav class="topbar-actions" aria-label="Main">
+        <a class="nav-link nav-full" href="https://offbridge.app/" rel="noopener">OffBridge<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <a class="nav-link nav-full" href="/quick-vote/" aria-current="page">Quick Vote</a>
+        <a class="nav-link nav-full" href="/schedule/">Schedule</a>
+        <a class="nav-link nav-compact" href="/#apps">Apps</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon on-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero product-hero">
+    <div class="container">
+      <div class="project-text">
+        <h1>Quick Vote</h1>
+        <div class="chips">
+          <span class="chip">Web</span>
+          <span class="chip chip-status chip-live">Live</span>
+        </div>
+        <p class="lead">Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
+          <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
+        </div>
+      </div>
+      <div class="media media-phone">
+        <img class="phone-shot on-dark" src="/assets/shots/quickvote-home-dark.png" width="1080" height="2278" alt="Quick Vote home screen">
+        <img class="phone-shot on-light" src="/assets/shots/quickvote-home-light.png" width="1080" height="2278" alt="Quick Vote home screen">
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="steps">
+      <div class="container">
+        <h2>How it works</h2>
+        <ol class="steps-list">
+          <li>
+            <h3>Make a poll</h3>
+            <p>Write a question, add 2 to 20 options, and choose whether people pick one or several. Turn on Anonymous to hide names.</p>
+          </li>
+          <li>
+            <h3>Share the PIN</h3>
+            <p>Voters open the site, type the 6-digit PIN and their name, and wait for you to let them in.</p>
+          </li>
+          <li>
+            <h3>Show the results</h3>
+            <p>Results stay hidden until you switch Live on. Then everyone's screen shows them at once.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="detail">
+      <div class="container">
+        <h2>Details</h2>
+        <ul class="facts">
+          <li>No accounts and nothing to install.</li>
+          <li>Single or multiple choice, with names shown to the host or fully anonymous.</li>
+          <li>Load-tested with 300 people voting at the same moment.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year">2026</span> Entropic Software Labs</p>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://github.com/josephting1105123" rel="noopener">GitHub</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://offbridge.app/privacy.html" rel="noopener">OffBridge privacy policy</a>
+    </div>
+  </footer>
+</body>
+</html>

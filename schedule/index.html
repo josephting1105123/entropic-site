@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schedule &middot; Entropic Software Labs</title>
+  <meta name="description" content="Schedule: a dashboard over the calendars already on your phone, with home-screen widgets for today and the month. In development for Android.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+  <link rel="canonical" href="https://entropicsoftwarelabs.com/schedule/">
+  <meta property="og:title" content="Schedule &middot; Entropic Software Labs">
+  <meta property="og:description" content="Schedule: a dashboard over the calendars already on your phone, with home-screen widgets for today and the month. In development for Android.">
+  <meta property="og:url" content="https://entropicsoftwarelabs.com/schedule/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/site.js" defer></script>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="8 8 48 48" fill="currentColor" focusable="false">
+            <rect x="14" y="12" width="36" height="8" rx="4"/>
+            <rect x="14" y="28" width="26" height="8" rx="4"/>
+            <rect x="14" y="44" width="36" height="8" rx="4"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
+      </a>
+      <nav class="topbar-actions" aria-label="Main">
+        <a class="nav-link nav-full" href="https://offbridge.app/" rel="noopener">OffBridge<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <a class="nav-link nav-full" href="/quick-vote/">Quick Vote</a>
+        <a class="nav-link nav-full" href="/schedule/" aria-current="page">Schedule</a>
+        <a class="nav-link nav-compact" href="/#apps">Apps</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon on-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero product-hero">
+    <div class="container">
+      <div class="project-text">
+        <h1>Schedule</h1>
+        <div class="chips">
+          <span class="chip">Android</span>
+          <span class="chip chip-warn">In development</span>
+        </div>
+        <p class="lead">A dashboard over the calendars already on your phone, with home-screen widgets for today and the month.</p>
+        <p class="small">Not released yet.</p>
+      </div>
+      <div class="media media-schedule">
+        <p class="sr-only">Mock-up of the Schedule Today widget</p>
+        <div class="mock" aria-hidden="true">
+          <div class="widget">
+            <p class="widget-title">Tomorrow &middot; Tue 20 Oct</p>
+            <ul class="widget-rows">
+              <li><span class="bar"></span><span class="time">09:00</span><span>Design review</span></li>
+              <li><span class="bar"></span><span class="time">12:30</span><span>Lunch with Sam</span></li>
+              <li><span class="bar"></span><span class="time">18:00</span><span>Climbing</span></li>
+            </ul>
+            <p class="widget-foot">Next due in 27 h: Rent</p>
+          </div>
+          <div class="month">
+            <span class="cell empty"></span><span class="cell empty"></span><span class="cell empty"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+            <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+            <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell today"></span>
+            <span class="cell"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span>
+            <span class="cell"></span><span class="cell dot"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell empty"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail">
+      <div class="container">
+        <h2>What it does</h2>
+        <ul class="facts">
+          <li>Type something like &ldquo;lunch with Sam Friday 1pm&rdquo; and it drafts the event.</li>
+          <li>Ask whether you're free on Thursday afternoon.</li>
+          <li>Nothing is added to your calendar until you confirm it.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year">2026</span> Entropic Software Labs</p>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://github.com/josephting1105123" rel="noopener">GitHub</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://offbridge.app/privacy.html" rel="noopener">OffBridge privacy policy</a>
+    </div>
+  </footer>
+</body>
+</html>

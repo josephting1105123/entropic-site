@@ -112,7 +112,7 @@ body {
 img, svg { max-width: 100%; }
 img { height: auto; }
 
-h1, h2 {
+h1, h2, h3 {
   margin: 0;
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -197,7 +197,8 @@ a {
 
 .mark svg { width: 16px; height: 16px; display: block; }
 
-@media (max-width: 419px) {
+/* The wordmark shortens where the full nav (or a narrow phone) leaves no room for it. */
+@media (max-width: 419px), (min-width: 640px) and (max-width: 799px) {
   .brand-rest { display: none; }
 }
 
@@ -217,7 +218,22 @@ a {
   border-radius: var(--r-sm);
 }
 
-.nav-link:hover { color: var(--text); }
+.nav-link:hover,
+.nav-link[aria-current="page"] { color: var(--text); }
+
+.nav-link svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  margin-left: 4px;
+}
+
+.nav-compact { display: none; }
+
+@media (max-width: 639px) {
+  .nav-full { display: none; }
+  .nav-compact { display: inline-flex; }
+}
 
 .theme-toggle {
   position: relative;
@@ -261,12 +277,84 @@ a {
   z-index: 1;
 }
 
-@media (min-width: 900px) {
-  .hero {
-    min-height: clamp(520px, 78svh, 760px);
-    display: flex;
-    align-items: center;
-  }
+/* Home hero: centered, fills the first screen. */
+.hero-home {
+  min-height: calc(100svh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-mark {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 2rem;
+  border-radius: var(--r-md);
+}
+
+.hero-mark svg { width: 28px; height: 28px; }
+
+.hero-home h1 {
+  max-width: 18ch;
+  margin-inline: auto;
+  font-size: clamp(2.6rem, 1.4rem + 5.2vw, 5.25rem);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.hero-home .lead {
+  max-width: 40ch;
+  margin-inline: auto;
+}
+
+.hero-home .actions { justify-content: center; }
+
+/* Typed headline: js/site.js wraps each character in .tc and moves the caret. */
+.typed { position: relative; }
+
+/* Hidden until js/site.js splits it into characters. The delayed animation is a failsafe if the script never runs. */
+.motion .typed-text:not(.split) {
+  opacity: 0;
+  animation: esl-show 0s linear 2.5s forwards;
+}
+
+@keyframes esl-show {
+  to { opacity: 1; }
+}
+
+.tw { white-space: nowrap; }
+
+.motion .tc { opacity: 0; }
+
+.motion .tc.on {
+  opacity: 1;
+  transition: opacity 80ms linear;
+}
+
+.typed-caret {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.08em;
+  height: 0.9em;
+  background: var(--accent);
+  transform: translate(var(--cx, 0px), var(--cy, 0px));
+  pointer-events: none;
+  animation: esl-blink 1s steps(1) infinite;
+}
+
+.typed-caret.typing { animation: none; }
+
+.typed-caret.gone {
+  animation: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+@keyframes esl-blink {
+  50% { opacity: 0; }
 }
 
 /* Entropy field: canvas drawn by js/field.js, fades out toward the bottom edge. */
@@ -282,17 +370,15 @@ canvas.field {
   mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
 
-.hero h1 { max-width: 16ch; }
-
-/* Hero intro: the lead settles in after the headline starts resolving. */
+/* Hero intro: the lead settles in once the headline is being typed. */
 @keyframes esl-rise {
   from { opacity: .25; transform: translateY(14px); filter: blur(6px); }
   to { opacity: 1; transform: none; filter: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero .lead {
-    animation: esl-rise 900ms cubic-bezier(.16, 1, .3, 1) 450ms both;
+  .hero-home .lead {
+    animation: esl-rise 900ms cubic-bezier(.16, 1, .3, 1) 1.2s both;
   }
 }
 
@@ -304,9 +390,110 @@ canvas.field {
   line-height: 1.55;
 }
 
-/* Projects */
-#projects { scroll-margin-top: 64px; }
+/* Home sections and product-page sections share one rhythm: a hairline, then generous space. */
+.statement,
+.principles,
+.steps,
+.detail,
+.apps {
+  padding-block: var(--section);
+  border-top: 1px solid var(--hairline);
+}
 
+.statement p {
+  max-width: 30ch;
+  font-size: clamp(1.6rem, 1rem + 2.6vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.motion .fill .fw {
+  color: var(--text-3);
+  transition: color 200ms;
+}
+
+.motion .fill .fw.lit { color: var(--text); }
+
+.principles-list,
+.steps-list {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.principles-list li,
+.steps-list li {
+  min-width: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.principles h3,
+.steps h3 {
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.principles li p,
+.steps li p {
+  margin-top: 0.5rem;
+  color: var(--text-2);
+}
+
+.steps-list { counter-reset: step; }
+
+.steps-list li { counter-increment: step; }
+
+.steps-list li::before {
+  content: counter(step);
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--accent-text);
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.detail .facts {
+  max-width: 40rem;
+  margin-top: 2rem;
+}
+
+/* Apps */
+.apps {
+  padding-bottom: 0;
+  scroll-margin-top: 64px;
+}
+
+.apps .project:first-of-type {
+  padding-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+  border-top: 0;
+}
+
+.project-name {
+  font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+}
+
+/* Product hero: text left, media right. */
+.product-hero {
+  overflow: visible;
+  padding-block: clamp(2.5rem, 2rem + 4vw, 5rem);
+}
+
+.product-hero .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.product-hero .lead { margin-top: 0; }
+
+/* Projects */
 .project {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -350,7 +537,7 @@ canvas.field {
   color: var(--warn);
 }
 
-.project-text > p:not(.small) { font-size: 1.05rem; }
+.project .project-text > p:not(.small) { font-size: 1.05rem; }
 
 .facts {
   list-style: none;
@@ -650,6 +837,24 @@ canvas.field {
   transform: translateY(16px);
 }
 
+/* Principles and steps rise in, a beat apart. */
+.motion .principles li,
+.motion .steps-list li {
+  transition: opacity 700ms cubic-bezier(.16, 1, .3, 1), transform 700ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.motion .principles li:nth-child(2),
+.motion .steps-list li:nth-child(2) { transition-delay: 80ms; }
+
+.motion .principles li:nth-child(n+3),
+.motion .steps-list li:nth-child(n+3) { transition-delay: 160ms; }
+
+.motion .principles li:not(.in),
+.motion .steps-list li:not(.in) {
+  opacity: .35;
+  transform: translateY(16px);
+}
+
 /* OffBridge: the phone joins the PC. */
 .motion .media-offbridge .shot-win {
   transition: opacity 900ms cubic-bezier(.16, 1, .3, 1), transform 900ms cubic-bezier(.16, 1, .3, 1);
@@ -716,6 +921,16 @@ canvas.field {
   }
 
   .project:nth-of-type(even) .media { order: 2; }
+
+  .product-hero .container {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .principles-list,
+  .steps-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

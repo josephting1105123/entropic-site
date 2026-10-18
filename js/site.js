@@ -53,57 +53,136 @@
         }
       }
     }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-    var revealEls = document.querySelectorAll('.project-text, .media');
+    var revealEls = document.querySelectorAll('.project-text, .media, .principles li, .steps-list li');
     for (i = 0; i < revealEls.length; i++) io.observe(revealEls[i]);
   }
 
-  // Headline scramble: letters resolve left to right from random lowercase.
-  var scr = document.querySelector('.hero .scramble');
-  if (scr) {
-    var finalText = scr.textContent;
-    var DURATION = 1100;
-    var ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-    var fixed = [];
-    var shown = [];
-    var resolveAt = [];
-    var lastRoll = [];
-    for (i = 0; i < finalText.length; i++) {
-      var ch = finalText.charAt(i);
-      fixed[i] = /[^A-Za-z0-9]/.test(ch);
-      shown[i] = ch;
-      resolveAt[i] = 150 + i * 24;
-      lastRoll[i] = -1000;
-    }
-    var scrStart = null;
-    var scrStep = function (now) {
-      if (scrStart === null) scrStart = now;
-      var elapsed = now - scrStart;
-      if (elapsed >= DURATION + 150) {
-        scr.textContent = finalText;
-        return;
+  // Typed headline: characters appear one by one with a caret that follows the last one.
+  var typedEl = document.querySelector('.typed .typed-text');
+  if (typedEl && root.classList.contains('motion')) typeHeadline(typedEl);
+
+  function typeHeadline(el) {
+    var h1 = el.parentNode;
+    var words = el.textContent.split(' ');
+    var chars = [];
+    el.textContent = '';
+    for (var w = 0; w < words.length; w++) {
+      if (!words[w]) continue;
+      if (el.childNodes.length) el.appendChild(document.createTextNode(' '));
+      var tw = document.createElement('span');
+      tw.className = 'tw';
+      for (var c = 0; c < words[w].length; c++) {
+        var s = document.createElement('span');
+        s.className = 'tc';
+        s.textContent = words[w].charAt(c);
+        tw.appendChild(s);
+        chars.push(s);
       }
-      var out = '';
-      for (var j = 0; j < finalText.length; j++) {
-        if (fixed[j] || elapsed >= resolveAt[j]) {
-          out += finalText.charAt(j);
-        } else {
-          if (elapsed - lastRoll[j] >= 45) {
-            shown[j] = ALPHA.charAt(Math.floor(Math.random() * ALPHA.length));
-            lastRoll[j] = elapsed;
-          }
-          out += shown[j];
-        }
-      }
-      scr.textContent = out;
-      requestAnimationFrame(scrStep);
-    };
-    // Start from scrambled text so the final line never flashes first.
-    var initial = '';
-    for (i = 0; i < finalText.length; i++) {
-      initial += fixed[i] ? finalText.charAt(i) : ALPHA.charAt(Math.floor(Math.random() * ALPHA.length));
+      el.appendChild(tw);
     }
-    scr.textContent = initial;
-    requestAnimationFrame(scrStep);
+    el.classList.add('split');
+    if (!chars.length) return;
+
+    var caret = document.createElement('span');
+    caret.className = 'typed-caret';
+    caret.setAttribute('aria-hidden', 'true');
+    h1.appendChild(caret);
+
+    var shown = -1;
+    var typing = true;
+
+    function place() {
+      var idx = shown < 0 ? 0 : shown;
+      var hr = h1.getBoundingClientRect();
+      var r = chars[idx].getBoundingClientRect();
+      var x = (shown < 0 ? r.left : r.right) - hr.left;
+      var y = r.top - hr.top + (r.height - caret.offsetHeight) / 2;
+      caret.style.setProperty('--cx', x.toFixed(1) + 'px');
+      caret.style.setProperty('--cy', y.toFixed(1) + 'px');
+    }
+
+    function onResize() {
+      if (typing) place();
+    }
+
+    function finish() {
+      typing = false;
+      window.removeEventListener('resize', onResize);
+      caret.classList.remove('typing');
+      setTimeout(function () {
+        caret.classList.add('gone');
+        setTimeout(function () {
+          if (caret.parentNode) caret.parentNode.removeChild(caret);
+        }, 600);
+      }, 500);
+    }
+
+    function reveal() {
+      shown++;
+      chars[shown].classList.add('on');
+      caret.classList.add('typing');
+      place();
+      if (shown < chars.length - 1) {
+        setTimeout(reveal, 45);
+      } else {
+        finish();
+      }
+    }
+
+    place();
+    window.addEventListener('resize', onResize);
+    setTimeout(reveal, 600);
+  }
+
+  // Scroll fill: words of p.fill light up as the paragraph scrolls through the viewport.
+  var fillEl = document.querySelector('p.fill');
+  if (fillEl && root.classList.contains('motion')) scrollFill(fillEl);
+
+  function scrollFill(p) {
+    var parts = p.textContent.split(/(\s+)/);
+    var fw = [];
+    p.textContent = '';
+    for (var k = 0; k < parts.length; k++) {
+      if (!parts[k]) continue;
+      if (/^\s+$/.test(parts[k])) {
+        p.appendChild(document.createTextNode(' '));
+      } else {
+        var sp = document.createElement('span');
+        sp.className = 'fw';
+        sp.textContent = parts[k];
+        p.appendChild(sp);
+        fw.push(sp);
+      }
+    }
+    var lit = 0;
+    var queued = false;
+
+    function update() {
+      queued = false;
+      var vh = window.innerHeight;
+      var r = p.getBoundingClientRect();
+      var progress = (vh * 0.85 - r.top) / (r.height + vh * 0.45);
+      progress = Math.max(0, Math.min(1, progress));
+      var target = Math.ceil(progress * fw.length - 1e-6);
+      var n;
+      if (target === lit) return;
+      if (target > lit) {
+        for (n = lit; n < target; n++) fw[n].classList.add('lit');
+      } else {
+        for (n = target; n < lit; n++) fw[n].classList.remove('lit');
+      }
+      lit = target;
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
   }
 
   // Tilt: media blocks lean toward a fine pointer on desktop.
