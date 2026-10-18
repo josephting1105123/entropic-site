@@ -1,0 +1,1225 @@
+/* ==========================================================================
+   schedule.css — the Schedule product page.
+
+   Three things live here that the rest of the site has no use for:
+
+   1. Scenes. The page is a run of full-screen sections. On a wide window
+      js/segments.js lifts their phone screens into one pinned pane, so the
+      phone holds still and swaps screen while the copy beside it scrolls.
+   2. The rail and the pull pill, both drawn by js/segments.js.
+   3. The phone itself. Every app screen on this page is hand-built HTML in
+      the app's own light palette, not a screenshot — it stays sharp at any
+      size, reads to a screen reader, and costs no image bytes.
+
+   The app is light-only, so the phone keeps its light palette whichever
+   theme the page is in. Those tokens are prefixed --a- and scoped to .app
+   so they cannot leak into the page around it.
+   ========================================================================== */
+
+:root {
+  --nav-h: 64px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --ease-std: cubic-bezier(.4, 0, .2, 1);
+}
+
+html { scroll-padding-top: var(--nav-h); }
+
+/* --- Scenes ------------------------------------------------------------- */
+
+.scene {
+  padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.scene:first-of-type { border-top: 0; }
+
+.scene__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+  align-items: center;
+}
+
+.scene__copy { min-width: 0; max-width: 34rem; }
+
+.scene h2 {
+  font-size: clamp(1.9rem, 1.3rem + 2.2vw, 2.9rem);
+  text-wrap: balance;
+}
+
+.scene .lead { max-width: 36rem; }
+
+.nobr { white-space: nowrap; }
+
+.scene code {
+  padding: .1em .35em;
+  border-radius: 4px;
+  background: var(--surface);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .88em;
+}
+
+/* The palette figure: web illustration, not a screen. */
+.palette { margin: 1.75rem 0 0; max-width: 20rem; }
+
+.palette figcaption {
+  margin-top: .65rem;
+  color: var(--text-3);
+  font-size: .85rem;
+}
+
+/* The eyebrow: a chapter number and name, the same pair the rail shows. */
+.eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 1rem;
+  color: var(--text-3);
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.eyebrow b {
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* Short supporting notes under the lead. Each is one specific claim. */
+.notes {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 34rem;
+}
+
+.notes li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--text-2);
+  font-size: .98rem;
+}
+
+.notes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(.8em - 3px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.notes b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Desktop, before the segment engine takes over: copy beside the phone,
+   the phone pinned while the copy scrolls past it. */
+@media (min-width: 900px) {
+  .scene__grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+
+  .scene__grid--flip { grid-template-columns: 340px minmax(0, 1fr); }
+  .scene__grid--flip .stage { order: -1; }
+
+  .scene__grid .stage {
+    position: sticky;
+    top: calc(var(--nav-h) + 24px);
+  }
+
+  /* Never taller than the space under the header, so the bottom bar is on
+     screen without scrolling past the phone. */
+  .scene__grid .phone {
+    max-width: min(320px, calc((100svh - var(--nav-h) - 80px) * .4615));
+  }
+}
+
+/* --- Hero --------------------------------------------------------------- */
+
+.scene--hero {
+  padding-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+  border-top: 0;
+}
+
+.scene--hero h1 { text-wrap: balance; }
+
+.hero-meta {
+  margin-top: 1.25rem;
+  color: var(--text-3);
+  font-family: var(--sans);
+  font-size: .88rem;
+}
+
+/* --- Install ------------------------------------------------------------ */
+
+.scene--install .scene__grid { grid-template-columns: minmax(0, 1fr); }
+
+.install-card {
+  margin-top: 2rem;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  background: var(--card);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-lg);
+  max-width: 40rem;
+}
+
+.install-card .actions { margin-top: 1.5rem; }
+
+.install-steps {
+  counter-reset: s;
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.install-steps li {
+  counter-increment: s;
+  position: relative;
+  padding-left: 38px;
+  color: var(--text-2);
+  font-size: .98rem;
+}
+
+.install-steps li::before {
+  content: counter(s);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-muted);
+  color: var(--accent-text);
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+/* --- Rail: chapters on an invisible ring (desktop) ---------------------
+   Nothing round is drawn. The ring's centre sits off the left edge and each
+   chapter's number and name ride its right half, --step apart. segments.js
+   sets --at and the ring turns until the section in view reaches 3 o'clock,
+   nearest the page, where it is largest and shaded. --d is each row's
+   distance in steps from there. ---------------------------------------- */
+
+.seg-rail {
+  --orbit: 200px;
+  --step: 21deg;
+  position: fixed;
+  left: -58px;
+  top: 50%;
+  z-index: 9;
+  width: 0;
+  height: 0;
+}
+
+.seg-rail ol { margin: 0; padding: 0; list-style: none; }
+
+/* Each row sits at its own angle minus the ring's turn, then turns back by
+   the same amount so it reads level. */
+.seg-rail li {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform: rotate(calc((var(--i) - var(--at, 0)) * var(--step))) translateX(var(--orbit))
+    rotate(calc((var(--at, 0) - var(--i)) * var(--step)));
+  opacity: clamp(0, min(1.15 - var(--d, 0) * .2, 4 - var(--d, 0)), 1);
+  transition: transform 800ms cubic-bezier(.2, .8, .2, 1), opacity 500ms var(--ease-std);
+}
+
+.seg-rail a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  color: var(--text-3);
+  text-decoration: none;
+  font-size: .95rem;
+  line-height: 1;
+  transform: translate(-14px, -50%) scale(calc(1 - min(var(--d, 0), 3) * .08));
+  transform-origin: 14px 50%;
+  transition: color 280ms var(--ease-std), background-color 360ms var(--ease-std),
+    box-shadow 360ms var(--ease-std), font-size 360ms var(--ease),
+    padding 360ms var(--ease), transform 800ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.seg-rail a:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.seg-rail__n {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  transition: font-size 360ms var(--ease), color 280ms var(--ease-std);
+}
+
+.seg-rail__t { transition: font-weight 200ms var(--ease-std); }
+
+.seg-rail a[aria-current] {
+  padding: 12px 18px;
+  font-size: 1.1rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: 0 0 0 1px var(--hairline-strong), 0 14px 30px -18px rgba(0, 0, 0, .55);
+}
+
+.seg-rail a[aria-current] .seg-rail__n {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-text);
+}
+
+.seg-rail a[aria-current] .seg-rail__t { font-weight: 600; }
+
+/* Keep the page clear of the rail where the side margins are thin. The ring
+   draws its centre in as the window narrows, so the strip reserved for it can
+   shrink with it: held at 290px down to the 1000px gate, the copy column beside
+   the phone would be about 220px wide, which sets prose five words to a line. */
+@media (max-width: 1859px) {
+  html.is-segmented main,
+  html.is-segmented .product-hero { padding-left: 290px; }
+}
+
+@media (max-width: 1399px) {
+  .seg-rail { --orbit: 170px; }
+
+  html.is-segmented main,
+  html.is-segmented .product-hero { padding-left: 246px; }
+}
+
+@media (max-width: 1199px) {
+  .seg-rail { --orbit: 140px; }
+
+  html.is-segmented main,
+  html.is-segmented .product-hero { padding-left: 202px; }
+}
+
+/* --- Pull pill: how far the page has been pushed toward the next section - */
+
+.seg-pull {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px 12px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+}
+
+.seg-pull.is-up {
+  bottom: auto;
+  top: calc(var(--nav-h) + 16px);
+  transform: translate(-50%, -12px);
+}
+
+.seg-pull.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+.seg-pull__track {
+  width: 150px;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--hairline-strong);
+  overflow: hidden;
+}
+
+.seg-pull__fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .08s linear;
+}
+
+/* --- Segmented layout: one screen per section, one pinned phone --------- */
+
+html.is-segmented main .scene {
+  min-height: calc(100svh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.25rem, .5rem + 2vh, 2.5rem);
+}
+
+html.is-segmented .story {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+}
+
+/* One screen per section leaves the hero less room than a long page does. */
+html.is-segmented .scene--hero h1 {
+  font-size: clamp(2.2rem, 1.2rem + 2.4vw, 3.4rem);
+}
+
+/* The phone gives up width before the copy does — it scales as a unit, where
+   the copy only gets narrower. */
+@media (max-width: 1199px) {
+  html.is-segmented .story { grid-template-columns: minmax(0, 1fr) 272px; }
+}
+
+html.is-segmented .story__copy { min-width: 0; }
+
+html.is-segmented .story .scene__grid {
+  display: block;
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+}
+
+html.is-segmented .story__stage { position: relative; min-width: 0; }
+
+html.is-segmented .story__pin {
+  position: sticky;
+  overflow-anchor: none;
+  top: calc(var(--nav-h) + 16px);
+  height: calc(100svh - var(--nav-h) - 32px);
+  display: grid;
+  align-items: center;
+}
+
+/* Every screen is stacked in the same cell; only the active one is visible,
+   and the rest are inert so they stay out of the tab order. */
+html.is-segmented .story__pin > .stage {
+  grid-area: 1 / 1;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(.985);
+  transition: opacity .35s var(--ease), transform .35s var(--ease),
+    visibility 0s linear .35s;
+}
+
+html.is-segmented .story__pin > .stage.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+/* The phone is sized by the pane's height, so it is always fully in view. */
+html.is-segmented .story__pin .phone {
+  max-width: min(320px, calc((100svh - var(--nav-h) - 64px) * .4615));
+}
+
+/* --- The phone ---------------------------------------------------------
+   One hand-built Android frame. Everything inside is sized in em against a
+   font-size that tracks the phone's own width, so the whole screen scales
+   as a unit instead of reflowing when the column narrows. ---------------- */
+
+.stage { display: grid; justify-items: center; min-width: 0; }
+
+.phone {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 9 / 19.5;
+  padding: 7px;
+  background: #11131A;
+  border-radius: 34px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 30px 60px -24px rgba(0, 0, 0, .7);
+}
+
+.phone__screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 27px;
+  background: var(--a-bg);
+  color: var(--a-text);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+@container (min-width: 1px) {
+  .phone__screen { font-size: 4.3cqw; }
+}
+
+/* The app's palette. Light whatever the page is doing, because the app is. */
+.app {
+  --a-bg: #F8FAFC;
+  --a-card: #FFFFFF;
+  --a-text: #0F172A;
+  --a-text2: #475569;
+  --a-divider: #E2E8F0;
+  --a-accent: #4F46E5;
+  --a-accent-text: #4338CA;
+  --a-muted: #EEF2FF;
+  --a-warn: #B45309;
+  --a-error: #B91C1C;
+
+  /* The six automatic event colours, at Google's own hex values, each with
+     the ink the app would put on it (black above 0.179 luminance, else white). */
+  --ev-peacock: #039BE5;    --ink-peacock: #0F172A;
+  --ev-tomato: #D50000;     --ink-tomato: #FFFFFF;
+  --ev-basil: #0B8043;      --ink-basil: #FFFFFF;
+  --ev-grape: #8E24AA;      --ink-grape: #FFFFFF;
+  --ev-tangerine: #F4511E;  --ink-tangerine: #0F172A;
+  --ev-lavender: #7986CB;   --ink-lavender: #0F172A;
+}
+
+.phone__status {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5em .95em .2em;
+  color: var(--a-text);
+  font-size: .72em;
+  font-variant-numeric: tabular-nums;
+}
+
+.phone__status span:last-child {
+  display: inline-flex;
+  gap: .3em;
+  opacity: .75;
+}
+
+.phone__status svg { width: .9em; height: .9em; display: block; }
+
+.phone__page {
+  flex: 1;
+  min-height: 0;
+  padding: 0 .75em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: .55em;
+}
+
+/* The bottom bar: the app's four tabs, Today first. */
+.phone__nav {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: .35em 0 .55em;
+  background: var(--a-card);
+  border-top: 1px solid var(--a-divider);
+}
+
+.phone__nav span {
+  display: grid;
+  justify-items: center;
+  gap: .15em;
+  color: var(--a-text2);
+  font-size: .62em;
+}
+
+.phone__nav svg { width: 1.5em; height: 1.5em; display: block; }
+
+.phone__nav .on { color: var(--a-accent-text); }
+
+.phone__nav .on i {
+  display: grid;
+  place-items: center;
+  padding: .1em .75em;
+  border-radius: 999px;
+  background: var(--a-muted);
+}
+
+/* The add button. */
+.fab {
+  position: absolute;
+  right: .9em;
+  bottom: 3.6em;
+  width: 2.9em;
+  height: 2.9em;
+  display: grid;
+  place-items: center;
+  border-radius: 1em;
+  background: var(--a-accent);
+  color: #fff;
+  box-shadow: 0 .3em .8em -.2em rgba(79, 70, 229, .5);
+}
+
+.fab svg { width: 1.3em; height: 1.3em; }
+
+.phone__screen { position: relative; }
+
+/* --- App furniture ------------------------------------------------------ */
+
+.a-head {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .5em;
+  padding: .35em .15em .1em;
+}
+
+.a-head h3 {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.a-head p {
+  margin: .15em 0 0;
+  color: var(--a-text2);
+  font-size: .74em;
+}
+
+.a-head .a-icon {
+  flex: none;
+  width: 1.9em;
+  height: 1.9em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--a-card);
+  border: 1px solid var(--a-divider);
+  color: var(--a-text2);
+}
+
+.a-head .a-icon svg { width: 1em; height: 1em; }
+
+.a-card {
+  padding: .6em .7em;
+  background: var(--a-card);
+  border: 1px solid var(--a-divider);
+  border-radius: .85em;
+}
+
+.a-card--raised { box-shadow: 0 .15em .5em -.2em rgba(15, 23, 42, .12); }
+
+.a-card__t {
+  display: flex;
+  align-items: center;
+  gap: .4em;
+  font-size: .85em;
+  font-weight: 500;
+}
+
+.a-card__t svg { width: 1em; height: 1em; flex: none; }
+
+.a-card__t .tail {
+  margin-left: auto;
+  color: var(--a-text2);
+  font-size: .85em;
+  font-weight: 400;
+}
+
+.a-card__t + * { margin-top: .45em; }
+
+.a-rule {
+  height: 1px;
+  margin: .45em -.7em;
+  background: var(--a-divider);
+}
+
+.a-cap {
+  color: var(--a-text2);
+  font-size: .68em;
+  letter-spacing: .02em;
+}
+
+.a-accent { color: var(--a-accent-text); }
+.a-warn { color: var(--a-warn); }
+
+/* Event rows: a colour bar, a two-line time column, then the title. */
+.a-row {
+  display: flex;
+  align-items: flex-start;
+  gap: .5em;
+  padding: .3em 0;
+}
+
+.a-row + .a-row { border-top: 1px solid var(--a-divider); }
+
+.a-bar {
+  flex: none;
+  width: .23em;
+  align-self: stretch;
+  min-height: 2.2em;
+  border-radius: .12em;
+  background: var(--a-accent);
+}
+
+.a-time {
+  flex: none;
+  width: 3.4em;
+  font-variant-numeric: tabular-nums;
+}
+
+.a-time b { display: block; font-size: .85em; font-weight: 500; }
+.a-time i { display: block; color: var(--a-text2); font-size: .68em; font-style: normal; }
+
+.a-row__b { min-width: 0; flex: 1; }
+.a-row__b b { display: block; font-size: .85em; font-weight: 400; }
+.a-row__b i { display: block; color: var(--a-text2); font-size: .68em; font-style: normal; }
+
+/* --- The hour grid ------------------------------------------------------
+   Twenty-four hours as two rows of twelve. A cell is filled in proportion to
+   the part of the hour its event covers, and a second lane under the first
+   is what a clash looks like. ------------------------------------------- */
+
+.hg { display: grid; gap: .3em; }
+
+.hg__nums {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+  color: var(--a-text2);
+  font-size: .56em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.hg__nums .now { color: var(--a-accent-text); font-weight: 700; }
+
+.hg__half { display: grid; gap: 2px; }
+
+.hg__lane { position: relative; height: 1.5em; }
+
+.hg__cells {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+}
+
+.hg__cells span {
+  border-radius: .22em;
+  background: var(--a-muted);
+}
+
+/* The current hour is outlined, never filled — the fill means an event. */
+.hg__cells span.now {
+  box-shadow: inset 0 0 0 1.5px var(--a-accent-text);
+}
+
+/* A run is one bar across the hours it covers, drawn over the cells. The
+   title appears only where the bar is wide enough to hold it, and is cut
+   with an ellipsis rather than wrapped. */
+.hg__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: .22em;
+  padding-inline: .2em;
+  font-size: .56em;
+  line-height: 2.68;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The current hour is outlined in the overlay, above the bars — an outline
+   drawn on the cell underneath would be hidden by any event covering it. */
+.hg__now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: .22em;
+  box-shadow: inset 0 0 0 1.5px var(--a-accent-text);
+}
+
+/* A deadline is a hairline tick, never a fill: a task takes no time. */
+.hg__tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--a-text);
+}
+
+/* --- The week timetable ------------------------------------------------- */
+
+.wk { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+.wk__dates {
+  display: grid;
+  grid-template-columns: 2.4em repeat(7, 1fr);
+  padding: .35em 0;
+  background: var(--a-card);
+  border: 1px solid var(--a-divider);
+  border-radius: .7em;
+}
+
+.wk__dates span {
+  display: grid;
+  justify-items: center;
+  gap: .1em;
+  font-size: .58em;
+  color: var(--a-text2);
+}
+
+.wk__dates span b {
+  width: 1.9em;
+  height: 1.9em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--a-text);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.wk__dates span.today { color: var(--a-accent-text); }
+.wk__dates span.today b { background: var(--a-accent); color: #fff; }
+
+.wk__grid {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin-top: .35em;
+  display: grid;
+  grid-template-columns: 2.4em repeat(7, 1fr);
+  overflow: hidden;
+}
+
+.wk__gutter {
+  position: relative;
+  color: var(--a-text2);
+  font-size: .55em;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding-right: .4em;
+}
+
+/* The label sits just under the rule its hour starts on. The app centres it
+   on the rule instead, which here would cut the first one in half against the
+   top of the window. */
+.wk__gutter span { position: absolute; right: .4em; margin-top: .15em; }
+
+.wk__col {
+  position: relative;
+  border-left: 1px solid var(--a-divider);
+}
+
+.wk__col.today { background: color-mix(in srgb, var(--a-muted) 60%, transparent); }
+
+/* The hairline rules that separate the hours, drawn once as a repeating
+   gradient rather than as a row of elements. */
+.wk__col::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--a-divider) 0 1px,
+    transparent 1px var(--hour, 25%)
+  );
+}
+
+.wk__blk {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: .1em;
+  padding: .15em;
+  border-radius: .3em;
+  font-size: .52em;
+  line-height: 1.1;
+  text-align: center;
+  overflow: hidden;
+  hyphens: auto;
+}
+
+.wk__blk i { font-style: normal; font-variant-numeric: tabular-nums; opacity: .85; }
+
+/* A clash is two blocks side by side in the same column. */
+.wk__blk--l { right: 50%; }
+.wk__blk--r { left: 50%; }
+
+.wk__now {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--a-accent);
+}
+
+/* --- The month grid ----------------------------------------------------- */
+
+.mo { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+
+.mo__wd {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding-bottom: .2em;
+  color: var(--a-text2);
+  font-size: .58em;
+  text-align: center;
+}
+
+.mo__grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  background: var(--a-card);
+  border: 1px solid var(--a-divider);
+  border-radius: .7em;
+  overflow: hidden;
+}
+
+.mo__wk {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--a-divider);
+}
+
+.mo__wk:first-child { border-top: 0; }
+
+.mo__d {
+  position: relative;
+  min-width: 0;
+  padding: .12em .1em 0;
+  border-left: 1px solid var(--a-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mo__d:first-child { border-left: 0; }
+.mo__d.off { color: #94A3B8; }
+
+.mo__n {
+  font-size: .55em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.mo__d.today .mo__n b {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--a-accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* A chip is a named event. A band crossing days is one chip spanning the
+   columns it covers, so its title is printed once across the whole run. */
+.mo__chip {
+  min-width: 0;
+  padding: 0 .2em;
+  border-radius: .15em;
+  font-size: .47em;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mo__more {
+  color: var(--a-text2);
+  font-size: .5em;
+  line-height: 1;
+  text-align: center;
+}
+
+/* A band is drawn over the finished grid, because a day cell clips to its
+   own bounds and a band crossing five columns cannot live inside one. */
+.mo__band {
+  position: absolute;
+  z-index: 1;
+  padding: 0 .25em;
+  border-radius: .15em;
+  font-size: .47em;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* --- The widgets -------------------------------------------------------- */
+
+/* The widget mock is a home screen, so that phone's screen is dark behind
+   the wallpaper and has no app chrome of its own. */
+.phone__screen--home { background: #121018; }
+.phone__screen--home .phone__status { color: #E8E0EA; }
+
+.wall {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: 1em .8em;
+  display: flex;
+  flex-direction: column;
+  gap: .8em;
+  justify-content: center;
+  background:
+    radial-gradient(120% 80% at 20% 0%, #4C3A63 0%, transparent 60%),
+    linear-gradient(160deg, #1E1B2E 0%, #121018 100%);
+}
+
+/* The month widget keeps its own fixed dark palette: it is a card on a home
+   screen, not a surface inside the app, and it does not follow any theme. */
+.mw {
+  --mw-card: #352C3D;
+  --mw-text: #E8E0EA;
+  --mw-mute: #CFC4D3;
+  --mw-off: #8E8794;
+  --mw-rule: #564D60;
+  --mw-pill: #D7BAF4;
+  --mw-on-pill: #3C2454;
+
+  padding: .6em;
+  border-radius: 1.1em;
+  background: var(--mw-card);
+  color: var(--mw-text);
+  font-family: var(--sans);
+  box-shadow: 0 .6em 1.4em -.4em rgba(0, 0, 0, .55);
+}
+
+.mw__head {
+  display: flex;
+  align-items: center;
+  gap: .3em;
+  padding: 0 .1em .4em;
+}
+
+.mw__head b { font-size: .95em; font-weight: 500; }
+.mw__head .sp { margin-left: auto; }
+
+.mw__head i {
+  display: grid;
+  place-items: center;
+  width: 1.4em;
+  height: 1.4em;
+  color: var(--mw-mute);
+}
+
+.mw__head svg { width: 1em; height: 1em; }
+
+.mw__add {
+  display: grid;
+  place-items: center;
+  width: 2em;
+  height: 1.4em;
+  border-radius: 999px;
+  background: var(--mw-pill);
+  color: var(--mw-on-pill);
+}
+
+.mw__wd {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  color: var(--mw-mute);
+  font-size: .55em;
+  text-align: center;
+  padding-bottom: .2em;
+}
+
+.mw__wk {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--mw-rule);
+  min-height: 2.5em;
+}
+
+.mw__d {
+  position: relative;
+  min-width: 0;
+  padding-top: .1em;
+  border-left: 1px solid var(--mw-rule);
+  font-size: .55em;
+  text-align: center;
+}
+
+.mw__d:first-child { border-left: 0; }
+.mw__d.off { color: var(--mw-off); }
+
+.mw__d.today b {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--mw-pill);
+  color: var(--mw-on-pill);
+}
+
+.mw__dots {
+  display: flex;
+  justify-content: center;
+  gap: .18em;
+  padding-top: .15em;
+}
+
+.mw__dots s {
+  width: .3em;
+  height: .3em;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.mw__dots em { font-size: .9em; font-style: normal; color: var(--mw-mute); }
+
+.mw__band {
+  position: absolute;
+  z-index: 1;
+  padding: 0 .2em;
+  border-radius: .14em;
+  font-size: .5em;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mw__ell { color: var(--mw-mute); font-size: .5em; line-height: 1; letter-spacing: .1em; }
+
+/* The today widget is the app's own light card. */
+.tw {
+  padding: .7em;
+  border-radius: 1.1em;
+  background: var(--a-card);
+  color: var(--a-text);
+  box-shadow: 0 .6em 1.4em -.4em rgba(0, 0, 0, .55);
+}
+
+.tw__t { font-size: .85em; font-weight: 500; }
+
+.tw__row {
+  display: flex;
+  align-items: center;
+  gap: .4em;
+  padding-top: .4em;
+}
+
+.tw__row s {
+  flex: none;
+  width: .22em;
+  height: 1.1em;
+  border-radius: .1em;
+  text-decoration: none;
+}
+
+.tw__row i {
+  width: 2.9em;
+  flex: none;
+  color: var(--a-accent-text);
+  font-size: .78em;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.tw__row b { font-size: .78em; font-weight: 400; }
+
+.tw__foot { padding-top: .45em; color: var(--a-text2); font-size: .7em; }
+
+/* --- Settings: the sync card and the colour picker ---------------------- */
+
+.set-row { padding: .35em 0; font-size: .8em; }
+.set-row + .set-row { border-top: 1px solid var(--a-divider); }
+.set-row b { font-weight: 400; }
+.set-row span { display: block; color: var(--a-text2); font-size: .82em; }
+.set-row span.warn { color: var(--a-warn); }
+
+.set-btns {
+  display: flex;
+  gap: .8em;
+  padding-top: .3em;
+  color: var(--a-accent-text);
+  font-size: .78em;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: .35em;
+  padding-top: .2em;
+}
+
+.swatches s {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.swatches s.pick { box-shadow: 0 0 0 2px var(--a-card), 0 0 0 3.5px var(--a-accent-text); }
+.swatches s.used { position: relative; }
+
+/* A colour already used today keeps its ring, but stays selectable — with
+   twelve colours and a spectrum, refusing one would be noise. */
+.swatches s.used::after {
+  content: "";
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  border: 1.5px solid var(--a-card);
+}
+
+/* --- Reveals ------------------------------------------------------------ */
+
+.motion .scene__copy {
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+}
+
+.motion .scene__copy:not(.in) {
+  opacity: .35;
+  transform: translateY(16px);
+}
+
+/* Off the segmented path the phone rises in with its section. */
+.motion .stage { transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+.motion .stage:not(.in) { opacity: .4; transform: translateY(22px); }
+html.is-segmented .motion .stage,
+html.is-segmented .stage:not(.in) { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .seg-rail li,
+  .seg-rail a,
+  .seg-pull,
+  .seg-pull__fill,
+  html.is-segmented .story__pin > .stage {
+    transition: none;
+  }
+}
