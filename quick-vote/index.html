@@ -15,7 +15,11 @@
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/schedule.css?v=3">
+  <link rel="stylesheet" href="/css/qv-phone.css">
   <script src="/js/site.js" defer></script>
+  <script src="/js/qv-phone.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body>
   <div class="topbar">
@@ -49,86 +53,142 @@
     </div>
   </div>
 
-  <header class="hero product-hero">
-    <div class="container">
-      <div class="project-text">
-        <h1>Quick Vote</h1>
-        <div class="chips">
-          <span class="chip">Web</span>
-          <span class="chip chip-status chip-live">Live</span>
-        </div>
-        <p class="lead">Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
-          <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
-        </div>
-      </div>
-      <div class="media media-phone">
-        <img class="phone-shot on-dark" src="/assets/shots/quickvote-join-dark.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed">
-        <img class="phone-shot on-light" src="/assets/shots/quickvote-join-light.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed">
-      </div>
-    </div>
-  </header>
+  <main data-story="join vote results host">
+    <span id="top"></span>
 
-  <main>
-    <section class="steps">
-      <div class="container">
-        <h2>How it works</h2>
-        <ol class="steps-list">
-          <li>
-            <h3>Make a poll</h3>
-            <p>Write a question, add 2 to 20 options, and choose whether people pick one or several. Turn on Anonymous to hide names.</p>
-          </li>
-          <li>
-            <h3>Share the PIN</h3>
-            <p>Voters open the site, type the 6-digit PIN and their name, and wait for you to let them in.</p>
-          </li>
-          <li>
-            <h3>Show the results</h3>
-            <p>Results stay hidden until you switch Live on. Then everyone's screen shows them at once.</p>
-          </li>
-        </ol>
+    <!-- ============================== 01 INTRO ============================== -->
+    <section class="scene scene--hero" id="intro" data-chapter="Intro" aria-labelledby="intro-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <h1 id="intro-title">Quick Vote</h1>
+          <div class="chips">
+            <span class="chip">Web</span>
+            <span class="chip chip-status chip-live">Live</span>
+          </div>
+          <p class="lead">Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
+            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
+          </div>
+          <p class="hero-meta">The phone is live. Tap around.</p>
+        </div>
+
+        <div class="stage">
+          <div class="phone phone--live" data-qv="results">
+            <img class="qv-shot on-dark" src="/assets/shots/quickvote-results-dark.png" width="1080" height="2280" alt="Quick Vote after voting: Vote recorded, with live results as bars" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/quickvote-results-light.png" width="1080" height="2280" alt="Quick Vote after voting: Vote recorded, with live results as bars" loading="lazy" decoding="async">
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="screens" aria-labelledby="screens-title">
-      <div class="container">
-        <h2 id="screens-title">On a voter's phone</h2>
-        <ul class="screens-list">
-          <li>
-            <figure>
-              <img class="screen-shot on-dark" src="/assets/shots/quickvote-join-dark.png" width="1080" height="2280" alt="Home screen: type the PIN and your name" loading="lazy" decoding="async">
-              <img class="screen-shot on-light" src="/assets/shots/quickvote-join-light.png" width="1080" height="2280" alt="Home screen: type the PIN and your name" loading="lazy" decoding="async">
-              <figcaption>Type the PIN and your name.</figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure>
-              <img class="screen-shot on-dark" src="/assets/shots/quickvote-ballot-dark.png" width="1080" height="2280" alt="Ballot with one option picked" loading="lazy" decoding="async">
-              <img class="screen-shot on-light" src="/assets/shots/quickvote-ballot-light.png" width="1080" height="2280" alt="Ballot with one option picked" loading="lazy" decoding="async">
-              <figcaption>Pick an option and submit.</figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure>
-              <img class="screen-shot on-dark" src="/assets/shots/quickvote-results-dark.png" width="1080" height="2280" alt="Vote recorded, with live results as bars" loading="lazy" decoding="async">
-              <img class="screen-shot on-light" src="/assets/shots/quickvote-results-light.png" width="1080" height="2280" alt="Vote recorded, with live results as bars" loading="lazy" decoding="async">
-              <figcaption>See the results once the host turns Live on.</figcaption>
-            </figure>
-          </li>
-        </ul>
+    <!-- ============================== 02 JOIN =============================== -->
+    <section class="scene" id="join" data-chapter="Join" aria-labelledby="join-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>02</b> <span>Join</span></p>
+          <h2 id="join-title">Six digits and a name.</h2>
+          <p class="lead">Voters open the site and type the PIN the host reads out. Nobody signs up, and nothing gets installed.</p>
+          <ul class="notes">
+            <li><b>The cursor moves on by itself.</b> After the sixth digit it jumps to the name field, so a room full of people can join fast.</li>
+            <li><b>The host lets people in.</b> Each name waits in a queue until the host approves it, one at a time or all at once.</li>
+            <li><b>Any six digits work here.</b> This phone is a demo: type a PIN and a name, then tap Join.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone phone--live" data-qv="join">
+            <img class="qv-shot on-dark" src="/assets/shots/quickvote-join-dark.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/quickvote-join-light.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed" loading="lazy" decoding="async">
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="detail">
-      <div class="container">
-        <h2>Details</h2>
-        <ul class="facts">
-          <li>No accounts and nothing to install.</li>
-          <li>Single or multiple choice, with names shown to the host or fully anonymous.</li>
-          <li>Results show as bars that update as each vote lands, with the leading option in green.</li>
-          <li>Load-tested with 300 people voting at the same moment.</li>
-        </ul>
+    <!-- ============================== 03 VOTE =============================== -->
+    <section class="scene" id="vote" data-chapter="Vote" aria-labelledby="vote-title">
+      <div class="container scene__grid scene__grid--flip">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>03</b> <span>Vote</span></p>
+          <h2 id="vote-title">One tap, then submit.</h2>
+          <p class="lead">Options are big rows you can hit with a thumb. Nothing counts until Submit, so a wrong tap is easy to fix.</p>
+          <ul class="notes">
+            <li><b>Single or multiple choice.</b> The host decides when making the poll, and the ballot says which.</li>
+            <li><b>Anonymous if you want it.</b> With Anonymous on, the host sees counts but not who picked what.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone phone--live" data-qv="vote">
+            <img class="qv-shot on-dark" src="/assets/shots/quickvote-ballot-dark.png" width="1080" height="2280" alt="Quick Vote ballot with one option picked" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/quickvote-ballot-light.png" width="1080" height="2280" alt="Quick Vote ballot with one option picked" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 04 RESULTS ============================ -->
+    <section class="scene" id="results" data-chapter="Results" aria-labelledby="results-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>04</b> <span>Results</span></p>
+          <h2 id="results-title">Bars that move as votes land.</h2>
+          <p class="lead">Results stay hidden until the host turns Live on. Then every screen in the room shows the same bars at once, and they keep moving as votes come in.</p>
+          <ul class="notes">
+            <li><b>The leader is green.</b> Every other option is grey, so the answer reads from across a room.</li>
+            <li><b>Your pick is marked.</b> A small check sits next to the option you chose.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone phone--live" data-qv="results">
+            <img class="qv-shot on-dark" src="/assets/shots/quickvote-results-dark.png" width="1080" height="2280" alt="Quick Vote results: Vote recorded, with live results as bars" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/quickvote-results-light.png" width="1080" height="2280" alt="Quick Vote results: Vote recorded, with live results as bars" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 05 HOST =============================== -->
+    <section class="scene" id="host" data-chapter="Host" aria-labelledby="host-title">
+      <div class="container scene__grid scene__grid--flip">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>05</b> <span>Host</span></p>
+          <h2 id="host-title">The host runs the room.</h2>
+          <p class="lead">The host's screen has the PIN to read out, the queue of people waiting, and the switch that shows results.</p>
+          <ul class="notes">
+            <li><b>Approve people as they arrive.</b> Or approve everyone in the queue with one tap.</li>
+            <li><b>Live is one switch.</b> Off, voters see only that their vote counted. On, they see the bars.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="phone phone--live" data-qv="host">
+            <img class="qv-shot on-dark" src="/assets/shots/quickvote-join-dark.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/quickvote-join-light.png" width="1080" height="2280" alt="Quick Vote home screen with the PIN being typed" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 06 DETAILS ============================ -->
+    <section class="scene scene--install" id="details" data-chapter="Details" aria-labelledby="details-title">
+      <div class="container scene__grid">
+        <div class="scene__copy">
+          <p class="eyebrow"><b>06</b> <span>Details</span></p>
+          <h2 id="details-title">Details</h2>
+          <ul class="facts">
+            <li>No accounts and nothing to install.</li>
+            <li>Single or multiple choice, with names shown to the host or fully anonymous.</li>
+            <li>Polls take 2 to 20 options.</li>
+            <li>Results show as bars that update as each vote lands, with the leading option in green.</li>
+            <li>Load-tested with 300 people voting at the same moment.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
+            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
