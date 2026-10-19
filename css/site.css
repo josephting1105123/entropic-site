@@ -201,7 +201,7 @@ a {
 .mark svg { width: 16px; height: 16px; display: block; }
 
 /* The wordmark shortens where the full nav (or a narrow phone) leaves no room for it. */
-@media (max-width: 419px), (min-width: 640px) and (max-width: 799px) {
+@media (max-width: 419px), (min-width: 720px) and (max-width: 899px) {
   .brand-rest { display: none; }
 }
 
@@ -233,7 +233,7 @@ a {
 
 .nav-compact { display: none; }
 
-@media (max-width: 639px) {
+@media (max-width: 719px) {
   .nav-full { display: none; }
   .nav-compact { display: inline-flex; }
 }
@@ -666,6 +666,18 @@ canvas.field {
   box-shadow: var(--shadow-shot);
 }
 
+/* Card Games: a phone-landscape screenshot, so it sits wide rather than tall. */
+.media-landscape { display: flex; justify-content: center; }
+
+.landscape-shot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 844 / 390;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-shot);
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--hairline);
@@ -790,6 +802,16 @@ canvas.field {
 
 .motion .media-phone:not(.in) .phone-shot {
   clip-path: inset(0 0 55% 0 round 28px);
+  opacity: .5;
+  transform: translateY(24px);
+}
+
+/* Card Games: the table rises into place. */
+.motion .media-landscape .landscape-shot {
+  transition: opacity 1000ms cubic-bezier(.16, 1, .3, 1), transform 1000ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.motion .media-landscape:not(.in) .landscape-shot {
   opacity: .5;
   transform: translateY(24px);
 }

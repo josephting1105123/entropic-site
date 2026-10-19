@@ -1,6 +1,6 @@
 # Entropic Software Labs
 
-The studio site for Entropic Software Labs (entropicsoftwarelabs.com). One page that lists OffBridge, Quick Vote and Schedule.
+The studio site for Entropic Software Labs (entropicsoftwarelabs.com). One page that lists OffBridge, Quick Vote, Schedule and Card Games.
 
 It is plain HTML, CSS and a little JavaScript. There is no build step and no dependencies.
 
