@@ -8,9 +8,9 @@
 
    Two other things ride on the same "which section is in view" answer:
 
-   - The rail, a fixed column of chapter numbers off the left edge. The rows
-     sit on an invisible ring that turns until the section in view reaches
-     3 o'clock, nearest the page.
+   - The rail, a depth track of chapter numbers down the left edge. The
+     section in view sits at the front, large and sharp; the others recede
+     with distance, smaller and dimmer, and a click jumps to one.
    - The story: the sections named in <main data-story="..."> give up their
      .stage to one shared pinned pane, so the phone holds still and swaps
      screen as you move between them.
@@ -345,11 +345,14 @@
     scenes.forEach(function (s, i) {
       var li = document.createElement("li");
       li.style.setProperty("--i", String(i));
-      // The ring starts unturned (--at defaults to 0), so each row's distance
-      // is its own index. Without this the row is born at --d:0, and the first
-      // paint fades the far ones out from full opacity — which is the moment
-      // the chapters past the screen edge are visible and clipped.
+      // The track starts with the first section in view, so each row's signed
+      // distance (--s), its distance (--d) and the sign (--sg) are born as if
+      // from row 0. Without this the row is born at --d:0, and the first paint
+      // fades the far ones out from full opacity — which is the moment the
+      // chapters far down the track are visible and crowded on the front row.
       li.style.setProperty("--d", String(i));
+      li.style.setProperty("--s", String(i));
+      li.style.setProperty("--sg", i > 0 ? "1" : "0");
       var a = document.createElement("a");
       a.href = s.id ? "#" + s.id : "#top";
       var n = document.createElement("span");
@@ -381,12 +384,14 @@
     if (i === current) return;
     current = i;
     if (rail) {
-      // Turning the ring by --at steps brings this section round to 3 o'clock.
-      // --d is each row's distance from there; by 4 steps a row has rounded the
-      // screen edge, so it fades out and leaves the tab order.
-      rail.style.setProperty("--at", String(i));
+      // The depth track: this section comes to the front. --s is each row's
+      // signed distance from it and --sg its sign (the current row gets room
+      // either side); --d is the distance, and by 4 a row has receded out of
+      // sight, so it leaves the tab order.
       Array.prototype.forEach.call(rail.querySelectorAll("li"), function (li, k) {
         var a = li.firstChild;
+        li.style.setProperty("--s", String(k - i));
+        li.style.setProperty("--sg", String(Math.sign(k - i)));
         li.style.setProperty("--d", String(Math.abs(k - i)));
         a.tabIndex = Math.abs(k - i) > 3 ? -1 : 0;
         if (k === i) a.setAttribute("aria-current", "true");
