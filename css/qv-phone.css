@@ -1,0 +1,795 @@
+/* ==========================================================================
+   qv-phone.css - the live Quick Vote replica inside the phone frame.
+
+   The frame itself (.phone, .stage, the pinned pane) comes from schedule.css.
+   This file only styles what js/qv-phone.js builds inside it.
+
+   Sizing: the app is laid out at a true device width, DEV_W = 360px, inside
+   .qv-dev. js/qv-phone.js then sets two custom properties on it through the
+   CSSOM (the CSP forbids style="" attributes, but CSSOM calls are allowed):
+     --k      the scale, frame width / 360
+     --dev-h  the device height, frame height / --k
+   so every size below is in px at the 360px device scale and the whole app
+   shrinks as one piece to fit whatever width the frame has.
+
+   Theme: dark by default, .is-light swaps the palette. The script puts the
+   class on this phone alone, following the page theme until the visitor taps
+   the phone's own theme button.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'QV Geist';
+  src: url('/assets/fonts/geist_variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* --- Fallback screenshots, until the script replaces them ---------------- */
+
+.phone--live[data-qv] { position: relative; }
+
+.qv-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 27px;
+}
+
+/* --- Palette -------------------------------------------------------------- */
+
+.qv {
+  --q-bg: #141414;
+  --q-bg-bottom: #0f0f0f;
+  --q-glow: rgba(34, 197, 94, .1);
+  --q-card: #1f1f1f;
+  --q-surface: #2a2a2a;
+  --q-track: #303030;
+  --q-text: #f5f5f5;
+  --q-text-2: #a3a3a3;
+  --q-text-3: #909090;
+  --q-divider: #303030;
+  --q-hairline: rgba(255, 255, 255, .08);
+  --q-hairline-strong: rgba(255, 255, 255, .14);
+  --q-accent: #22c55e;
+  --q-accent-text: #4ade88;
+  --q-accent-on: #06210f;
+  --q-accent-muted: rgba(34, 197, 94, .14);
+  --q-bar-lead: #22c55e;
+  --q-bar-other: #4a4a4a;
+  --q-shadow-card: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 20px 40px -28px rgba(0, 0, 0, .7);
+  --q-md: 14px;
+  --q-lg: 20px;
+  --q-pill: 999px;
+  --q-serif: "Noto Serif", Georgia, serif;
+  --q-ui: 'QV Geist', system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.qv.is-light {
+  --q-bg: #f8fafc;
+  --q-bg-bottom: #eef2f7;
+  --q-glow: rgba(16, 185, 129, .1);
+  --q-card: #ffffff;
+  --q-surface: #f1f5f9;
+  --q-track: #e8edf3;
+  --q-text: #0f172a;
+  --q-text-2: #475569;
+  --q-text-3: #5b6b80;
+  --q-divider: #e2e8f0;
+  --q-hairline: rgba(15, 23, 42, .08);
+  --q-hairline-strong: rgba(15, 23, 42, .14);
+  --q-accent: #34d399;
+  --q-accent-text: #047857;
+  --q-accent-on: #042f1c;
+  --q-accent-muted: rgba(52, 211, 153, .16);
+  --q-bar-lead: #059669;
+  --q-bar-other: #94a3b8;
+  --q-shadow-card: 0 1px 2px rgba(15, 23, 42, .04), 0 18px 36px -26px rgba(15, 23, 42, .18);
+}
+
+/* --- Viewport and scaled device ------------------------------------------ */
+
+.qv-vp {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 27px;
+  isolation: isolate;
+  background: var(--q-bg);
+}
+
+.qv-dev {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: var(--dev-h, 760px);
+  transform: scale(var(--k, .8));
+  transform-origin: 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--q-serif);
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  letter-spacing: 0;
+  color: var(--q-text);
+  background:
+    radial-gradient(120% 55% at 50% 0, var(--q-glow), transparent 70%),
+    linear-gradient(var(--q-bg), var(--q-bg-bottom));
+}
+
+/* --- Reset: keep the host page's rules out of the app ---------------------- */
+
+.qv-dev,
+.qv-dev * { box-sizing: border-box; }
+
+.qv-dev ul,
+.qv-dev li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.qv-dev ul { display: block; }
+
+.qv-dev [hidden] { display: none !important; }
+
+/* :where() keeps the reset at element specificity, so any class below wins. */
+:where(.qv-dev) button,
+:where(.qv-dev) input {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: inherit;
+}
+
+:where(.qv-dev) button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:where(.qv-dev) button:disabled { cursor: default; }
+
+.qv-dev svg { display: block; max-width: none; flex: none; }
+
+.qv-dev :focus-visible {
+  outline: 2px solid var(--q-accent-text);
+  outline-offset: 2px;
+}
+
+.qv-dev [tabindex="-1"]:focus { outline: none; }
+
+.qv-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Icons ---------------------------------------------------------------- */
+
+.qv-ic {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.qv-ic--chk { stroke-width: 3; }
+
+/* --- Top bar ---------------------------------------------------------------- */
+
+.qv-bar {
+  flex: none;
+  height: 60px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--q-hairline);
+  font-family: var(--q-ui);
+}
+
+.qv-logo {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--q-card);
+  border: 1px solid var(--q-hairline-strong);
+  overflow: hidden;
+}
+
+.qv-logo__svg { width: 36px; height: 36px; margin: -1px; }
+.qv-lg-a { fill: var(--q-bar-other); }
+.qv-lg-b { fill: var(--q-accent); }
+
+.qv-seg {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--q-hairline-strong);
+  border-radius: var(--q-pill);
+  background: var(--q-card);
+}
+
+.qv-seg__b {
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--q-pill);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--q-text-2);
+}
+
+.qv-seg__b.is-on {
+  background: var(--q-accent-muted);
+  border-color: var(--q-accent);
+  color: var(--q-accent-text);
+  font-weight: 600;
+}
+
+.qv-theme {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--q-hairline-strong);
+  border-radius: 50%;
+  background: var(--q-card);
+  color: var(--q-text-2);
+}
+
+.qv-theme .qv-ic { width: 18px; height: 18px; }
+.qv .qv-i-sun { display: none; }
+.qv.is-light .qv-i-sun { display: block; }
+.qv.is-light .qv-i-moon { display: none; }
+
+/* --- Page area ---------------------------------------------------------------- */
+
+.qv-page {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+/* Only when the page is wheel-stepped: otherwise a scrolled-to-the-end screen
+   should hand the scroll back to the page. */
+html.is-segmented .qv-page { overscroll-behavior: contain; }
+
+.qv-page::-webkit-scrollbar { display: none; }
+
+.qv-pad { padding: 22px 20px 28px; }
+
+.qv-screen { animation: qv-in .28s cubic-bezier(.16, 1, .3, 1) both; }
+
+@keyframes qv-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Type ----------------------------------------------------------------------- */
+
+.qv-h1 {
+  margin: 0 0 12px;
+  font-family: var(--q-serif);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.qv-h2 {
+  margin: 0 0 6px;
+  font-family: var(--q-serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.qv-h3 {
+  margin: 0;
+  font-family: var(--q-serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.qv-lead {
+  margin: 0 0 22px;
+  color: var(--q-text-2);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.qv-text {
+  color: var(--q-text-2);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.qv-note {
+  margin-top: 8px;
+  color: var(--q-text-3);
+  font-family: var(--q-ui);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.qv-label {
+  margin-bottom: 8px;
+  color: var(--q-text-2);
+  font-family: var(--q-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.qv-label--gap { margin-top: 18px; }
+
+.qv-q {
+  margin-top: 4px;
+  color: var(--q-text-2);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.qv-q--left { margin: 0; color: var(--q-text); font-size: 17px; font-weight: 600; }
+
+/* --- Cards ----------------------------------------------------------------------- */
+
+.qv-card {
+  margin: 0 0 14px;
+  padding: 18px;
+  border-radius: var(--q-lg);
+  border: 1px solid var(--q-hairline);
+  background: var(--q-card);
+  box-shadow: var(--q-shadow-card);
+}
+
+.qv-card__h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 32px;
+}
+
+.qv-center { text-align: center; }
+
+.qv-badge {
+  width: 56px;
+  height: 56px;
+  margin: 2px auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--q-accent);
+  color: var(--q-accent-on);
+}
+
+.qv-badge__ic { width: 28px; height: 28px; }
+
+/* --- Join ------------------------------------------------------------------------- */
+
+.qv-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.qv-pill {
+  display: block;
+  height: 8px;
+  border-radius: var(--q-pill);
+  background: var(--q-bar-other);
+}
+
+.qv-pill--a { width: 60%; }
+.qv-pill--b { width: 100%; height: 12px; background: var(--q-bar-lead); }
+.qv-pill--c { width: 45%; }
+
+.qv-pin { position: relative; }
+
+.qv-cells {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.qv-cell {
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--q-surface);
+  color: var(--q-text);
+  font-family: var(--q-ui);
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.qv-cell.is-filled {
+  background: var(--q-accent-muted);
+  border-color: var(--q-accent);
+}
+
+.qv-cell.is-empty {
+  color: var(--q-text-3);
+  font-weight: 400;
+}
+
+/* The real input sits over the cells, invisible but focusable. */
+.qv-dev .qv-pin__in {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  caret-color: transparent;
+  background: transparent;
+  font-family: var(--q-ui);
+  font-size: 16px;
+  letter-spacing: 40px;
+  border-radius: 12px;
+  cursor: text;
+}
+
+.qv-pin__in::selection { background: transparent; color: transparent; }
+
+.qv-dev .qv-input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--q-md);
+  background: var(--q-surface);
+  color: var(--q-text);
+  font-family: var(--q-ui);
+  font-size: 16px;
+}
+
+.qv-input::placeholder { color: var(--q-text-3); opacity: 1; }
+
+.qv-dev .qv-btn {
+  display: block;
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  border-radius: var(--q-pill);
+  background: var(--q-accent);
+  color: var(--q-accent-on);
+  font-family: var(--q-ui);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  transition: opacity .2s, transform .12s;
+}
+
+.qv-btn:disabled { opacity: .45; }
+.qv-btn:not(:disabled):active { transform: scale(.98); }
+
+/* Waiting for the host */
+.qv-wait { text-align: center; padding-block: 26px; }
+.qv-wait .qv-h2 { margin-bottom: 8px; }
+
+.qv-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.qv-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--q-accent);
+  animation: qv-dot 1s ease-in-out infinite;
+}
+
+.qv-dots i:nth-child(2) { animation-delay: .15s; }
+.qv-dots i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes qv-dot {
+  0%, 100% { opacity: .3; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* --- Ballot ------------------------------------------------------------------------ */
+
+.qv-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.qv-dev .qv-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  padding: 8px 16px;
+  border: 1px solid var(--q-hairline-strong);
+  border-radius: var(--q-pill);
+  background: var(--q-surface);
+  color: var(--q-text);
+  font-family: var(--q-serif);
+  font-size: 16px;
+  line-height: 1.3;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+
+.qv-opt.is-on {
+  background: var(--q-accent);
+  border-color: var(--q-accent);
+  color: var(--q-accent-on);
+  font-weight: 600;
+}
+
+.qv-ring {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--q-text-3);
+  border-radius: 50%;
+}
+
+.qv-opt.is-on .qv-ring {
+  border-color: var(--q-accent-on);
+  background: var(--q-accent-on);
+  color: var(--q-accent);
+}
+
+.qv-ring__ic { width: 12px; height: 12px; opacity: 0; }
+.qv-opt.is-on .qv-ring__ic { opacity: 1; }
+.qv-opt__t { min-width: 0; }
+
+/* --- Results bars --------------------------------------------------------------------- */
+
+.qv-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.qv-h3 + .qv-rows { margin-top: 18px; }
+
+.qv-row__h {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.qv-row__n {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.qv-row__v {
+  flex: none;
+  color: var(--q-text-2);
+  font-family: var(--q-ui);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.qv-row.is-lead .qv-row__v { color: var(--q-text); }
+
+.qv-tag {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--q-accent-muted);
+  border: 1px solid var(--q-accent);
+  color: var(--q-accent-text);
+}
+
+.qv-tag__ic { width: 10px; height: 10px; }
+
+.qv-track {
+  height: 22px;
+  border-radius: var(--q-pill);
+  background: var(--q-track);
+  overflow: hidden;
+}
+
+.qv-fill {
+  width: var(--w, 0%);
+  height: 100%;
+  border-radius: var(--q-pill);
+  background: var(--q-bar-other);
+  transition: width .6s cubic-bezier(.16, 1, .3, 1), background-color .3s;
+}
+
+.qv-row.is-lead .qv-fill { background: var(--q-bar-lead); }
+
+.qv-dev .qv-link {
+  padding: 8px 4px;
+  color: var(--q-accent-text);
+  font-family: var(--q-ui);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.qv-link:disabled { color: var(--q-text-3); opacity: .6; }
+.qv-link--center { display: block; margin: 2px auto 0; }
+
+/* --- Host ------------------------------------------------------------------------------- */
+
+.qv-bigpin {
+  margin-top: 2px;
+  font-family: var(--q-ui);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.qv-queue { margin: 10px 0 0; }
+
+.qv-person {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--q-divider);
+}
+
+.qv-person:first-child { border-top: 0; }
+.qv-person__n { font-size: 16px; }
+
+.qv-dev .qv-pillbtn {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--q-accent);
+  border-radius: var(--q-pill);
+  background: var(--q-accent-muted);
+  color: var(--q-accent-text);
+  font-family: var(--q-ui);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.qv-queue + .qv-text { margin-top: 6px; }
+
+.qv-inroom {
+  margin: 0 4px 14px;
+  color: var(--q-text-2);
+  font-family: var(--q-ui);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.qv-switchlabel {
+  font-family: var(--q-ui);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.qv-dev .qv-switch {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 28px;
+  border-radius: var(--q-pill);
+  background: var(--q-track);
+  border: 1px solid var(--q-hairline-strong);
+  transition: background-color .2s, border-color .2s;
+}
+
+.qv-switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--q-text-3);
+  transition: transform .2s cubic-bezier(.16, 1, .3, 1), background-color .2s;
+}
+
+.qv-switch.is-on { background: var(--q-accent); border-color: var(--q-accent); }
+.qv-switch.is-on .qv-switch__knob { transform: translateX(20px); background: var(--q-accent-on); }
+
+/* --- Motion and contrast preferences ------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .qv-dev *,
+  .qv-dev *::before,
+  .qv-dev *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .qv-dev .qv-cell,
+  .qv-dev .qv-cell.is-filled,
+  .qv-dev .qv-cell.is-empty {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+
+  .qv-dev .qv-cell.is-filled { border-width: 2px; }
+
+  /* The real input sits over the cells; keep its own text and caret out of sight. */
+  .qv-dev .qv-pin__in,
+  .qv-dev .qv-pin__in::selection {
+    forced-color-adjust: none;
+    color: transparent;
+    caret-color: transparent;
+    background: transparent;
+  }
+
+  .qv-dev .qv-track { border: 1px solid CanvasText; }
+
+  .qv-dev .qv-fill {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .qv-dev .qv-row.is-lead .qv-fill { background: Highlight; }
+
+  .qv-dev .qv-switch__knob {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
+
+  .qv-dev .qv-switch.is-on {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+
+  .qv-dev .qv-switch.is-on .qv-switch__knob { background: HighlightText; }
+
+  .qv-dev .qv-seg__b.is-on {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+}
