@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Card Games &middot; Entropic Software Labs</title>
-  <meta name="description" content="Card Games is a web app with Dou Di Zhu, Big Two and Blackjack against bots at seven strengths. Play-money coins, no account, installs to your home screen and works offline.">
+  <meta name="description" content="Card Games is a web app with Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, plus online rooms for Dou Di Zhu and Big Two. Play-money coins, no account, and it installs to your home screen.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/card-games/">
   <meta property="og:title" content="Card Games &middot; Entropic Software Labs">
-  <meta property="og:description" content="Dou Di Zhu, Big Two and Blackjack against bots at seven strengths. Play-money coins, no account, and it works offline.">
+  <meta property="og:description" content="Dou Di Zhu, Big Two and Blackjack against bots, or online with friends. Play-money coins and no account.">
   <meta property="og:url" content="https://entropicsoftwarelabs.com/card-games/">
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <script src="/js/theme.js"></script>
@@ -58,7 +58,7 @@
           <span class="chip">Web</span>
           <span class="chip chip-status chip-live">Live</span>
         </div>
-        <p class="lead">Dou Di Zhu, Big Two and Blackjack, played against bots at seven strengths. Coins are play money, there is no account, and once it has loaded it works offline.</p>
+        <p class="lead">Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, or Dou Di Zhu and Big Two online with friends. Coins are play money and there is no account. Once it has loaded, single player works offline.</p>
         <div class="actions">
           <a class="btn btn-primary" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
           <a class="btn btn-secondary" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Source on GitHub</a>
@@ -85,7 +85,7 @@
           </li>
           <li>
             <h3>Play</h3>
-            <p>Play the bots on your own, or on Dou Di Zhu share a room with friends on the same Wi-Fi. Bots fill any empty seat.</p>
+            <p>Play the bots on your own, or open a Dou Di Zhu or Big Two room and send friends the invite link. Bots fill any empty seat.</p>
           </li>
         </ol>
       </div>
@@ -100,7 +100,9 @@
           <li>Each game keeps an Elo rating for you.</li>
           <li>Coins are play money only. There are no real-money stakes, no payments and no transfers.</li>
           <li>It runs in the browser, installs to the home screen as an app, and opens full screen in landscape.</li>
-          <li>Local multiplayer is Dou Di Zhu only for now. One computer runs <code>node server/server.js</code> from the source code, and everyone on the same Wi-Fi opens the address it prints and joins with a five-character room code. Bots take over a seat if someone drops, and that player can rejoin. This needs that command running on your network, and it does not work from the hosted link, because a browser won't let an HTTPS page open a plain connection to a device on the local network.</li>
+          <li>Online rooms are for Dou Di Zhu and Big Two. The host picks the coins, the stake and how many seats are human, then shares a link or a five-character code, and friends join from any browser. Bots take over a seat if someone drops, and that player can rejoin the same hand.</li>
+          <li>The room server sleeps when nobody has played for a while, so the first game after a quiet spell can take up to a minute to start.</li>
+          <li>On a home network one computer can host rooms itself instead: run <code>node server/server.js</code> from the source code and everyone opens the address it prints.</li>
         </ul>
         <div class="actions">
           <a class="btn btn-primary" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
