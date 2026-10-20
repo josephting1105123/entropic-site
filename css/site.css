@@ -1131,6 +1131,95 @@ canvas.field {
   }
 }
 
+/* Product accents. data-product on <body> (product pages) or on a homepage card swaps the accent tokens for
+   everything inside it. Each matches its app where the app has its own color: Schedule's indigo, Card Games'
+   brass on felt. Quick Vote and MIF Finance share the studio green in-app, so their pages take their own. */
+[data-product="schedule"] {
+  --accent: #818CF8;
+  --accent-text: #A5B4FC;
+  --accent-on: #1E1B4B;
+  --accent-muted: rgba(129, 140, 248, .16);
+}
+
+[data-product="card-games"] {
+  --accent: #CDAE6C;
+  --accent-text: #E3C98A;
+  --accent-on: #1A1408;
+  --accent-muted: rgba(205, 174, 108, .16);
+}
+
+[data-product="quick-vote"] {
+  --accent: #FB923C;
+  --accent-text: #FDBA74;
+  --accent-on: #2A1204;
+  --accent-muted: rgba(251, 146, 60, .16);
+}
+
+[data-product="mif-finance"] {
+  --accent: #60A5FA;
+  --accent-text: #93C5FD;
+  --accent-on: #0B1B36;
+  --accent-muted: rgba(96, 165, 250, .16);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) [data-product="schedule"] {
+    --accent: #4F46E5;
+    --accent-text: #4338CA;
+    --accent-on: #FFFFFF;
+    --accent-muted: rgba(79, 70, 229, .12);
+  }
+
+  :root:not([data-theme="dark"]) [data-product="card-games"] {
+    --accent: #CDAE6C;
+    --accent-text: #7A5C1E;
+    --accent-on: #2A1E06;
+    --accent-muted: rgba(205, 174, 108, .2);
+  }
+
+  :root:not([data-theme="dark"]) [data-product="quick-vote"] {
+    --accent: #F97316;
+    --accent-text: #9A3412;
+    --accent-on: #2A1204;
+    --accent-muted: rgba(249, 115, 22, .14);
+  }
+
+  :root:not([data-theme="dark"]) [data-product="mif-finance"] {
+    --accent: #2563EB;
+    --accent-text: #1D4ED8;
+    --accent-on: #FFFFFF;
+    --accent-muted: rgba(37, 99, 235, .12);
+  }
+}
+
+:root[data-theme="light"] [data-product="schedule"] {
+  --accent: #4F46E5;
+  --accent-text: #4338CA;
+  --accent-on: #FFFFFF;
+  --accent-muted: rgba(79, 70, 229, .12);
+}
+
+:root[data-theme="light"] [data-product="card-games"] {
+  --accent: #CDAE6C;
+  --accent-text: #7A5C1E;
+  --accent-on: #2A1E06;
+  --accent-muted: rgba(205, 174, 108, .2);
+}
+
+:root[data-theme="light"] [data-product="quick-vote"] {
+  --accent: #F97316;
+  --accent-text: #9A3412;
+  --accent-on: #2A1204;
+  --accent-muted: rgba(249, 115, 22, .14);
+}
+
+:root[data-theme="light"] [data-product="mif-finance"] {
+  --accent: #2563EB;
+  --accent-text: #1D4ED8;
+  --accent-on: #FFFFFF;
+  --accent-muted: rgba(37, 99, 235, .12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;
