@@ -84,12 +84,38 @@
     return sv("qv-ic qv-i-moon", "0 0 24 24", [["path", { d: "M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" }]]);
   }
 
-  function iconLogo() {
-    return sv("qv-logo__svg", "0 0 36 36", [
-      ["rect", { "class": "qv-lg-a", x: "8", y: "9", width: "14", height: "4", rx: "2" }],
-      ["rect", { "class": "qv-lg-b", x: "8", y: "16", width: "20", height: "4", rx: "2" }],
-      ["rect", { "class": "qv-lg-a", x: "8", y: "23", width: "10", height: "4", rx: "2" }]
+  // The studio flask. Each app copy needs its own mask id: up to five copies
+  // share the page with the page's own top bar, which already has a mask.
+  var maskN = 0;
+  var FLASK = "M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104";
+
+  function iconFlask() {
+    var id = "qv-mark-liquid-" + (++maskN);
+    var n = sv("qv-mark__svg", "76 82 360 360", [
+      ["rect", { x: "0", y: "310", width: "512", height: "202", fill: "currentColor", stroke: "none", mask: "url(#" + id + ")" }],
+      ["path", { d: FLASK }],
+      ["path", { d: "M196 104h120" }]
     ]);
+    n.setAttribute("fill", "none");
+    n.setAttribute("stroke", "currentColor");
+    n.setAttribute("stroke-width", "36");
+    n.setAttribute("stroke-linecap", "round");
+    n.setAttribute("stroke-linejoin", "round");
+
+    var mask = document.createElementNS(SVGNS, "mask");
+    mask.setAttribute("id", id);
+    var fillP = document.createElementNS(SVGNS, "path");
+    fillP.setAttribute("d", FLASK + "z");
+    fillP.setAttribute("fill", "#fff");
+    fillP.setAttribute("stroke", "none");
+    var edgeP = document.createElementNS(SVGNS, "path");
+    edgeP.setAttribute("d", FLASK);
+    edgeP.setAttribute("stroke", "#000");
+    edgeP.setAttribute("stroke-width", "60");
+    mask.appendChild(fillP);
+    mask.appendChild(edgeP);
+    n.insertBefore(mask, n.firstChild);
+    return n;
   }
 
   // In-app headings are plain divs with a heading role: the host page's own
@@ -234,9 +260,12 @@
     live.setAttribute("role", "status");
 
     var bar = mk("div", "qv-bar");
-    var logo = mk("span", "qv-logo");
-    logo.setAttribute("aria-hidden", "true");
-    logo.appendChild(iconLogo());
+    var brand = mk("span", "qv-brand");
+    brand.setAttribute("aria-hidden", "true");
+    var mark = mk("span", "qv-mark");
+    mark.appendChild(iconFlask());
+    brand.appendChild(mark);
+    brand.appendChild(mk("span", "qv-brand__t", "Entropic"));
 
     var seg = mk("div", "qv-seg");
     seg.setAttribute("role", "group");
@@ -253,7 +282,7 @@
     themeBtn.appendChild(iconSun());
     themeBtn.appendChild(iconMoon());
 
-    bar.appendChild(logo);
+    bar.appendChild(brand);
     bar.appendChild(seg);
     bar.appendChild(themeBtn);
 
