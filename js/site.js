@@ -16,6 +16,12 @@
     btn.setAttribute('aria-label', 'Switch to ' + other + ' theme');
   }
 
+  function syncThemeColor() {
+    var color = current() === 'dark' ? '#141414' : '#F8FAFC';
+    var metas = document.querySelectorAll('meta[name="theme-color"]');
+    for (var m = 0; m < metas.length; m++) metas[m].setAttribute('content', color);
+  }
+
   if (btn) {
     btn.addEventListener('click', function () {
       var next = current() === 'dark' ? 'light' : 'dark';
@@ -24,6 +30,7 @@
         localStorage.setItem('esl-theme', next);
       } catch (e) {}
       updateLabel();
+      syncThemeColor();
     });
   }
 
@@ -32,6 +39,7 @@
   }
 
   updateLabel();
+  if (root.hasAttribute('data-theme')) syncThemeColor();
 
   var year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
