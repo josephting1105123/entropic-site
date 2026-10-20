@@ -684,7 +684,7 @@
       tr.appendChild(numCell('td', claim.cents));
       tr.appendChild(el('td', null, claim.by));
       var statusCell = el('td');
-      statusCell.appendChild(el('span', 'mif-pill ' + (claim.paid ? 'mif-pill-paid' : 'mif-pill-unpaid'), claim.paid ? 'Paid' : 'Unpaid'));
+      statusCell.appendChild(el('span', 'mif-pill ' + (claim.paid ? 'mif-pill-paid' : 'mif-pill-unpaid'), claim.paid ? 'Claimed' : 'Unclaimed'));
       if (claim.paid) {
         statusCell.appendChild(lockIcon());
         statusCell.appendChild(el('span', 'mif-sr', 'locked'));
