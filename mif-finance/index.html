@@ -76,31 +76,52 @@
         </div>
       </div>
       <div class="media media-mock">
-        <div class="mif-window mif-window-static" role="img" aria-label="MIF Finance's home screen: budget against actual, month by month">
+        <div class="mif-window mif-window-static" role="img" aria-label="MIF Finance's home screen: total income, expenses, budget and surplus for 2026, with monthly income">
           <div class="mif-titlebar" aria-hidden="true">
-            <span class="mif-title">Example Church</span>
-            <span class="mif-year">2026</span>
+            <span class="mif-title">Example Church<span class="mif-title-rest"> &middot; Yearly Financial Report</span></span>
+            <span class="mif-year">2026<svg class="mif-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></span>
           </div>
-          <div class="mif-menu" aria-hidden="true">
-            <span class="mif-menu-item">Offering</span>
-            <span class="mif-menu-item">Expenses</span>
+          <div class="mif-menubar" aria-hidden="true">
+            <span class="mif-menu-item">Offering &#9662;</span>
+            <span class="mif-menu-item">Expenses &#9662;</span>
             <span class="mif-menu-item">Budget</span>
-            <span class="mif-menu-item">Import / Export</span>
+            <span class="mif-menu-item">Import / Export &#9662;</span>
             <span class="mif-menu-item">Settings</span>
           </div>
           <div class="mif-body" aria-hidden="true">
-            <p class="mif-heading">Budget vs Actual &middot; 2026</p>
-            <table class="mif-table">
-              <thead>
-                <tr><th scope="col">Month</th><th scope="col" class="mif-num">Income</th><th scope="col" class="mif-num">Expenses</th><th scope="col" class="mif-num">Surplus</th></tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Jan</th><td class="mif-num">5,200</td><td class="mif-num">3,100</td><td class="mif-num">2,100</td></tr>
-                <tr><th scope="row">Feb</th><td class="mif-num">3,800</td><td class="mif-num">4,300</td><td class="mif-num mif-neg">-500</td></tr>
-                <tr><th scope="row">Mar</th><td class="mif-num">5,800</td><td class="mif-num">4,300</td><td class="mif-num">1,500</td></tr>
-                <tr><th scope="row">Apr</th><td class="mif-num">4,900</td><td class="mif-num">2,900</td><td class="mif-num">2,000</td></tr>
-              </tbody>
-            </table>
+            <p class="mif-heading">Budget vs Actual</p>
+            <p class="mif-sub">Year: <span class="mif-fig">2026</span></p>
+            <div class="mif-cards">
+              <div class="mif-card"><span class="mif-card-label">Total Income</span><strong class="mif-card-value">RM29,555.00</strong></div>
+              <div class="mif-card"><span class="mif-card-label">Total Expense</span><strong class="mif-card-value">RM18,842.25</strong></div>
+              <div class="mif-card"><span class="mif-card-label">Total Budget</span><strong class="mif-card-value">RM48,000.00</strong></div>
+              <div class="mif-card"><span class="mif-card-label">Surplus / Deficit</span><strong class="mif-card-value mif-pos">RM10,712.75</strong></div>
+            </div>
+            <figure class="mif-chart">
+              <figcaption>Monthly Income (weekly meeting offering)</figcaption>
+              <svg class="mif-svg" viewBox="0 0 300 110" focusable="false">
+                <line class="mif-c-grid" x1="54" x2="290" y1="84" y2="84"/>
+                <line class="mif-c-grid" x1="54" x2="290" y1="46" y2="46"/>
+                <line class="mif-c-grid" x1="54" x2="290" y1="8" y2="8"/>
+                <text class="mif-c-label" x="48" y="88" text-anchor="end">RM0</text>
+                <text class="mif-c-label" x="48" y="50" text-anchor="end">RM3,000</text>
+                <text class="mif-c-label" x="48" y="12" text-anchor="end">RM6,000</text>
+                <path class="mif-c-area" d="M54 18.1 L101.2 35.9 L148.4 10.5 L195.6 21.9 L242.8 16.9 L290 26.3 L290 84 L54 84 Z"/>
+                <path class="mif-c-line" d="M54 18.1 L101.2 35.9 L148.4 10.5 L195.6 21.9 L242.8 16.9 L290 26.3"/>
+                <circle class="mif-c-accent" cx="54" cy="18.1" r="4"/>
+                <circle class="mif-c-accent" cx="101.2" cy="35.9" r="4"/>
+                <circle class="mif-c-accent" cx="148.4" cy="10.5" r="4"/>
+                <circle class="mif-c-accent" cx="195.6" cy="21.9" r="4"/>
+                <circle class="mif-c-accent" cx="242.8" cy="16.9" r="4"/>
+                <circle class="mif-c-accent" cx="290" cy="26.3" r="4"/>
+                <text class="mif-c-label" x="54" y="102" text-anchor="middle">Jan</text>
+                <text class="mif-c-label" x="101.2" y="102" text-anchor="middle">Feb</text>
+                <text class="mif-c-label" x="148.4" y="102" text-anchor="middle">Mar</text>
+                <text class="mif-c-label" x="195.6" y="102" text-anchor="middle">Apr</text>
+                <text class="mif-c-label" x="242.8" y="102" text-anchor="middle">May</text>
+                <text class="mif-c-label" x="290" y="102" text-anchor="middle">Jun</text>
+              </svg>
+            </figure>
           </div>
         </div>
       </div>
