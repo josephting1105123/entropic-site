@@ -1,620 +1,117 @@
-/* MIF Finance: the app-window mock (static hero copy and interactive demo). Tokens only. */
+/* ==========================================================================
+   mif.css - the MIF Finance product page.
 
-.media-mock {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-}
+   The page reuses Schedule's scene layout (css/schedule.css) and the site's
+   shot styles (css/site.css). What lives here is only what that pair does
+   not cover: a wide copy-plus-screenshot grid for the Windows app, flat
+   Windows screenshots, an Android phone frame that wraps a screenshot
+   (Schedule's own phone.css is not loaded here), a side-by-side pair of
+   phones, and a text-only scene. Site tokens only; no motion.
+   ========================================================================== */
 
-.media-mock .mif-window-static {
-  width: 100%;
-  max-width: 520px;
-}
+/* --- Wide scenes: copy beside a Windows screenshot ---------------------- */
 
-.mif-demo-section .mif-demo {
-  margin-top: 1.5rem;
-}
+.scene__shots { min-width: 0; }
 
-.mif-demo-fallback {
-  color: var(--text-2);
-}
-
-.mif-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Window: serif UI text, sans tabular numbers */
-.mif-window {
-  --mif-red: #F87171;
-  --mif-teal: #2DD4BF;
-  min-width: 0;
-  background: var(--card);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-shot);
-  overflow: hidden;
-  font-family: var(--serif);
-  color: var(--text);
-  text-align: left;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .mif-window {
-    --mif-red: #DC2626;
-    --mif-teal: #0D9488;
+@media (min-width: 900px) {
+  .scene__grid--wide {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
   }
+
+  /* Flipped: screenshot first on a wide screen. The copy stays first in the
+     source, so it is still first when the grid collapses to one column. */
+  .scene__grid--wide.scene__grid--flip {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .scene__grid--wide.scene__grid--flip .scene__shots { order: -1; }
 }
 
-:root[data-theme="light"] .mif-window {
-  --mif-red: #DC2626;
-  --mif-teal: #0D9488;
-}
+/* --- Windows screenshots ------------------------------------------------ */
 
-.mif-num,
-.mif-fig,
-.mif-card-value,
-.mif-year,
-.mif-field input.mif-amount,
-.mif-totals strong,
-.mif-owed strong,
-.mif-svg text {
-  font-family: var(--sans);
-  font-variant-numeric: tabular-nums;
-}
-
-.mif-titlebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 16px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--hairline);
-}
-
-.mif-title {
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  text-align: left;
-}
-
-button.mif-title { cursor: pointer; }
-
-.mif-title:focus-visible {
-  outline: 2px solid var(--accent-text);
-  outline-offset: 2px;
-}
-
-.mif-title-rest {
-  color: var(--text-2);
-  font-weight: 400;
-}
-
-.mif-year {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 10px 2px 12px;
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-pill);
-  background: var(--card);
-  color: var(--text-2);
-  font-size: 0.85em;
-  font-weight: 600;
-}
-
-.mif-chevron {
-  width: 12px;
-  height: 12px;
-}
-
-/* Menu row: the tabs, then the app menu entries the demo does not have */
-.mif-menubar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  border-bottom: 1px solid var(--hairline);
-  background: var(--bg);
-}
-
-.mif-tabs {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.mif-menu-item,
-.mif-tab {
-  padding: 8px 14px;
-  color: var(--text-2);
-  font: inherit;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.mif-menu-off {
-  display: inline-flex;
-  align-items: center;
-  color: var(--text-3);
-  cursor: default;
-}
-
-.mif-tab {
-  min-height: 44px;
-  margin: 0 0 -1px;
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  cursor: pointer;
-}
-
-.mif-tab:hover { color: var(--text); }
-
-.mif-tab[aria-selected="true"] {
-  color: var(--accent-text);
-  border-bottom-color: var(--accent);
-  font-weight: 600;
-}
-
-.mif-tab:focus-visible,
-.mif-btn:focus-visible,
-.mif-remove:focus-visible,
-.mif-field input:focus-visible,
-.mif-field select:focus-visible,
-.mif-scroll:focus-visible {
-  outline: 2px solid var(--accent-text);
-  outline-offset: 2px;
-}
-
-/* Panels */
-.mif-body,
-.mif-panel {
-  padding: 16px;
-}
-
-.mif-panel[hidden] { display: none; }
-
-.mif-heading {
-  margin: 0 0 12px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.mif-sub {
-  margin: -6px 0 12px;
-  color: var(--text-2);
-  font-size: 0.9rem;
-}
-
-.mif-sub.mif-note { margin-top: 0; }
-
-/* Home: summary cards and charts */
-.mif-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.mif-card,
-.mif-chart {
-  min-width: 0;
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-md);
-}
-
-.mif-card {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px 14px;
-}
-
-.mif-card-label {
-  color: var(--text-2);
-  font-size: 0.8rem;
-}
-
-.mif-card-value {
-  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
-
-.mif-pos { color: var(--accent-text); }
-
-.mif-neg-red { color: var(--mif-red); }
-
-.mif-charts {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.mif-chart {
-  margin: 0;
-  padding: 12px 14px;
-}
-
-.mif-chart figcaption {
-  margin: 0 0 8px;
-  color: var(--text-2);
-  font-family: var(--serif);
-  font-size: 0.9rem;
-}
-
-.mif-svg {
+.win-shot {
   display: block;
   width: 100%;
   height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-shot);
+  background: var(--card);
 }
 
-.mif-pie {
-  max-width: 180px;
-  margin: 0 auto;
+.win-shot + .win-shot { margin-top: 1.25rem; }
+
+.win-shot--dialog {
+  max-width: 460px;
+  margin-inline: auto;
 }
 
-.mif-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 12px 0 0;
-  padding: 0;
-  color: var(--text);
-  font-size: 0.85rem;
-  list-style: none;
+/* --- Android phones ----------------------------------------------------- */
+
+/* Schedule draws its screens as HTML in a 9:19.5 frame. These are
+   screenshots at 824 x 1849, so the frame takes the image's own height. */
+.stage .phone {
+  max-width: 300px;
+  aspect-ratio: auto;
 }
 
-.mif-legend li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mif-swatch {
-  flex: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-}
-
-/* Chart colours: classes only, the CSP does not allow inline styles */
-.mif-c-accent { fill: var(--accent); }
-
-.mif-c-area {
-  fill: var(--accent);
-  fill-opacity: 0.16;
-}
-
-.mif-c-line {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.mif-c-red { fill: var(--mif-red); }
-.mif-c-teal { fill: var(--mif-teal); }
-.mif-c-warn { fill: var(--warn); }
-.mif-c-grey { fill: var(--text-2); }
-
-.mif-c-sep {
-  stroke: var(--card);
-  stroke-width: 2;
-}
-
-.mif-c-grid {
-  stroke: var(--hairline-strong);
-  stroke-width: 1;
-}
-
-.mif-c-label {
-  fill: var(--text-3);
-  font-size: 11px;
-}
-
-.mif-bg-accent { background: var(--accent); }
-.mif-bg-teal { background: var(--mif-teal); }
-.mif-bg-warn { background: var(--warn); }
-.mif-bg-grey { background: var(--text-2); }
-
-/* Tables */
-.mif-scroll {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.mif-table {
+.phone__shot {
+  display: block;
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
+  height: auto;
+  border-radius: 27px;
 }
 
-.mif-table caption {
-  text-align: left;
+/* Two phones side by side; one column, centred, on a narrow screen. */
+.stage--pair {
+  grid-template-columns: repeat(2, minmax(0, 260px));
+  justify-content: center;
+  align-items: start;
+  gap: clamp(1rem, .5rem + 1.5vw, 1.75rem);
 }
 
-.mif-table th,
-.mif-table td {
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--hairline);
-  text-align: left;
-  vertical-align: middle;
+.stage--pair .phone { max-width: 260px; }
+
+@media (max-width: 599.98px) {
+  .stage--pair { grid-template-columns: minmax(0, 260px); }
 }
 
-.mif-table thead th {
-  color: var(--text-3);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.mif-table .mif-num {
-  text-align: right;
-  white-space: nowrap;
-}
-
-.mif-table .mif-fig { white-space: nowrap; }
-
-.mif-neg { color: var(--warn); }
-
-.mif-locked,
-.mif-locked td {
-  color: var(--text-2);
-}
-
-.mif-lock {
-  width: 14px;
-  height: 14px;
-  margin-left: 6px;
-  vertical-align: -2px;
-  color: var(--text-3);
-}
-
-/* Pills and tags */
-.mif-pill {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: var(--r-pill);
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.mif-pill-paid {
-  background: var(--accent-muted);
-  color: var(--accent-text);
-}
-
-.mif-pill-unpaid {
-  background: var(--surface);
-  border: 1px solid var(--hairline-strong);
-  color: var(--text-2);
-}
-
-.mif-tag {
-  display: inline-block;
-  padding: 2px 10px;
-  border: 1px solid var(--warn);
-  border-radius: var(--r-pill);
-  color: var(--warn);
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.mif-saved {
-  color: var(--text-2);
-  font-size: 0.85rem;
-}
-
-/* Buttons */
-.mif-btn {
-  min-height: 40px;
-  padding: 0 14px;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-sm);
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.mif-btn:hover { filter: brightness(1.08); }
-
-.mif-btn-primary {
-  background: var(--accent);
-  color: var(--accent-on);
-  border-color: transparent;
-}
-
-/* Claim actions: capsules. Mark Paid is tonal, Mark Unpaid is quiet and outlined. */
-.mif-table .mif-btn {
-  min-height: 34px;
-  padding: 0 14px;
-  background: transparent;
-  color: var(--text-2);
-  border-radius: var(--r-pill);
-  font-size: 0.85rem;
-}
-
-.mif-btn-tonal,
-.mif-table .mif-btn-tonal {
-  background: var(--accent-muted);
-  color: var(--accent-text);
-  border-color: transparent;
-}
-
-.mif-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  filter: none;
-}
-
-.mif-remove {
-  min-width: 40px;
-  min-height: 40px;
-  background: transparent;
-  color: var(--text-2);
-  border: 0;
-  border-radius: var(--r-sm);
-  font: inherit;
-  cursor: pointer;
-}
-
-.mif-remove:hover { color: var(--warn); }
-
-/* Add-row form */
-.mif-form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--hairline);
-}
-
-.mif-field {
-  display: flex;
-  flex: 1 1 140px;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  color: var(--text-2);
-  font-size: 0.8rem;
-}
-
-.mif-activity {
-  max-width: 320px;
-  margin: 0 0 12px;
-}
-
-.mif-field input,
-.mif-field select {
-  width: 100%;
-  min-height: 40px;
-  padding: 0 10px;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--r-sm);
-  font: inherit;
-  font-size: 0.95rem;
-}
-
-.mif-field input.mif-amount { text-align: right; }
-
-.mif-totals {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 24px;
-  margin-top: 16px;
-  font-size: 0.9rem;
-  color: var(--text-2);
-}
-
-.mif-totals strong {
-  color: var(--text);
-}
-
-.mif-totals .mif-btn {
-  margin-left: auto;
-}
-
-.mif-owed {
-  margin: 0 0 12px;
-  color: var(--text-2);
-  font-size: 0.95rem;
-}
-
-.mif-owed strong { color: var(--text); }
-
-/* Static hero copy: compact, not interactive */
-.mif-window-static {
-  font-size: 0.8rem;
-  pointer-events: none;
-  user-select: none;
-}
-
-.mif-window-static .mif-titlebar { padding: 8px 12px; }
-
-.mif-window-static .mif-menu-item {
-  padding: 6px 10px;
-  font-size: 0.8rem;
-}
-
-.mif-window-static .mif-body { padding: 12px; }
-
-.mif-window-static .mif-heading { font-size: 0.95rem; }
-
-.mif-window-static .mif-card { padding: 8px 10px; }
-
-.mif-window-static .mif-card-label { font-size: 0.7rem; }
-
-.mif-window-static .mif-card-value { font-size: 1rem; }
-
-.mif-window-static .mif-chart {
-  margin-top: 10px;
-  padding: 8px 10px;
-}
-
-.mif-window-static .mif-chart figcaption {
-  margin-bottom: 4px;
-  font-size: 0.75rem;
-}
-
-@media (max-width: 479px) {
-  .mif-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .mif-field { flex: 0 0 auto; }
-
-  .mif-form .mif-btn { width: 100%; }
-
-  .mif-totals .mif-btn {
-    width: 100%;
-    margin-left: 0;
-  }
-}
-
-@media (min-width: 640px) {
-  .mif-body,
-  .mif-panel { padding: 20px; }
-
-  .mif-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
+/* Keep a phone shorter than the space under the header (a screenshot is
+   about 2.24 times as tall as it is wide). */
 @media (min-width: 900px) {
-  .mif-charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .scene__grid .stage .phone {
+    max-width: min(300px, max(200px, calc((100svh - var(--nav-h) - 80px) * .4456)));
+  }
+
+  .scene__grid .stage--pair .phone {
+    max-width: min(260px, max(200px, calc((100svh - var(--nav-h) - 80px) * .4456)));
+  }
 }
 
-/* Static mocks stay small: two cards across, whatever the viewport */
-.mif-window-static .mif-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* A pair needs about 560px beside the copy, so it only sits beside the copy
+   on a wide screen and stacks under it otherwise. */
+@media (min-width: 900px) and (max-width: 1079.98px) {
+  .scene__grid--pair { grid-template-columns: minmax(0, 1fr); }
+  .scene__grid--pair .stage { position: static; }
+}
+
+@media (min-width: 1080px) {
+  .scene__grid--pair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  }
+}
+
+/* --- Text-only scene ---------------------------------------------------- */
+
+.scene__grid.scene__grid--text { grid-template-columns: minmax(0, 1fr); }
+
+.scene__grid--text .scene__copy,
+.scene__grid--text .lead,
+.scene__grid--text .notes {
+  max-width: 68ch;
+}
+
+/* --- Availability card -------------------------------------------------- */
+
+.install-card .notes { margin-top: 0; }
