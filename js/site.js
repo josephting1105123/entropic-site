@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  // Old homepage anchors (#apps, #schedule, ...) now live on the projects page; send them there.
+  var h = location.hash;
+  if ((location.pathname === '/' || location.pathname === '/index.html') &&
+      ['#apps', '#offbridge', '#schedule', '#quick-vote', '#card-games', '#mif-finance', '#spectrum-agent'].indexOf(h) !== -1) {
+    location.replace('/projects/' + (h === '#apps' ? '' : h));
+    return;
+  }
+
   var root = document.documentElement;
   var btn = document.getElementById('theme-toggle');
   var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;

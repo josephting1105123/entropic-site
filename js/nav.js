@@ -213,7 +213,8 @@
 
     var foot = el('div', 'drawer-foot');
     var all = el('a', 'drawer-all', 'All projects');
-    all.setAttribute('href', '/#apps');
+    all.setAttribute('href', '/projects/');
+    if (norm(location.pathname) === '/projects/') all.setAttribute('aria-current', 'page');
     foot.appendChild(all);
 
     dialog.appendChild(head);

@@ -229,7 +229,7 @@ a {
 
 .skip-link:focus { top: 12px; }
 
-/* Menu button: opens the Projects drawer (js/nav.js), or follows its link to /#apps without JS. */
+/* Menu button: opens the Projects drawer (js/nav.js), or follows its link to /projects/ without JS. */
 .menu-btn {
   position: relative;
   display: inline-flex;
@@ -436,7 +436,12 @@ dialog.drawer[open] {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 24px 8px 8px;
+  margin: 16px -12px 0;
+  padding: 8px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg);
   font: 700 .8rem/1.4 var(--sans);
   text-transform: uppercase;
   letter-spacing: .1em;
@@ -660,7 +665,9 @@ canvas.field {
 .principles,
 .steps,
 .detail,
-.apps {
+.apps,
+.faq,
+.contact {
   padding-block: var(--section);
   border-top: 1px solid var(--hairline);
 }
@@ -726,6 +733,67 @@ canvas.field {
 .detail .facts {
   max-width: 40rem;
   margin-top: 2rem;
+}
+
+.faq-list {
+  margin-top: 2.5rem;
+  max-width: 46rem;
+}
+
+.faq-item { border-top: 1px solid var(--hairline-strong); }
+
+.faq-item:last-child { border-bottom: 1px solid var(--hairline-strong); }
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  font: 400 1.5rem/1 var(--sans);
+  color: var(--accent-text);
+}
+
+.faq-item[open] summary::after { content: "\2212"; }
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.faq-item p {
+  margin: 0 0 1.25rem;
+  max-width: 40rem;
+  color: var(--text-2);
+}
+
+.faq-item a { color: var(--accent-text); }
+
+.contact-lead {
+  margin-top: 1rem;
+  max-width: 36rem;
+  color: var(--text-2);
+}
+
+.contact-email {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: clamp(1.4rem, 1rem + 2vw, 2.2rem);
+  color: var(--accent-text);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  overflow-wrap: anywhere;
 }
 
 /* Apps */
@@ -1240,6 +1308,3 @@ canvas.field {
 
   .drawer::backdrop { transition: none; }
 }
-
-/* The drawer moves focus to #apps after "All projects"; its links show their own ring. */
-#apps:focus { outline: none; }
