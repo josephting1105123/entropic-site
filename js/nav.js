@@ -14,7 +14,7 @@
     { name: 'Schedule', href: '/schedule/', category: 'utilities', platforms: ['Android'], source: 'open' },
     { name: 'Quick Vote', href: '/quick-vote/', category: 'utilities', platforms: ['Web'], source: 'open' },
     { name: 'Card Games', href: '/card-games/', category: 'games', platforms: ['Web'], source: 'open' },
-    { name: 'MIF Finance', href: '/mif-finance/', category: 'finance', platforms: ['Windows'], source: 'closed' },
+    { name: 'MIF Finance', href: '/mif-finance/', category: 'finance', platforms: ['Windows', 'Android'], source: 'closed' },
     { name: 'Spectrum agent', category: null, platforms: [], source: 'closed', soon: true }
   ];
 
