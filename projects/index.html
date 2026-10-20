@@ -23,9 +23,11 @@
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/mif.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -60,7 +62,7 @@
     </div>
   </div>
 
-  <header class="hero" id="content">
+  <header class="hero scene" data-chapter="Projects" id="content">
     <div class="container">
       <h1>Projects</h1>
       <p class="lead">Everything we've released, plus what's still being built. Each one has its own page with the details.</p>
@@ -70,7 +72,7 @@
   <main>
     <section id="apps" class="apps">
       <div class="container">
-        <article class="project" id="offbridge" aria-labelledby="offbridge-title">
+        <article class="project scene" data-chapter="OffBridge" id="offbridge" aria-labelledby="offbridge-title">
           <div class="media media-offbridge">
             <img class="shot-win on-dark" src="/assets/shots/windows-main-dark.webp" width="1200" height="636" alt="OffBridge on Windows">
             <img class="shot-win on-light" src="/assets/shots/windows-main-light.webp" width="1200" height="636" alt="OffBridge on Windows">
@@ -94,7 +96,7 @@
           </div>
         </article>
 
-        <article class="project" id="schedule" data-product="schedule" aria-labelledby="schedule-title">
+        <article class="project scene" data-chapter="Schedule" id="schedule" data-product="schedule" aria-labelledby="schedule-title">
           <div class="media media-phone">
             <img class="phone-shot" src="/assets/shots/schedule-today.jpg" width="824" height="1839" alt="Schedule's Today page: the next event, the day's hour grid and a double-booking it caught" loading="lazy">
           </div>
@@ -115,7 +117,7 @@
           </div>
         </article>
 
-        <article class="project" id="quick-vote" data-product="quick-vote" aria-labelledby="quick-vote-title">
+        <article class="project scene" data-chapter="Quick Vote" id="quick-vote" data-product="quick-vote" aria-labelledby="quick-vote-title">
           <div class="media media-phone">
             <img class="phone-shot on-dark" src="/assets/shots/qv-results-dark.webp" width="1080" height="2280" alt="Quick Vote showing live results as bars" loading="lazy">
             <img class="phone-shot on-light" src="/assets/shots/qv-results-light.webp" width="1080" height="2280" alt="Quick Vote showing live results as bars" loading="lazy">
@@ -136,7 +138,7 @@
           </div>
         </article>
 
-        <article class="project" id="card-games" data-product="card-games" aria-labelledby="card-games-title">
+        <article class="project scene" data-chapter="Card Games" id="card-games" data-product="card-games" aria-labelledby="card-games-title">
           <div class="media media-landscape">
             <img class="landscape-shot" src="/assets/shots/card-games-table.webp" width="844" height="390" alt="A Dou Di Zhu hand at phone size: the bid panel over the felt, two opponents' card backs and the player's 17 cards" loading="lazy">
           </div>
@@ -156,7 +158,7 @@
           </div>
         </article>
 
-        <article class="project" id="mif-finance" data-product="mif-finance" aria-labelledby="mif-finance-title">
+        <article class="project scene" data-chapter="MIF Finance" id="mif-finance" data-product="mif-finance" aria-labelledby="mif-finance-title">
           <div class="media media-mock">
             <div class="mif-window mif-window-static" role="img" aria-label="MIF Finance's home screen: total income, expenses, budget and surplus for 2026, with monthly income">
               <div class="mif-titlebar" aria-hidden="true">
@@ -222,7 +224,7 @@
           </div>
         </article>
 
-        <article class="project-soon" id="spectrum-agent" aria-labelledby="spectrum-agent-title">
+        <article class="project-soon scene" data-chapter="Spectrum agent" id="spectrum-agent" aria-labelledby="spectrum-agent-title">
           <span class="cat-label">Coming soon</span>
           <h2 class="project-name" id="spectrum-agent-title">Spectrum agent</h2>
           <div class="chips">

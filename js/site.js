@@ -176,8 +176,16 @@
     function update() {
       queued = false;
       var vh = window.innerHeight;
-      var r = p.getBoundingClientRect();
-      var progress = (vh * 0.85 - r.top) / (r.height + vh * 0.45);
+      var sec = root.classList.contains('is-segmented') && p.closest('.scene');
+      var progress;
+      if (sec) {
+        // One screen per section: fill as the section glides in, full once it settles under the bar.
+        var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+        progress = (vh - sec.getBoundingClientRect().top) / Math.max(1, vh - pad);
+      } else {
+        var r = p.getBoundingClientRect();
+        progress = (vh * 0.85 - r.top) / (r.height + vh * 0.45);
+      }
       progress = Math.max(0, Math.min(1, progress));
       var target = Math.ceil(progress * fw.length - 1e-6);
       var n;

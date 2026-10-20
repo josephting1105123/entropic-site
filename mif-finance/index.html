@@ -23,10 +23,12 @@
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/mif.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/mif-demo.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body data-product="mif-finance">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -61,7 +63,7 @@
     </div>
   </div>
 
-  <header class="hero product-hero" id="content">
+  <header class="hero product-hero scene" data-chapter="Intro" id="content">
     <div class="container">
       <div class="project-text">
         <span class="cat-label">Finance</span>
@@ -129,7 +131,7 @@
   </header>
 
   <main>
-    <section class="steps">
+    <section class="steps scene" id="week" data-chapter="A week">
       <div class="container">
         <h2>How a week goes</h2>
         <ol class="steps-list">
@@ -149,7 +151,7 @@
       </div>
     </section>
 
-    <section class="detail mif-demo-section" id="demo">
+    <section class="detail mif-demo-section scene" data-chapter="Try it" id="demo">
       <div class="container">
         <h2>Try it</h2>
         <p class="small">Sample data from a made-up church. It runs in your browser and nothing is saved.</p>
@@ -159,7 +161,7 @@
       </div>
     </section>
 
-    <section class="detail">
+    <section class="detail scene" id="details" data-chapter="Details">
       <div class="container">
         <h2>Details</h2>
         <ul class="facts">
