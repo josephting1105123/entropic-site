@@ -433,11 +433,21 @@ dialog.drawer[open] {
 }
 
 .drawer-group h3 {
-  margin: 20px 8px 6px;
-  font: 600 .75rem/1.4 var(--sans);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 8px 8px;
+  font: 700 .8rem/1.4 var(--sans);
   text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--text-3);
+  letter-spacing: .1em;
+  color: var(--accent-text);
+}
+
+.drawer-group h3::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hairline-strong);
 }
 
 .drawer-group ul {
@@ -461,7 +471,7 @@ dialog.drawer[open] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.3;
 }
 
