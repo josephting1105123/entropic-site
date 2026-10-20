@@ -31,17 +31,43 @@
   border: 0;
 }
 
-/* Window */
+/* Window: serif UI text, sans tabular numbers */
 .mif-window {
+  --mif-red: #F87171;
+  --mif-teal: #2DD4BF;
   min-width: 0;
   background: var(--card);
   border: 1px solid var(--hairline-strong);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-shot);
   overflow: hidden;
-  font-family: var(--sans);
+  font-family: var(--serif);
   color: var(--text);
   text-align: left;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .mif-window {
+    --mif-red: #DC2626;
+    --mif-teal: #0D9488;
+  }
+}
+
+:root[data-theme="light"] .mif-window {
+  --mif-red: #DC2626;
+  --mif-teal: #0D9488;
+}
+
+.mif-num,
+.mif-fig,
+.mif-card-value,
+.mif-year,
+.mif-field input.mif-amount,
+.mif-totals strong,
+.mif-owed strong,
+.mif-svg text {
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
 }
 
 .mif-titlebar {
@@ -55,28 +81,61 @@
 }
 
 .mif-title {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
   font-weight: 700;
   letter-spacing: -0.01em;
+  text-align: left;
+}
+
+button.mif-title { cursor: pointer; }
+
+.mif-title:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.mif-title-rest {
+  color: var(--text-2);
+  font-weight: 400;
 }
 
 .mif-year {
-  padding: 2px 12px;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px 2px 12px;
   border: 1px solid var(--hairline-strong);
   border-radius: var(--r-pill);
   background: var(--card);
   color: var(--text-2);
   font-size: 0.85em;
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
-/* Menu row (static) and tab bar (demo) */
-.mif-menu,
+.mif-chevron {
+  width: 12px;
+  height: 12px;
+}
+
+/* Menu row: the tabs, then the app menu entries the demo does not have */
+.mif-menubar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--bg);
+}
+
 .mif-tabs {
   display: flex;
   flex-wrap: wrap;
-  border-bottom: 1px solid var(--hairline);
-  background: var(--card);
 }
 
 .mif-menu-item,
@@ -86,6 +145,13 @@
   font: inherit;
   font-size: 0.9rem;
   white-space: nowrap;
+}
+
+.mif-menu-off {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-3);
+  cursor: default;
 }
 
 .mif-tab {
@@ -126,7 +192,7 @@
 
 .mif-heading {
   margin: 0 0 12px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
@@ -136,6 +202,140 @@
   color: var(--text-2);
   font-size: 0.9rem;
 }
+
+.mif-sub.mif-note { margin-top: 0; }
+
+/* Home: summary cards and charts */
+.mif-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mif-card,
+.mif-chart {
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+
+.mif-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+}
+
+.mif-card-label {
+  color: var(--text-2);
+  font-size: 0.8rem;
+}
+
+.mif-card-value {
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.mif-pos { color: var(--accent-text); }
+
+.mif-neg-red { color: var(--mif-red); }
+
+.mif-charts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mif-chart {
+  margin: 0;
+  padding: 12px 14px;
+}
+
+.mif-chart figcaption {
+  margin: 0 0 8px;
+  color: var(--text-2);
+  font-family: var(--serif);
+  font-size: 0.9rem;
+}
+
+.mif-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mif-pie {
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+.mif-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 12px 0 0;
+  padding: 0;
+  color: var(--text);
+  font-size: 0.85rem;
+  list-style: none;
+}
+
+.mif-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mif-swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* Chart colours: classes only, the CSP does not allow inline styles */
+.mif-c-accent { fill: var(--accent); }
+
+.mif-c-area {
+  fill: var(--accent);
+  fill-opacity: 0.16;
+}
+
+.mif-c-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mif-c-red { fill: var(--mif-red); }
+.mif-c-teal { fill: var(--mif-teal); }
+.mif-c-warn { fill: var(--warn); }
+.mif-c-grey { fill: var(--text-2); }
+
+.mif-c-sep {
+  stroke: var(--card);
+  stroke-width: 2;
+}
+
+.mif-c-grid {
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
+}
+
+.mif-c-label {
+  fill: var(--text-3);
+  font-size: 11px;
+}
+
+.mif-bg-accent { background: var(--accent); }
+.mif-bg-teal { background: var(--mif-teal); }
+.mif-bg-warn { background: var(--warn); }
+.mif-bg-grey { background: var(--text-2); }
 
 /* Tables */
 .mif-scroll {
@@ -147,7 +347,6 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
-  font-variant-numeric: tabular-nums;
 }
 
 .mif-table caption {
@@ -171,22 +370,12 @@
   white-space: nowrap;
 }
 
-.mif-table tbody th {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.mif-table tfoot th,
-.mif-table tfoot td {
-  border-top: 1px solid var(--hairline-strong);
-  border-bottom: 0;
-  font-weight: 700;
-}
-
 .mif-table .mif-num {
   text-align: right;
   white-space: nowrap;
 }
+
+.mif-table .mif-fig { white-space: nowrap; }
 
 .mif-neg { color: var(--warn); }
 
@@ -263,6 +452,23 @@
   border-color: transparent;
 }
 
+/* Claim actions: capsules. Mark Paid is tonal, Mark Unpaid is quiet and outlined. */
+.mif-table .mif-btn {
+  min-height: 34px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: var(--r-pill);
+  font-size: 0.85rem;
+}
+
+.mif-btn-tonal,
+.mif-table .mif-btn-tonal {
+  background: var(--accent-muted);
+  color: var(--accent-text);
+  border-color: transparent;
+}
+
 .mif-btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -303,6 +509,11 @@
   font-size: 0.8rem;
 }
 
+.mif-activity {
+  max-width: 320px;
+  margin: 0 0 12px;
+}
+
 .mif-field input,
 .mif-field select {
   width: 100%;
@@ -316,10 +527,7 @@
   font-size: 0.95rem;
 }
 
-.mif-field input.mif-amount {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
+.mif-field input.mif-amount { text-align: right; }
 
 .mif-totals {
   display: flex;
@@ -329,7 +537,6 @@
   margin-top: 16px;
   font-size: 0.9rem;
   color: var(--text-2);
-  font-variant-numeric: tabular-nums;
 }
 
 .mif-totals strong {
@@ -344,7 +551,6 @@
   margin: 0 0 12px;
   color: var(--text-2);
   font-size: 0.95rem;
-  font-variant-numeric: tabular-nums;
 }
 
 .mif-owed strong { color: var(--text); }
@@ -365,14 +571,23 @@
 
 .mif-window-static .mif-body { padding: 12px; }
 
-.mif-window-static .mif-heading { font-size: 0.85rem; }
+.mif-window-static .mif-heading { font-size: 0.95rem; }
 
-.mif-window-static .mif-table { font-size: 0.8rem; }
+.mif-window-static .mif-card { padding: 8px 10px; }
 
-.mif-window-static .mif-table th,
-.mif-window-static .mif-table td { padding: 6px 8px; }
+.mif-window-static .mif-card-label { font-size: 0.7rem; }
 
-.mif-window-static .mif-table thead th { font-size: 0.68rem; }
+.mif-window-static .mif-card-value { font-size: 1rem; }
+
+.mif-window-static .mif-chart {
+  margin-top: 10px;
+  padding: 8px 10px;
+}
+
+.mif-window-static .mif-chart figcaption {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+}
 
 @media (max-width: 479px) {
   .mif-form {
@@ -393,4 +608,13 @@
 @media (min-width: 640px) {
   .mif-body,
   .mif-panel { padding: 20px; }
+
+  .mif-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+@media (min-width: 900px) {
+  .mif-charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Static mocks stay small: two cards across, whatever the viewport */
+.mif-window-static .mif-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
