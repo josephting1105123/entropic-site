@@ -526,11 +526,9 @@ a.drawer-link:hover { background: var(--surface); }
   border-top: 1px solid var(--hairline);
 }
 
-.drawer-all {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--accent-text);
+.drawer-foot .drawer-all {
+  display: flex;
+  width: 100%;
   font-family: var(--sans);
 }
 

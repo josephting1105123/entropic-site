@@ -212,7 +212,7 @@
     groupsEl = el('div', 'drawer-groups');
 
     var foot = el('div', 'drawer-foot');
-    var all = el('a', 'drawer-all', 'All projects');
+    var all = el('a', 'btn btn-primary drawer-all', 'All projects');
     all.setAttribute('href', '/projects/');
     if (norm(location.pathname) === '/projects/') all.setAttribute('aria-current', 'page');
     foot.appendChild(all);
