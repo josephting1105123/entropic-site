@@ -204,19 +204,33 @@
   font-family: var(--q-ui);
 }
 
-.qv-logo {
+.qv-brand {
   flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--q-card);
-  border: 1px solid var(--q-hairline-strong);
-  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--q-serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--q-text);
+  white-space: nowrap;
 }
 
-.qv-logo__svg { width: 36px; height: 36px; margin: -1px; }
-.qv-lg-a { fill: var(--q-bar-other); }
-.qv-lg-b { fill: var(--q-accent); }
+.qv-mark {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--q-card);
+  border: 1px solid var(--q-hairline);
+  border-radius: 8px;
+  color: var(--q-accent-text);
+}
+
+.qv-mark__svg { width: 16px; height: 16px; display: block; }
 
 .qv-seg {
   margin-left: auto;
