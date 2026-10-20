@@ -1,8 +1,8 @@
 /* ==========================================================================
    segments.js — section-by-section scrolling on desktop.
 
-   Each <section class="scene"> is a segment. Inside one the page scrolls
-   normally; at its edge further wheel input is held back and has to build
+   Every element with class="scene" is a segment, in document order. Inside
+   one the page scrolls normally; at its edge further wheel input is held back and has to build
    past a threshold before the page moves on, otherwise it lets go. The page
    never comes to rest straddling two segments.
 
@@ -447,7 +447,7 @@
   function init() {
     var main = document.querySelector("main");
     if (!main) return;
-    scenes = Array.prototype.slice.call(document.querySelectorAll("section.scene"));
+    scenes = Array.prototype.slice.call(document.querySelectorAll(".scene"));
     if (!scenes.length) return;
     STORY = (main.getAttribute("data-story") || "").split(/\s+/).filter(Boolean);
 

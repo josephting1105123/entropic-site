@@ -23,9 +23,11 @@
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/segments.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/field.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -60,7 +62,7 @@
     </div>
   </div>
 
-  <header class="hero hero-home" id="content">
+  <header class="hero hero-home scene" data-chapter="Intro" id="content">
     <canvas class="field" aria-hidden="true"></canvas>
     <div class="container">
       <span class="mark hero-mark" aria-hidden="true">
@@ -81,13 +83,13 @@
   </header>
 
   <main>
-    <section class="statement" aria-label="About the studio">
+    <section class="statement scene" id="about" data-chapter="About" aria-label="About the studio">
       <div class="container">
         <p class="fill">Entropy means randomness, and that's the idea behind the name. Our apps don't stick to one sector. What they share is the approach: find one thing that's frustrating, then build the app that handles it cleanly.</p>
       </div>
     </section>
 
-    <section class="principles">
+    <section class="principles scene" id="principles" data-chapter="Principles">
       <div class="container">
         <h2>How we build</h2>
         <ul class="principles-list">
@@ -107,7 +109,7 @@
       </div>
     </section>
 
-    <section class="faq" id="faq" aria-labelledby="faq-title">
+    <section class="faq scene" data-chapter="Questions" id="faq" aria-labelledby="faq-title">
       <div class="container">
         <h2 id="faq-title">Questions</h2>
         <div class="faq-list">
@@ -135,7 +137,7 @@
       </div>
     </section>
 
-    <section class="contact" id="contact" aria-labelledby="contact-title">
+    <section class="contact scene" data-chapter="Contact" id="contact" aria-labelledby="contact-title">
       <div class="container">
         <h2 id="contact-title">Contact</h2>
         <p class="contact-lead">Questions, bug reports, ideas for an app: email us and we'll get back to you.</p>

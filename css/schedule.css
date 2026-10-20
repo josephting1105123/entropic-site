@@ -6,7 +6,8 @@
    1. Scenes. The page is a run of full-screen sections. On a wide window
       js/segments.js lifts their phone screens into one pinned pane, so the
       phone holds still and swaps screen while the copy beside it scrolls.
-   2. The rail and the pull pill, both drawn by js/segments.js.
+   2. The rail and the pull pill, both drawn by js/segments.js, now live in
+      css/segments.css.
    3. The phone itself. Every app screen on this page is hand-built HTML in
       the app's own light palette, not a screenshot — it stays sharp at any
       size, reads to a screen reader, and costs no image bytes.
@@ -17,12 +18,9 @@
    ========================================================================== */
 
 :root {
-  --nav-h: 64px;
   --ease: cubic-bezier(.16, 1, .3, 1);
   --ease-std: cubic-bezier(.4, 0, .2, 1);
 }
-
-html { scroll-padding-top: var(--nav-h); }
 
 /* --- Scenes ------------------------------------------------------------- */
 
@@ -210,229 +208,7 @@ html { scroll-padding-top: var(--nav-h); }
   font-weight: 700;
 }
 
-/* --- Rail: a depth track (desktop) -------------------------------------
-   A hairline runs down the left edge and the chapter numbers hang off it in
-   depth, not in a row. segments.js gives each row three numbers: --s, its
-   signed distance from the section in view (negative above, positive below);
-   --d, the same without the sign; and --sg, the sign alone (-1, 0 or 1). The
-   current row (--d: 0) sits at the front, large, sharp and bright. Every step
-   away pushes a row further back (translateZ), so perspective shrinks it and
-   draws it toward the middle, and the opacity falls and the blur grows with
-   it. By --d 4 a row is gone. --sg opens a gap either side of the current row,
-   so its neighbours don't crowd it. The list is turned a little about the line
-   so the whole track leans away from the page. The sideways step in each row
-   cancels the lean's drift, so every number stays on the line, and the steps
-   are sized so the perspective squeeze never closes the gap between rows. ---- */
-
-.seg-rail {
-  position: fixed;
-  left: 32px;
-  top: 50%;
-  z-index: 9;
-  width: 0;
-  height: 0;
-  perspective: 600px;
-  perspective-origin: 0 50%;
-}
-
-.seg-rail ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  transform-style: preserve-3d;
-  transform-origin: 0 0;
-  transform: rotateY(12deg);
-}
-
-/* The track: 70vh of hairline centred on the row in view, fading at both ends. */
-.seg-rail ol::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: -35vh;
-  width: 1px;
-  height: 70vh;
-  background: var(--hairline-strong);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
-}
-
-/* Opacity is the max of three lines (1, .55, .32, .18 at --d 0 to 3), cut off
-   to nothing at 4. Blur is capped at --d 4 so a row is never smeared further. */
-.seg-rail li {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 0;
-  transform: translateY(calc(var(--s, 0) * 56px + var(--sg, 0) * 24px))
-    translateX(calc(min(var(--d, 0), 4) * 10.63px))
-    translateZ(calc(min(var(--d, 0), 4) * -50px));
-  opacity: calc(max(1 - var(--d, 0) * .45, .78 - var(--d, 0) * .23, .6 - var(--d, 0) * .14)
-    * clamp(0, 4 - var(--d, 0), 1));
-  filter: blur(calc(min(var(--d, 0), 4) * .45px));
-  transition: transform 700ms cubic-bezier(.2, .8, .2, 1), opacity 700ms cubic-bezier(.2, .8, .2, 1),
-    filter 700ms cubic-bezier(.2, .8, .2, 1);
-}
-
-/* Pointing at a row brings it forward, as long as it is still on the track. */
-.seg-rail li:hover,
-.seg-rail li:focus-within { opacity: 1; filter: none; }
-
-/* A row past --d 3 is scaled to nothing, not just faded, so the invisible ones
-   stacked behind the visible ones can't be clicked. */
-.seg-rail a {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px 6px 16px;
-  white-space: nowrap;
-  color: var(--text-3);
-  text-decoration: none;
-  line-height: 1;
-  transform: translateY(-50%) scale(clamp(0, calc((4 - var(--d, 0)) * 100), 1));
-  transform-origin: 0 50%;
-  transition: transform 700ms cubic-bezier(.2, .8, .2, 1);
-}
-
-.seg-rail__n {
-  flex: none;
-  width: 54px;
-  font-family: var(--sans);
-  font-size: 1.05rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  transition: font-size 500ms var(--ease), color 280ms var(--ease-std);
-}
-
-.seg-rail__t {
-  min-width: 0;
-  max-width: 110px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: .95rem;
-  transition: color 280ms var(--ease-std), font-weight 200ms var(--ease-std);
-}
-
-.seg-rail a:hover .seg-rail__n,
-.seg-rail a:hover .seg-rail__t { color: var(--text); }
-
-/* The marker for the row in view: a dot sitting on the track. */
-.seg-rail a::before {
-  content: "";
-  position: absolute;
-  left: -4px;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin-top: -4px;
-  border-radius: 50%;
-  background: var(--accent-text);
-  transform: scale(0);
-  transition: transform 500ms cubic-bezier(.2, .8, .2, 1);
-}
-
-.seg-rail a[aria-current]::before { transform: scale(1); }
-
-.seg-rail a[aria-current] .seg-rail__n {
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: var(--accent-text);
-}
-
-.seg-rail a[aria-current] .seg-rail__t {
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* Keep the page clear of the track where the side margins are thin. The widest
-   row is the current one: 16px of padding, the 54px number, an 8px gap, the
-   title at its cap and 10px of padding, all leaning away so it reads about
-   10% narrower than that. The strip reserved here is wider than that at each
-   step, and the title cap comes down with it. */
-@media (max-width: 1859px) {
-  html.is-segmented main,
-  html.is-segmented .product-hero { padding-left: 290px; }
-}
-
-@media (max-width: 1399px) {
-  .seg-rail__t { max-width: 100px; }
-
-  html.is-segmented main,
-  html.is-segmented .product-hero { padding-left: 246px; }
-}
-
-@media (max-width: 1199px) {
-  .seg-rail { left: 24px; }
-  .seg-rail__t { max-width: 90px; }
-
-  html.is-segmented main,
-  html.is-segmented .product-hero { padding-left: 202px; }
-}
-
-/* --- Pull pill: how far the page has been pushed toward the next section - */
-
-.seg-pull {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  z-index: 12;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px 12px;
-  border-radius: var(--r-pill);
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--hairline-strong);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
-  font-family: var(--sans);
-  font-size: .82rem;
-  font-weight: 600;
-  opacity: 0;
-  transform: translate(-50%, 12px);
-  transition: opacity .18s ease, transform .18s ease;
-  pointer-events: none;
-}
-
-.seg-pull.is-up {
-  bottom: auto;
-  top: calc(var(--nav-h) + 16px);
-  transform: translate(-50%, -12px);
-}
-
-.seg-pull.is-on { opacity: 1; transform: translate(-50%, 0); }
-
-.seg-pull__track {
-  width: 150px;
-  height: 3px;
-  border-radius: var(--r-pill);
-  background: var(--hairline-strong);
-  overflow: hidden;
-}
-
-.seg-pull__fill {
-  display: block;
-  height: 100%;
-  background: var(--accent);
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform .08s linear;
-}
-
 /* --- Segmented layout: one screen per section, one pinned phone --------- */
-
-html.is-segmented main .scene {
-  min-height: calc(100svh - var(--nav-h));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: clamp(1.25rem, .5rem + 2vh, 2.5rem);
-}
 
 html.is-segmented .story {
   width: 100%;
@@ -1270,16 +1046,7 @@ html.is-segmented .motion .stage,
 html.is-segmented .stage:not(.in) { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .seg-rail li,
-  .seg-rail__n,
-  .seg-rail__t,
-  .seg-rail a::before,
-  .seg-rail a,
-  .seg-pull,
-  .seg-pull__fill,
-  html.is-segmented .story__pin > .stage {
-    transition: none;
-  }
+  html.is-segmented .story__pin > .stage { transition: none; }
 }
 
 /* --- Values the mock-ups would otherwise carry in style="" ---------------
