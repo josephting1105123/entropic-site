@@ -87,6 +87,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scrollbar-color: var(--surface) var(--bg);
+  scrollbar-gutter: stable;
 }
 
 ::selection {
@@ -179,6 +180,7 @@ a {
   align-items: center;
   gap: 12px;
   min-height: 44px;
+  margin-right: auto;
   color: var(--text);
   text-decoration: none;
   font-weight: 700;
@@ -200,8 +202,8 @@ a {
 
 .mark svg { width: 16px; height: 16px; display: block; }
 
-/* The wordmark shortens where the full nav (or a narrow phone) leaves no room for it. */
-@media (max-width: 419px), (min-width: 720px) and (max-width: 899px) {
+/* The wordmark shortens on narrow phones, where the menu button and theme toggle leave no room for it. */
+@media (max-width: 519px) {
   .brand-rest { display: none; }
 }
 
@@ -211,31 +213,75 @@ a {
   gap: 4px;
 }
 
-.nav-link {
+/* Skip link: first focusable thing on the page. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 20;
+  padding: 10px 16px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  font-family: var(--sans);
+  text-decoration: none;
+}
+
+.skip-link:focus { top: 12px; }
+
+/* Menu button: opens the Projects drawer (js/nav.js), or follows its link to /#apps without JS. */
+.menu-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 12px;
-  color: var(--text-2);
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  font-family: var(--sans);
+  font-size: .95rem;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: var(--r-sm);
 }
 
-.nav-link:hover,
-.nav-link[aria-current="page"] { color: var(--text); }
+/* Extends the hit area to 44px without changing the 40px look. */
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+}
 
-.nav-link svg {
-  width: 12px;
-  height: 12px;
+.menu-btn:hover { background: var(--surface); }
+
+.menu-btn svg {
+  width: 18px;
+  height: 18px;
   flex: none;
-  margin-left: 4px;
 }
 
-.nav-compact { display: none; }
+@media (max-width: 519px) {
+  .menu-btn {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
 
-@media (max-width: 719px) {
-  .nav-full { display: none; }
-  .nav-compact { display: inline-flex; }
+  /* Visually hidden, still the accessible name. */
+  .menu-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 .theme-toggle {
@@ -265,6 +311,213 @@ a {
 .theme-toggle svg {
   width: 20px;
   height: 20px;
+}
+
+/* Projects drawer: built by js/nav.js. */
+html.drawer-open body { overflow: hidden; }
+
+dialog.drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  margin: 0;
+  width: min(360px, calc(100vw - 48px));
+  height: 100%;
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--hairline-strong);
+  background: var(--bg);
+  color: var(--text);
+  transform: translateX(-100%);
+  transition: transform 280ms cubic-bezier(.16, 1, .3, 1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+dialog.drawer[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer.open { transform: none; }
+
+.drawer::backdrop {
+  background: rgba(0, 0, 0, .55);
+  opacity: 0;
+  transition: opacity 280ms;
+}
+
+.drawer.open::backdrop { opacity: 1; }
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.drawer-head h2 { font-size: 1.5rem; }
+
+.drawer-close {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+}
+
+.drawer-close::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+}
+
+.drawer-close:hover { background: var(--surface); }
+
+.drawer-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Category / Platform switch: the thumb slides with data-view, no JS needed for the motion. */
+.view-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 16px 20px 4px;
+  padding: 4px;
+  background: var(--surface);
+  border-radius: var(--r-pill);
+}
+
+.view-switch::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  background: var(--card);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-pill);
+  transition: transform 250ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.view-switch[data-view="platform"]::before { transform: translateX(100%); }
+
+.view-switch button {
+  position: relative;
+  z-index: 1;
+  min-height: 36px;
+  border: 0;
+  background: transparent;
+  color: var(--text-2);
+  font: 600 .9rem var(--sans);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+}
+
+.view-switch button[aria-pressed="true"] { color: var(--text); }
+
+.drawer-groups {
+  flex: 1;
+  padding: 0 12px 16px;
+}
+
+.drawer-group h3 {
+  margin: 20px 8px 6px;
+  font: 600 .75rem/1.4 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-3);
+}
+
+.drawer-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drawer-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.drawer-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.drawer-name svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+.drawer-meta {
+  grid-column: 1;
+  font: .8rem var(--sans);
+  color: var(--text-3);
+}
+
+.drawer-link .src-badge {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+a.drawer-link:hover { background: var(--surface); }
+
+.drawer-link[aria-current="page"] { background: var(--accent-muted); }
+
+.drawer-link.is-soon { color: var(--text-2); }
+
+.src-badge {
+  font: 600 .72rem/1.5 var(--sans);
+  padding: 1px 8px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+.src-open {
+  background: var(--accent-muted);
+  color: var(--accent-text);
+}
+
+.src-closed {
+  background: var(--surface);
+  color: var(--text-2);
+  border: 1px solid var(--hairline-strong);
+}
+
+.drawer-foot {
+  padding: 16px 20px;
+  border-top: 1px solid var(--hairline);
+}
+
+.drawer-all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--accent-text);
+  font-family: var(--sans);
 }
 
 /* Hero */
@@ -508,6 +761,15 @@ canvas.field {
 
 .project-text { min-width: 0; max-width: 34rem; }
 
+/* Text-only card for a project that is not out yet. */
+.project-soon {
+  padding-block: clamp(2.5rem, 2rem + 3vw, 4rem);
+  border-top: 1px solid var(--hairline);
+  max-width: 34rem;
+}
+
+.project-soon p { color: var(--text-2); }
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -538,6 +800,34 @@ canvas.field {
   background: var(--surface);
   border-color: transparent;
   color: var(--warn);
+}
+
+.chip-link { text-decoration: none; }
+.chip-link:hover { color: var(--text); }
+
+.chip-closed {
+  background: var(--surface);
+  border-color: var(--hairline-strong);
+  color: var(--text-2);
+}
+
+.chip-soon {
+  background: var(--surface);
+  border-color: transparent;
+  color: var(--warn);
+}
+
+/* Small category label above a project name. */
+.cat-label {
+  display: block;
+  margin-bottom: .6rem;
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-3);
 }
 
 .project .project-text > p:not(.small) { font-size: 1.05rem; }
@@ -849,4 +1139,9 @@ canvas.field {
   }
 
   .btn-primary:active, .btn-secondary:active { transform: none; }
+
+  .drawer::backdrop { transition: none; }
 }
+
+/* The drawer moves focus to #apps after "All projects"; its links show their own ring. */
+#apps:focus { outline: none; }

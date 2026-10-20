@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MIF Finance &middot; Entropic Software Labs</title>
+  <meta name="description" content="MIF Finance is a Windows app for a church treasurer: weekly offerings, expense claims with their receipts, a monthly budget and a year-end report, all in one folder on one PC.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+  <link rel="canonical" href="https://entropicsoftwarelabs.com/mif-finance/">
+  <meta property="og:title" content="MIF Finance &middot; Entropic Software Labs">
+  <meta property="og:description" content="A Windows app for a church treasurer: offerings, expense claims, budget and a year-end report in one folder.">
+  <meta property="og:url" content="https://entropicsoftwarelabs.com/mif-finance/">
+  <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/mif.css">
+  <script src="/js/site.js" defer></script>
+  <script src="/js/nav.js" defer></script>
+  <script src="/js/mif-demo.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="menu-btn" id="menu-btn" href="/#apps">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span class="menu-label">Projects</span>
+      </a>
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="76 82 360 360" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <mask id="mark-liquid"><path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104z" fill="#fff" stroke="none"/><path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104" stroke="#000" stroke-width="60"/></mask>
+            <rect x="0" y="310" width="512" height="202" fill="currentColor" stroke="none" mask="url(#mark-liquid)"/>
+            <path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104"/>
+            <path d="M196 104h120"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
+      </a>
+      <div class="topbar-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon on-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero product-hero" id="content">
+    <div class="container">
+      <div class="project-text">
+        <span class="cat-label">Finance</span>
+        <h1>MIF Finance</h1>
+        <div class="chips">
+          <span class="chip">Windows</span>
+          <span class="chip chip-closed">Closed source</span>
+        </div>
+        <p class="lead">A Windows app for a church treasurer. Record each week's offering, pay back expense claims against their receipts, watch the budget month by month, and hand the year to the next treasurer as one folder.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#demo">Try the demo</a>
+        </div>
+      </div>
+      <div class="media media-mock">
+        <div class="mif-window mif-window-static" role="img" aria-label="MIF Finance's home screen: budget against actual, month by month">
+          <div class="mif-titlebar" aria-hidden="true">
+            <span class="mif-title">Example Church</span>
+            <span class="mif-year">2026</span>
+          </div>
+          <div class="mif-menu" aria-hidden="true">
+            <span class="mif-menu-item">Offering</span>
+            <span class="mif-menu-item">Expenses</span>
+            <span class="mif-menu-item">Budget</span>
+            <span class="mif-menu-item">Import / Export</span>
+            <span class="mif-menu-item">Settings</span>
+          </div>
+          <div class="mif-body" aria-hidden="true">
+            <p class="mif-heading">Budget vs Actual &middot; 2026</p>
+            <table class="mif-table">
+              <thead>
+                <tr><th scope="col">Month</th><th scope="col" class="mif-num">Income</th><th scope="col" class="mif-num">Expenses</th><th scope="col" class="mif-num">Surplus</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Jan</th><td class="mif-num">5,200</td><td class="mif-num">3,100</td><td class="mif-num">2,100</td></tr>
+                <tr><th scope="row">Feb</th><td class="mif-num">3,800</td><td class="mif-num">4,300</td><td class="mif-num mif-neg">-500</td></tr>
+                <tr><th scope="row">Mar</th><td class="mif-num">5,800</td><td class="mif-num">4,300</td><td class="mif-num">1,500</td></tr>
+                <tr><th scope="row">Apr</th><td class="mif-num">4,900</td><td class="mif-num">2,900</td><td class="mif-num">2,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="steps">
+      <div class="container">
+        <h2>How a week goes</h2>
+        <ol class="steps-list">
+          <li>
+            <h3>Open the service</h3>
+            <p>Create an activity for the service, camp or event: which income stream it belongs to, the date, a name and any remarks.</p>
+          </li>
+          <li>
+            <h3>Add who gave</h3>
+            <p>Add a row for each giver, or attach a payment screenshot and the app reads the amount and date off it. You check them. Cash with no name is recorded as a lump sum.</p>
+          </li>
+          <li>
+            <h3>Confirm</h3>
+            <p>Nothing is saved until you confirm. Then the totals on the home screen update.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="detail mif-demo-section" id="demo">
+      <div class="container">
+        <h2>Try it</h2>
+        <p class="small">Sample data from a made-up church. It runs in your browser and nothing is saved.</p>
+        <div class="mif-demo" id="mif-demo">
+          <p class="mif-demo-fallback">The demo needs JavaScript.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail">
+      <div class="container">
+        <h2>Details</h2>
+        <ul class="facts">
+          <li>One folder holds the program, the database, the receipts vault and the backups.</li>
+          <li>It backs up the database every time it opens and keeps the last 10.</li>
+          <li>Verify Vault re-checks the fingerprint of every receipt.</li>
+          <li>At year end it writes an Excel report and a one-page PDF summary. A handover zip adds every receipt, a list of which file belongs to which record, and the database.</li>
+          <li>Settings sit behind a password.</li>
+          <li>No account and no subscription. Handing over means giving the next treasurer the folder.</li>
+          <li>MIF Finance is closed source. It was built for one church's treasurer, so there is no public download.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year">2026</span> Entropic Software Labs</p>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://github.com/josephting1105123" rel="noopener">GitHub</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://offbridge.app/privacy.html" rel="noopener">OffBridge privacy policy</a>
+    </div>
+  </footer>
+</body>
+</html>

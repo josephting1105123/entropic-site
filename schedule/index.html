@@ -18,10 +18,12 @@
   <link rel="stylesheet" href="/css/schedule.css?v=3">
   <link rel="stylesheet" href="/css/phone.css?v=2">
   <script src="/js/site.js" defer></script>
+  <script src="/js/nav.js" defer></script>
   <script src="/js/phone.js?v=2" defer></script>
   <script src="/js/segments.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
 
   <!-- Icons. One sprite, referenced by <use> everywhere below. -->
   <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
@@ -46,6 +48,10 @@
 
   <div class="topbar">
     <div class="container topbar-inner">
+      <a class="menu-btn" id="menu-btn" href="/#apps">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span class="menu-label">Projects</span>
+      </a>
       <a class="brand" href="/">
         <span class="mark" aria-hidden="true">
           <svg viewBox="76 82 360 360" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" focusable="false">
@@ -57,12 +63,7 @@
         </span>
         <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
       </a>
-      <nav class="topbar-actions" aria-label="Main">
-        <a class="nav-link nav-full" href="https://offbridge.app/" rel="noopener">OffBridge<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
-        <a class="nav-link nav-full" href="/quick-vote/">Quick Vote</a>
-        <a class="nav-link nav-full" href="/schedule/" aria-current="page">Schedule</a>
-        <a class="nav-link nav-full" href="/card-games/">Card Games</a>
-        <a class="nav-link nav-compact" href="/#apps">Apps</a>
+      <div class="topbar-actions">
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
           <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <circle cx="12" cy="12" r="4"/>
@@ -72,22 +73,24 @@
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
           </svg>
         </button>
-      </nav>
+      </div>
     </div>
   </div>
 
-  <main data-story="today week month widgets tasks google">
+  <main id="content" data-story="today week month widgets tasks google">
     <span id="top"></span>
 
     <!-- ============================== 01 INTRO ============================== -->
     <section class="scene scene--hero" id="intro" data-chapter="Intro" aria-labelledby="intro-title">
       <div class="container scene__grid">
         <div class="scene__copy">
+          <span class="cat-label">Utilities</span>
           <h1 id="intro-title">The calendar you already have, laid out so you can read it.</h1>
           <div class="chips">
             <span class="chip">Android 10+</span>
             <span class="chip">Free</span>
             <span class="chip">No account</span>
+            <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Schedule" rel="noopener">Open source</a>
           </div>
           <p class="lead">
             Schedule reads the calendars already synced to your phone &mdash; Google, work,
