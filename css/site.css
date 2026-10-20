@@ -1075,7 +1075,7 @@ canvas.field {
 .motion .media-offbridge.tilting .shot-phone { transition: none; }
 
 .motion .media-offbridge:not(.in) .shot-phone {
-  transform: translate(18%, 10%) rotate(4deg);
+  transform: translateY(10%) rotate(4deg);
   opacity: .3;
 }
 
