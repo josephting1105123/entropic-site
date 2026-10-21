@@ -421,7 +421,7 @@
     buildStory();
     measure();
     if (!pill) buildPill();
-    if (!rail) buildRail();
+    if (!rail && document.body.getAttribute("data-rail") !== "off") buildRail();
     current = -1;
     paintActive();
   }
