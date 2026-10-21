@@ -149,25 +149,26 @@ html { scroll-padding-top: var(--nav-h); }
    row is the current one: 16px of padding, the 54px number, an 8px gap, the
    title at its cap and 10px of padding, all leaning away so it reads about
    10% narrower than that. The strip reserved here is wider than that at each
-   step, and the title cap comes down with it. */
+   step, and the title cap comes down with it. A page whose <body> has data-rail="off"
+   gets no rail and no gutter. */
 @media (max-width: 1859px) {
-  html.is-segmented main,
-  html.is-segmented header.scene { padding-left: 290px; }
+  html.is-segmented body:not([data-rail="off"]) main,
+  html.is-segmented body:not([data-rail="off"]) header.scene { padding-left: 290px; }
 }
 
 @media (max-width: 1399px) {
   .seg-rail__t { max-width: 100px; }
 
-  html.is-segmented main,
-  html.is-segmented header.scene { padding-left: 246px; }
+  html.is-segmented body:not([data-rail="off"]) main,
+  html.is-segmented body:not([data-rail="off"]) header.scene { padding-left: 246px; }
 }
 
 @media (max-width: 1199px) {
   .seg-rail { left: 24px; }
   .seg-rail__t { max-width: 90px; }
 
-  html.is-segmented main,
-  html.is-segmented header.scene { padding-left: 202px; }
+  html.is-segmented body:not([data-rail="off"]) main,
+  html.is-segmented body:not([data-rail="off"]) header.scene { padding-left: 202px; }
 }
 
 /* --- Pull pill: how far the page has been pushed toward the next section - */
