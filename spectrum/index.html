@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spectrum+ &middot; Entropic Software Labs</title>
+  <meta name="description" content="An unofficial Android app for UM Spectrum. It shows only your own occurrence's classes, posts and deadlines, and checks Spectrum for you in the background.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#e3e3e0">
+  <link rel="canonical" href="https://entropicsoftwarelabs.com/spectrum/">
+  <meta property="og:title" content="Spectrum+ &middot; Entropic Software Labs">
+  <meta property="og:description" content="An unofficial Android app for UM Spectrum. It shows only your own occurrence's classes, posts and deadlines, and checks Spectrum for you in the background.">
+  <meta property="og:url" content="https://entropicsoftwarelabs.com/spectrum/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Entropic Software Labs">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/spectrum.css">
+  <script src="/js/spectrum.js"></script>
+  <script src="/js/site.js" defer></script>
+  <script src="/js/nav.js" defer></script>
+</head>
+<body data-product="spectrum">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="76 82 360 360" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <mask id="mark-liquid"><path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104z" fill="#fff" stroke="none"/><path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104" stroke="#000" stroke-width="60"/></mask>
+            <rect x="0" y="310" width="512" height="202" fill="currentColor" stroke="none" mask="url(#mark-liquid)"/>
+            <path d="M216 104v104L128 372a32 32 0 0 0 28 48h200a32 32 0 0 0 28-48L296 208V104"/>
+            <path d="M196 104h120"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-short">Entropic</span><span class="brand-rest"> Software Labs</span></span>
+      </a>
+      <div class="topbar-actions">
+        <a class="menu-btn" id="menu-btn" href="/projects/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <span class="menu-label">Projects</span>
+        </a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun on-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon on-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <svg width="0" height="0" class="sp-defs" aria-hidden="true" focusable="false">
+  <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
+  <filter id="toner"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="1" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.0" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>
+</svg>
+
+  <main id="content" class="wrap sp-main">
+
+<section class="sheet hero-sheet" aria-labelledby="hero-title">
+  <header class="strip">
+    <p class="wordmark">Spectrum<span class="plus">+</span></p>
+    <a class="strip-link" href="#how-it-works">How it works</a>
+    <p class="stamp">UNOFFICIAL</p>
+  </header>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1 id="hero-title">See only <span class="hl" data-sweep="load">your classes</span>.</h1>
+      <p class="sub">Only your OCC's posts, checked for you. You just open the app.</p>
+      <div class="tickets">
+        <span class="ticket" aria-disabled="true" data-dl="play"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Google Play — <span class="nw">coming soon</span></span></span>
+        <span class="ticket" aria-disabled="true" data-dl="apk"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Download APK — <span class="nw">coming soon</span></span></span>
+      </div>
+      <p class="fine">Android only. Not on the Play Store yet.</p>
+    </div>
+
+    <div class="demo">
+      <h2 class="demo-title">Example posts</h2>
+      <p class="occ-label">Pick your OCC</p>
+      <div class="occ" id="occ" role="radiogroup" aria-label="Your OCC">
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">1</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">2</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">3</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">4</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">5</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">6</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">7</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0">8</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">9</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">10</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">11</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">12</button>
+      </div>
+      <p class="count" aria-live="polite" aria-atomic="true">Spectrum shows you 12 posts. You need <span class="hl" id="need">6</span>.</p>
+      <ul class="posts" id="posts">
+        <li class="post" data-occ="7,8,9"><span class="code">WIX1002</span><span><span class="row-title hl">Online tutorials and lab sessions for OCC7, OCC8, and OCC9</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post" data-occ="all"><span class="code">WIX1003</span><span><span class="row-title hl">Lecture shifted online due to haze</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post is-other" data-occ="10,11,12"><span class="code">WIA2001</span><span><span class="row-title">Occ 10, 11, 12: quiz venue moved to BK5</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post is-other" data-occ="3"><span class="code">WIA2001</span><span><span class="row-title">OCC/Group 3 lab report deadline extended</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post" data-occ="all"><span class="code">WIX1002</span><span><span class="row-title hl">No physical class this Thursday</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post is-other" data-occ="1,2"><span class="code">GIG1003</span><span><span class="row-title">OCC 1 and 2 replacement class, Saturday 9am</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post" data-occ="all"><span class="code">WIA2003</span><span><span class="row-title hl">Week 6 slides uploaded</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post" data-occ="8"><span class="code">WIA2003</span><span><span class="row-title hl--changed">OCC 8 tutorial moved to Friday 2pm</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post is-other" data-occ="4,5,6"><span class="code">WIX1003</span><span><span class="row-title">Occ 4, 5, 6 group presentations schedule</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post" data-occ="unclear"><span class="code">WIA2001</span><span><span class="row-title">K1 tutorial notes</span><span class="sr-only" hidden> (other occurrence)</span><span class="tag">may not apply</span></span></li>
+        <li class="post is-other" data-occ="11"><span class="code">WIA2003</span><span><span class="row-title">OCC 11 lab cancelled</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+        <li class="post is-other" data-occ="12"><span class="code">WIX1002</span><span><span class="row-title">Midterm seating plan for OCC 12</span><span class="sr-only"> (other occurrence)</span><span class="tag" hidden>may not apply</span></span></li>
+      </ul>
+      <p class="fine">Example posts in the format UM lecturers use. Not real announcements.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="cmp-title">
+  <h2 class="sec-title" id="cmp-title">The same Spectrum, minus the digging.</h2>
+  <table class="cmp">
+    <caption class="sr-only">Spectrum compared with Spectrum+</caption>
+    <thead>
+      <tr><th scope="col">On Spectrum</th><th scope="col">With Spectrum+</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Every OCC's posts, sections and deadlines</span></td>
+        <td data-label="With Spectrum+"><span class="hl">Only yours</span>, from your MAYA timetable and your Spectrum group</td>
+      </tr>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Open each course page to look for changes</span></td>
+        <td data-label="With Spectrum+">One Updates feed, newest first, searchable</td>
+      </tr>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Find out a class moved when you get there</span></td>
+        <td data-label="With Spectrum+">The class in your week gets a "changed" badge with the post</td>
+      </tr>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Remember your own deadlines</span></td>
+        <td data-label="With Spectrum+">Reminders 24 h and 3 h before anything you haven't submitted</td>
+      </tr>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Find the assignment page to hand in</span></td>
+        <td data-label="With Spectrum+">Attach your files and submit from the Due tab</td>
+      </tr>
+      <tr>
+        <td data-label="On Spectrum"><span class="strike">Open Spectrum to check</span></td>
+        <td data-label="With Spectrum+">It checks every 30 minutes and notifies you</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="sec" id="how-it-works" aria-labelledby="how-title">
+  <h2 class="sec-title" id="how-title">Open it. Your week, your updates, what's due.</h2>
+  <p class="note">Example data.</p>
+  <div class="c-grid">
+
+    <article class="sheet panel p-week">
+      <h3>Week</h3>
+      <div class="tt" role="group" aria-label="Example week, Monday to Friday">
+        <div class="tt-hours" aria-hidden="true">
+          <span>08:00</span><span>09:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span><span>18:00</span>
+        </div>
+        <div class="tt-day">
+          <h4 class="tt-dayname">Mon</h4>
+          <ul class="tt-list">
+            <li class="cls cls--old r3"><span class="time">10:00-12:00</span><span><strong>WIA2003</strong> Tutorial · OCC 8</span><span class="where">BK3</span><span class="sr-only">Old slot, moved</span></li>
+            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIX1003</strong> Lecture</span></li>
+          </ul>
+        </div>
+        <div class="tt-day">
+          <h4 class="tt-dayname">Tue</h4>
+          <ul class="tt-list">
+            <li class="cls r3"><span class="time">10:00-12:00</span><span><strong>WIX1002</strong> Lecture</span><span class="where">DK1</span></li>
+            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIA2001</strong> Tutorial · OCC 8</span><span class="where">BK5</span></li>
+          </ul>
+        </div>
+        <div class="tt-day">
+          <h4 class="tt-dayname">Wed</h4>
+          <ul class="tt-list">
+            <li class="cls r2"><span class="time">09:00-11:00</span><span><strong>GIG1003</strong> Lecture</span></li>
+          </ul>
+        </div>
+        <div class="tt-day">
+          <h4 class="tt-dayname">Thu</h4>
+          <ul class="tt-list">
+            <li class="cls r2"><span class="time">09:00-11:00</span><span><strong>WIX1002</strong> Tutorial · OCC 8</span></li>
+            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIA2003</strong> Lab · OCC 8</span></li>
+          </ul>
+        </div>
+        <div class="tt-day">
+          <h4 class="tt-dayname">Fri</h4>
+          <ul class="tt-list">
+            <li class="cls r7"><span class="time">14:00-16:00</span><span class="hl--changed" data-sweep="scroll"><strong>WIA2003</strong> Tutorial · OCC 8</span><span class="cls-moved">Moved</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="tt-note"><span class="hl--changed" data-sweep="scroll">Moved:</span> from the post "OCC 8 tutorial moved to Friday 2pm". The old Mon 10:00 BK3 slot is struck through.</p>
+    </article>
+
+    <article class="sheet panel p-updates">
+      <h3>Updates</h3>
+      <ul class="feed">
+        <li>
+          <p class="meta"><span class="code">WIX1002</span><span>2 h ago</span></p>
+          <p class="item-title"><span class="hl">No physical class this Thursday</span></p>
+        </li>
+        <li>
+          <p class="meta"><span class="code">WIA2003</span><span>5 h ago</span></p>
+          <p class="item-title"><span class="hl">Week 6 slides uploaded</span><span class="badge">New material</span></p>
+        </li>
+        <li>
+          <p class="meta"><span class="code">WIX1003</span><span>Yesterday</span></p>
+          <p class="item-title"><span class="hl">Lecture shifted online due to haze</span></p>
+        </li>
+      </ul>
+    </article>
+
+    <article class="sheet panel p-due">
+      <h3>Due</h3>
+      <ul class="feed">
+        <li>
+          <p class="meta"><span class="code">WIA2003</span><span>due today 6:00 pm</span></p>
+          <p class="item-title"><span class="hl--due">Lab 3 · OCC 8 submission</span></p>
+          <p class="state state--open">Not submitted</p>
+          <p class="state">Reminder sent 3 h before</p>
+          <p class="state">Submit from the app: attach files and hand in.</p>
+        </li>
+        <li>
+          <p class="meta"><span class="code">WIX1002</span><span>due Fri 11:59 pm</span></p>
+          <p class="item-title">Assignment 2</p>
+          <p class="state">Submitted</p>
+        </li>
+        <li>
+          <p class="meta"><span class="code">WIX1003</span><span>due Mon 9:00 am</span></p>
+          <p class="item-title">Tutorial worksheet 4</p>
+          <p class="state">Submitted</p>
+        </li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="bg-title">
+  <div class="split">
+    <div>
+      <h2 class="sec-title" id="bg-title">It checks Spectrum so you don't have to.</h2>
+      <p>Spectrum+ checks Spectrum in the background every 30 minutes. You get a notification for new announcements, assignments and materials that apply to your OCC.</p>
+      <p>Opening the app refreshes announcements and due dates within a minute, so you never wait for the next check.</p>
+    </div>
+    <figure class="widget">
+      <div class="sheet widget-card">
+        <div class="widget-head"><p class="widget-title">Today</p><p class="widget-count">2 classes</p></div>
+        <ul class="widget-list">
+          <li><span>WIX1002 Lecture</span><span class="at">10:00 DK1</span></li>
+          <li><span>WIA2001 Tutorial</span><span class="at">14:00 BK5</span></li>
+        </ul>
+        <p class="widget-due">Next due: <span class="hl--due">Lab 3, 6:00 pm</span></p>
+      </div>
+      <figcaption class="fine">Home-screen widget: today's classes and your next deadline.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="login-title">
+  <div class="split split--text">
+    <h2 class="sec-title" id="login-title">Your login stays with Microsoft.</h2>
+    <ul class="fact-list">
+      <li>Sign in with your UM Microsoft account (your siswa365 address), the same way Spectrum does.</li>
+      <li>The password goes to Microsoft only. The app keeps just the Spectrum token, encrypted on your phone.</li>
+      <li>Your posts, timetable and deadlines stay on your phone. The app talks to Spectrum and nothing else.</li>
+      <li>Your OCC for each course comes from your MAYA timetable, cross-checked with your Spectrum group. When a post doesn't say which OCC, it's shown and labelled instead of hidden.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="full-title">
+  <h2 class="sec-title" id="full-title">Need the full Spectrum page? It's one tap away.</h2>
+  <p>Every item has "Open in Spectrum". It opens the real page inside the app, restyled for your phone, with sections for other occurrences hidden. Quizzes and attendance happen there, on Spectrum itself.</p>
+</section>
+
+<section class="sec" aria-labelledby="close-title">
+  <div class="sheet close">
+    <h2 class="close-title" id="close-title"><span class="hl">Stop digging</span> through Spectrum.</h2>
+    <div class="tickets">
+      <span class="ticket" aria-disabled="true" data-dl="play"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Google Play — <span class="nw">coming soon</span></span></span>
+      <span class="ticket" aria-disabled="true" data-dl="apk"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Download APK — <span class="nw">coming soon</span></span></span>
+    </div>
+    <p class="fine">Android only.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap foot sp-foot">
+  <p>Spectrum+ is an unofficial app made by Entropic Software Labs. It is not affiliated with, endorsed by or supported by Universiti Malaya. Spectrum is Universiti Malaya's learning platform.</p>
+  <p class="fine">© 2026 Entropic Software Labs</p>
+</footer>
+</body>
+</html>
