@@ -118,5 +118,30 @@
     } else {
       onScroll.forEach((el) => el.classList.add('swept'));
     }
+
+    // Reveal blocks: CSS holds them at their start state (only under .motion) until they scroll into view.
+    if (root.classList.contains('motion') && 'IntersectionObserver' in window) {
+      const rio = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            rio.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.35 });
+      document.querySelectorAll('[data-reveal]').forEach((el) => rio.observe(el));
+
+      // html.story-live is on while a story section covers the middle of the viewport. The segmented
+      // phone screens only play while it is set, so each one replays when you arrive from outside the story.
+      const storySecs = ['week', 'updates', 'due', 'checks'].map((id) => document.getElementById(id)).filter(Boolean);
+      const live = new Set();
+      const sio = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) live.add(en.target); else live.delete(en.target);
+        });
+        root.classList.toggle('story-live', live.size > 0);
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      storySecs.forEach((el) => sio.observe(el));
+    }
   });
 })();
