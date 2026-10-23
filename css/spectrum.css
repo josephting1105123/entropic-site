@@ -717,7 +717,7 @@ html.is-book .cmp td{padding:var(--sp-2) var(--sp-4)}
 html.is-book .scene__copy p+p{margin-top:var(--sp-3)}
 html.is-book .close{padding:0;background:none;box-shadow:none;gap:var(--sp-4)}
 html.is-book .course-copy{padding:var(--sp-3);gap:var(--sp-2)}
-html.is-book .page .sp-foot{max-width:none;margin:0;padding:var(--sp-4) 0 0;gap:var(--sp-1)}
+html.is-book .page .sp-foot{max-width:none;margin:auto 0 0;padding:var(--sp-4) 0 0;gap:var(--sp-1)}
 html.is-book .page .sp-foot p{font-size:.8rem;line-height:1.4;max-width:none}
 html.is-book .page .sp-foot .fine{font-size:.75rem}
 
