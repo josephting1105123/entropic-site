@@ -302,7 +302,7 @@ a.ticket:active{transform:translateY(1px)}
 .foot{padding-top:var(--sp-8);padding-bottom:var(--sp-7);display:grid;gap:var(--sp-3)}
 .foot p{font-size:.95rem}
 
-/* scenes (unsegmented first; the story layout is further down) */
+/* scenes */
 .scene__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-7)}
 @media (min-width:900px){.scene__grid{grid-template-columns:minmax(0,1fr) minmax(0,320px);align-items:center}}
 .scene__copy{min-width:0}
@@ -405,58 +405,6 @@ a.ticket:active{transform:translateY(1px)}
   mix-blend-mode:multiply;
 }
 
-/* segmented desktop: sectioned scroll, chapter rail, one sticky phone (mirrors the Schedule page) */
-html.is-segmented .sp-main .story{
-  width:100%;max-width:1120px;margin-inline:auto;padding-inline:0;
-  display:grid;grid-template-columns:minmax(0,1fr) 320px;
-  gap:clamp(2.5rem,2rem + 3vw,4.5rem);
-}
-@media (max-width:1199px){html.is-segmented .sp-main .story{grid-template-columns:minmax(0,1fr) 272px}}
-html.is-segmented .sp-main .story__copy{min-width:0}
-html.is-segmented .sp-main .story .scene__grid{display:block;width:100%;max-width:none;padding-inline:0}
-html.is-segmented .sp-main .story__stage{position:relative;min-width:0}
-html.is-segmented .sp-main .story__pin{
-  position:sticky;overflow-anchor:none;
-  top:calc(var(--nav-h,64px) + 16px);
-  height:calc(100svh - var(--nav-h,64px) - 32px);
-  display:grid;align-items:center;
-}
-html.is-segmented .sp-main .story__pin>.stage{
-  grid-area:1 / 1;width:100%;
-  opacity:0;visibility:hidden;
-  transform:translateY(14px) scale(.985);
-  transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s;
-}
-html.is-segmented .sp-main .story__pin>.stage.is-active{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-html.is-segmented .sp-main .story__pin .phone{max-width:min(320px,calc((100svh - var(--nav-h,64px) - 64px) * .4615))}
-html.is-segmented .sp-main .story .sec-title{font-size:clamp(2.25rem,3.2vw,3.25rem)}
-/* main is padded for the rail, so the hero sheet no longer bleeds out to the window edges */
-html.is-segmented .sp-main .hero-sheet{margin-inline:0;min-height:calc(100svh - var(--nav-h,64px) - 2 * var(--sp-5))}
-html.is-segmented .sp-main .hero-sheet>.strip,
-html.is-segmented .sp-main .hero-sheet>.hero-grid{width:100%}
-
-/* chapter rail and pull pill in paper colours (the page is light in both site themes) */
-body[data-product="spectrum"] .seg-rail ol::before{background:var(--toner)}
-body[data-product="spectrum"] .seg-rail a{color:var(--toner-2);font-family:var(--sp-font)}
-body[data-product="spectrum"] .seg-rail a::before{background:var(--toner)}
-body[data-product="spectrum"] .seg-rail a:hover .seg-rail__n,
-body[data-product="spectrum"] .seg-rail a:hover .seg-rail__t{color:var(--toner)}
-body[data-product="spectrum"] .seg-rail__n{font-family:var(--sp-font)}
-body[data-product="spectrum"] .seg-rail a[aria-current] .seg-rail__n{
-  color:var(--toner);
-  background-image:linear-gradient(var(--hl-yours),var(--hl-yours));
-  background-repeat:no-repeat;background-position:0 60%;background-size:100% 82%;
-  mix-blend-mode:multiply;
-  border-radius:.2em .5em .3em .4em;
-}
-body[data-product="spectrum"] .seg-rail a[aria-current] .seg-rail__t{color:var(--toner)}
-body[data-product="spectrum"] .seg-pull{
-  background:var(--sheet);color:var(--toner);border:1.5px solid var(--toner);
-  font-family:var(--sp-font);
-}
-body[data-product="spectrum"] .seg-pull__track{background:var(--rule)}
-body[data-product="spectrum"] .seg-pull__fill{background:var(--toner)}
-
 /* topbar and Projects drawer in the photocopy look. Tokens are redefined on body so site.css's
    dark/light/product blocks all resolve to paper values. :root:root:root beats the (0,3,0)
    ":root[data-theme=light] [data-product=spectrum]" and ":root:not([data-theme=dark]) [data-product=spectrum]" blocks. */
@@ -558,13 +506,13 @@ body[data-product="spectrum"] .drawer-foot .drawer-all:hover{background:var(--hl
 .motion .scene__copy{transition:opacity 600ms var(--ease),transform 600ms var(--ease)}
 .motion .scene__copy:not(.in){opacity:0;transform:translateY(20px)}
 
-/* Off the segmented path the phone lands like a sheet of paper. Segmented stages swap on .is-active instead. */
-html:not(.is-segmented).motion .stage{transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
-html:not(.is-segmented).motion .stage:not(.in){opacity:0;transform:translateY(28px) rotate(1.5deg)}
+/* The phone lands like a sheet of paper when its page (or its place in the scroll) comes into view. */
+.motion .stage{transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+.motion .stage:not(.in){opacity:0;transform:translateY(28px) rotate(1.5deg)}
 
-/* Screen choreography. "Screen on" is .stage.in when not segmented and .stage.is-active when segmented.
-   The resting state under .motion is the hidden one; the :is() list below switches it on (segmented also needs html.story-live, set by js/spectrum.js while a story section covers mid-viewport), and it snaps
-   back .4s after the stage has faded out, so the screen replays every time it comes back. */
+/* Screen choreography. "Screen on" is .stage.in (set by the scroll observer, or by the book page hooks).
+   The resting state under .motion is the hidden one; .motion .stage.in switches it on, and it snaps back .4s after
+   the stage has gone, so the screen replays every time it comes back. */
 .screen-body>*{--i:0}
 .screen-body>:nth-child(2){--i:1}
 .screen-body>:nth-child(3){--i:2}
@@ -586,27 +534,27 @@ html:not(.is-segmented).motion .stage:not(.in){opacity:0;transform:translateY(28
   opacity:0;transform:translateY(.6em);
   transition:opacity 0s linear .4s,transform 0s linear .4s;
 }
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) .screen-body :is(.day,.search,.screen-note,li){
+.motion .stage.in .screen-body :is(.day,.search,.screen-note,li){
   opacity:1;transform:none;
   transition:opacity 360ms var(--ease) var(--rd),transform 360ms var(--ease) var(--rd);
 }
 
 .motion [data-ink]{background-size:0% 82%;transition:background-size 0s linear .4s}
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) [data-ink]{
+.motion .stage.in [data-ink]{
   background-size:100% 82%;
   transition:background-size 520ms var(--ease) 420ms;
 }
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) .screen--week [data-ink]{transition-delay:720ms}
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) .screen--home [data-ink]{transition-delay:800ms}
+.motion .stage.in .screen--week [data-ink]{transition-delay:720ms}
+.motion .stage.in .screen--home [data-ink]{transition-delay:800ms}
 
 .motion .row--old .row-main::after{transform:rotate(-1.2deg) scaleX(0);transition:transform 0s linear .4s}
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) .row--old .row-main::after{
+.motion .stage.in .row--old .row-main::after{
   transform:rotate(-1.2deg) scaleX(1);
   transition:transform 420ms var(--ease) 300ms;
 }
 
 .motion .notif{transform:translateY(-140%);opacity:0;transition:transform 0s linear .4s,opacity 0s linear .4s}
-:is(html:not(.is-segmented).motion .stage.in,html.is-segmented.motion.story-live .story__pin>.stage.is-active) .notif{
+.motion .stage.in .notif{
   transform:none;opacity:1;
   transition:transform 520ms var(--ease) 250ms,opacity 520ms var(--ease) 250ms;
 }
@@ -643,6 +591,153 @@ html:not(.is-segmented).motion .stage:not(.in){opacity:0;transform:translateY(28
 .motion .course-copy:not(.in) .cc--yours{background-size:0% 100%}
 .motion .course-copy .cc--other .cc-title::after{transition-delay:200ms}
 .motion .course-copy .cc--yours~.cc--other .cc-title::after{transition-delay:340ms}
+
+/* Book mode. js/spectrum.js adds html.is-book on desktop and wraps the sections in .book, one paper page each.
+   Everything below is under html.is-book, so mobile, no-JS and narrow windows keep the long scrolling page. */
+html.is-book,html.is-book body{overflow:hidden}
+html.is-book .sp-main{
+  max-width:1280px;
+  padding-block:var(--sp-5);
+  padding-inline:var(--gut) calc(var(--gut) + 76px);
+}
+.book{
+  --flip:cubic-bezier(.45,.05,.25,1);
+  --ph:min(300px,calc(100svh - 64px - 2 * var(--sp-5) - 2 * var(--sp-6)) * .4615);
+  position:relative;isolation:isolate;
+  width:min(100%,1180px);
+  height:calc(100svh - 64px - 2 * var(--sp-5));
+  margin-inline:auto;
+  perspective:2200px;
+  transform:rotate(-.6deg);
+}
+/* the stack of sheets under the top page */
+.book::before,.book::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--sheet);
+  border-radius:2px 3px 2px 4px;
+  box-shadow:3px 14px 34px -8px rgba(31,30,28,.32),0 1px 3px rgba(31,30,28,.18);
+}
+.book::before{transform:translate(5px,6px) rotate(.45deg)}
+.book::after{transform:translate(10px,12px) rotate(-.3deg)}
+
+html.is-book .page{
+  position:absolute;inset:0;
+  z-index:calc(var(--pn,9) - var(--pi,0));
+  display:flex;flex-direction:column;
+  margin:0;min-height:0;overflow:hidden;overflow:clip;
+  padding:var(--sp-6) var(--sp-7);
+  background:radial-gradient(ellipse 125% 105% at 50% 45%,transparent 58%,rgba(31,30,28,.11) 100%),var(--sheet);
+  border-radius:2px 3px 2px 4px;
+  box-shadow:3px 14px 34px -8px rgba(31,30,28,.32),0 1px 3px rgba(31,30,28,.18);
+  transform-origin:left center;
+  transform:rotateY(0deg);
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  visibility:hidden;
+  transition:transform 700ms var(--flip) var(--fd,0ms),visibility 0s linear calc(700ms + var(--fd,0ms));
+}
+html.is-book .page.is-turned{transform:rotateY(-180deg);z-index:calc(var(--pn,9) + var(--pi,0))}
+html.is-book .page.is-current{visibility:visible;transition:transform 700ms var(--flip) var(--fd,0ms),visibility 0s}
+/* shade toward the spine while a page is turned, and the shadow a page casts on the one beneath it */
+html.is-book .page::before,html.is-book .page::after{
+  content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  transition:opacity 700ms var(--flip) var(--fd,0ms);
+}
+html.is-book .page::after{background:linear-gradient(to right,rgba(31,30,28,.28),transparent 70%);opacity:0}
+html.is-book .page.is-turned::after{opacity:1}
+html.is-book .page::before{background:linear-gradient(to right,rgba(31,30,28,.22),rgba(31,30,28,.05));opacity:1}
+html.is-book .page.is-current::before{opacity:0}
+.book.is-still .page,.book.is-still .page::before,.book.is-still .page::after{transition:none!important}
+/* the hero lands with its own animation outside book mode; here the book does the landing */
+html.is-book.motion .hero-sheet{animation:none}
+
+html.is-book .page-in{flex:1 1 0;min-height:0;min-width:0;display:flex;flex-direction:column}
+html.is-book .page-in>:first-child{margin-top:auto}
+html.is-book .page-in>:last-child{margin-bottom:auto}
+html.is-book .page-in.is-fit{
+  transform:translateY(var(--fit-y,0px)) scale(var(--fit));transform-origin:top center;
+  width:calc(100% / var(--fit));
+  margin-inline:calc(50% * (1 - 1 / var(--fit)));
+  flex:0 0 100%;
+}
+.book.is-measuring .page-in *{transform:none!important;transition:none!important;animation:none!important}
+html.is-book .page-no{position:absolute;right:var(--sp-5);bottom:var(--sp-3);margin:0;line-height:1;font-variant-numeric:tabular-nums}
+
+/* index tabs */
+.book-tabs{position:absolute;top:var(--sp-5);left:100%;z-index:40;margin-left:-10px}
+.book-tabs ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.book-tabs button{
+  display:flex;align-items:center;gap:.45em;
+  width:86px;min-height:34px;margin:0;padding:0 .5em 0 16px;
+  font-family:var(--sp-font);
+  font-stretch:66%;font-weight:800;font-size:.85rem;line-height:1;text-align:left;
+  color:var(--toner);background:var(--paper-2);
+  border:1.5px solid var(--toner);border-left:0;border-radius:0 .45em .55em 0;
+  box-shadow:2px 3px 6px -2px rgba(31,30,28,.3);
+  cursor:pointer;
+  transition:transform 220ms var(--ease),background-color 220ms var(--ease);
+}
+.book-tabs button:hover{transform:translateX(3px)}
+.book-tabs button[aria-current="page"]{background:var(--sheet);transform:translateX(5px)}
+.tab-n{flex:none;color:var(--toner-2);font-variant-numeric:tabular-nums}
+.tab-t{
+  min-width:0;white-space:nowrap;padding-inline:.14em;margin-inline:-.14em;
+  border-radius:.2em .5em .3em .4em;
+}
+.book-tabs button[aria-current="page"] .tab-t{
+  background-image:linear-gradient(var(--hl-yours),var(--hl-yours));
+  background-repeat:no-repeat;background-position:0 60%;background-size:100% 82%;
+  mix-blend-mode:multiply;
+}
+
+/* compact layouts, so every page fits the book */
+html.is-book .sec-title{font-size:clamp(2rem,5.2vh,3.25rem);margin-bottom:var(--sp-4)}
+html.is-book .sp-main h1{font-size:clamp(2.6rem,9vh,5.5rem)}
+html.is-book .close-title{font-size:clamp(2.6rem,9vh,5rem)}
+html.is-book .scene__grid{grid-template-columns:minmax(0,1fr) var(--ph);gap:var(--sp-6);align-items:center}
+html.is-book #full-page .scene__grid{grid-template-columns:minmax(0,1fr) minmax(0,340px)}
+html.is-book .phone{max-width:var(--ph)}
+html.is-book .stage{align-self:center}
+
+html.is-book .hero-sheet{margin:0;min-height:0;--tilt:0deg}
+html.is-book .hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-6);align-items:center}
+html.is-book .strip{padding-bottom:var(--sp-3);margin-bottom:var(--sp-4)}
+html.is-book .hero-copy{gap:var(--sp-4)}
+html.is-book .demo{padding:var(--sp-3)}
+html.is-book .occ-label{margin-top:var(--sp-2)}
+html.is-book .occ{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--sp-1);margin-top:var(--sp-1)}
+html.is-book .occ button{min-height:36px}
+html.is-book .count{margin-top:var(--sp-2);font-size:.95rem}
+html.is-book .posts{margin-top:var(--sp-2)}
+html.is-book .post{grid-template-columns:4.6rem minmax(0,1fr);gap:var(--sp-2);padding:3px 0;font-size:.85rem;line-height:1.3}
+html.is-book .demo .fine{font-size:.8rem}
+
+html.is-book .cmp th{padding:var(--sp-2) var(--sp-4)}
+html.is-book .cmp td{padding:var(--sp-2) var(--sp-4)}
+
+html.is-book .scene__copy p+p{margin-top:var(--sp-3)}
+html.is-book .close{padding:0;background:none;box-shadow:none;gap:var(--sp-4)}
+html.is-book .course-copy{padding:var(--sp-3);gap:var(--sp-2)}
+html.is-book .page .sp-foot{max-width:none;margin:0;padding:var(--sp-4) 0 0;gap:var(--sp-1)}
+html.is-book .page .sp-foot p{font-size:.8rem;line-height:1.4;max-width:none}
+html.is-book .page .sp-foot .fine{font-size:.75rem}
+
+/* print: undo the book and let the pages run one after another */
+@media print{
+  html.is-book,html.is-book body{overflow:visible}
+  html.is-book .sp-main{padding-inline:var(--gut)}
+  html.is-book .book{height:auto;width:auto;transform:none;perspective:none}
+  html.is-book .book::before,html.is-book .book::after{display:none}
+  html.is-book .page{
+    position:static;z-index:auto;height:auto;overflow:visible;
+    visibility:visible!important;transform:none!important;
+    break-after:page;page-break-after:always;
+  }
+  html.is-book .page:last-of-type{break-after:auto;page-break-after:auto}
+  html.is-book .page::before,html.is-book .page::after{display:none}
+  html.is-book .page-in{flex:none;min-height:auto}
+  html.is-book .page-in.is-fit{transform:none;width:auto;margin-inline:0;flex:none}
+  html.is-book .book-tabs{display:none}
+}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
