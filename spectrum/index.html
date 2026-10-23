@@ -18,10 +18,12 @@
   <link rel="preload" href="/assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/spectrum.css">
   <script src="/js/spectrum.js"></script>
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
 <body data-product="spectrum">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -61,12 +63,13 @@
   <filter id="toner"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="1" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.0" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>
 </svg>
 
-  <main id="content" class="wrap sp-main">
+  <main id="content" class="wrap sp-main" data-story="week updates due checks">
+<span id="top"></span>
 
-<section class="sheet hero-sheet" aria-labelledby="hero-title">
+<section class="sheet hero-sheet scene" id="intro" data-chapter="Intro" aria-labelledby="hero-title">
   <header class="strip">
     <p class="wordmark">Spectrum<span class="plus">+</span></p>
-    <a class="strip-link" href="#how-it-works">How it works</a>
+    <a class="strip-link" href="#week">How it works</a>
     <p class="stamp">UNOFFICIAL</p>
   </header>
   <div class="hero-grid">
@@ -117,9 +120,9 @@
   </div>
 </section>
 
-<section class="sec" aria-labelledby="cmp-title">
-  <h2 class="sec-title" id="cmp-title">The same Spectrum, minus the digging.</h2>
-  <table class="cmp">
+<section class="sec scene" id="compare" data-chapter="Compare" aria-labelledby="cmp-title">
+  <h2 class="sec-title" id="cmp-title">The same Spectrum, <span class="hl" data-sweep="scroll">minus the digging</span>.</h2>
+  <table class="cmp" data-reveal>
     <caption class="sr-only">Spectrum compared with Spectrum+</caption>
     <thead>
       <tr><th scope="col">On Spectrum</th><th scope="col">With Spectrum+</th></tr>
@@ -153,123 +156,181 @@
   </table>
 </section>
 
-<section class="sec" id="how-it-works" aria-labelledby="how-title">
-  <h2 class="sec-title" id="how-title">Open it. Your week, your updates, what's due.</h2>
-  <p class="note">Example data.</p>
-  <div class="c-grid">
-
-    <article class="sheet panel p-week">
-      <h3>Week</h3>
-      <div class="tt" role="group" aria-label="Example week, Monday to Friday">
-        <div class="tt-hours" aria-hidden="true">
-          <span>08:00</span><span>09:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span><span>18:00</span>
-        </div>
-        <div class="tt-day">
-          <h4 class="tt-dayname">Mon</h4>
-          <ul class="tt-list">
-            <li class="cls cls--old r3"><span class="time">10:00-12:00</span><span><strong>WIA2003</strong> Tutorial · OCC 8</span><span class="where">BK3</span><span class="sr-only">Old slot, moved</span></li>
-            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIX1003</strong> Lecture</span></li>
+<section class="sec scene" id="week" data-chapter="Week" aria-labelledby="week-title">
+  <div class="scene__grid">
+    <div class="scene__copy">
+      <h2 class="sec-title" id="week-title">Your week, with <span class="hl--changed" data-sweep="scroll">the moved class</span> marked.</h2>
+      <p>The Week tab is your timetable from MAYA. When a post moves one of your classes, that class gets a changed badge and a link to the post that moved it.</p>
+      <p class="fine">Example data.</p>
+    </div>
+    <div class="stage">
+      <figure class="phone">
+        <div class="screen screen--week">
+          <div class="app-bar"><p class="app-title">Spectrum<span class="plus">+</span></p><p class="app-ex">Example</p></div>
+          <ul class="tabs">
+            <li class="is-on" aria-current="page">Week</li>
+            <li>Updates</li>
+            <li>Due</li>
+            <li>Courses</li>
           </ul>
+          <div class="screen-body">
+            <p class="day">Mon</p>
+            <ul class="rows">
+              <li class="row row--old"><span class="row-main"><strong>WIA2003</strong> Tutorial · OCC 8</span><span class="row-at">10:00 BK3</span><span class="sr-only">old slot, moved</span></li>
+              <li class="row"><span class="row-main"><strong>WIX1003</strong> Lecture</span><span class="row-at">14:00</span></li>
+            </ul>
+            <p class="day">Tue</p>
+            <ul class="rows">
+              <li class="row"><span class="row-main"><strong>WIX1002</strong> Lecture</span><span class="row-at">10:00 DK1</span></li>
+              <li class="row"><span class="row-main"><strong>WIA2001</strong> Tutorial · OCC 8</span><span class="row-at">14:00 BK5</span></li>
+            </ul>
+            <p class="day">Thu</p>
+            <ul class="rows">
+              <li class="row"><span class="row-main"><strong>WIX1002</strong> Tutorial · OCC 8</span><span class="row-at">09:00</span></li>
+              <li class="row"><span class="row-main"><strong>WIA2003</strong> Lab · OCC 8</span><span class="row-at">14:00</span></li>
+            </ul>
+            <p class="day">Fri</p>
+            <ul class="rows">
+              <li class="row"><span class="row-main"><span class="hl--changed" data-ink><strong>WIA2003</strong> Tutorial · OCC 8</span> <span class="badge">Moved</span></span><span class="row-at">14:00</span></li>
+            </ul>
+            <p class="screen-note">Moved: from the post "OCC 8 tutorial moved to Friday 2pm"</p>
+          </div>
         </div>
-        <div class="tt-day">
-          <h4 class="tt-dayname">Tue</h4>
-          <ul class="tt-list">
-            <li class="cls r3"><span class="time">10:00-12:00</span><span><strong>WIX1002</strong> Lecture</span><span class="where">DK1</span></li>
-            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIA2001</strong> Tutorial · OCC 8</span><span class="where">BK5</span></li>
-          </ul>
-        </div>
-        <div class="tt-day">
-          <h4 class="tt-dayname">Wed</h4>
-          <ul class="tt-list">
-            <li class="cls r2"><span class="time">09:00-11:00</span><span><strong>GIG1003</strong> Lecture</span></li>
-          </ul>
-        </div>
-        <div class="tt-day">
-          <h4 class="tt-dayname">Thu</h4>
-          <ul class="tt-list">
-            <li class="cls r2"><span class="time">09:00-11:00</span><span><strong>WIX1002</strong> Tutorial · OCC 8</span></li>
-            <li class="cls r7"><span class="time">14:00-16:00</span><span><strong>WIA2003</strong> Lab · OCC 8</span></li>
-          </ul>
-        </div>
-        <div class="tt-day">
-          <h4 class="tt-dayname">Fri</h4>
-          <ul class="tt-list">
-            <li class="cls r7"><span class="time">14:00-16:00</span><span class="hl--changed" data-sweep="scroll"><strong>WIA2003</strong> Tutorial · OCC 8</span><span class="cls-moved">Moved</span></li>
-          </ul>
-        </div>
-      </div>
-      <p class="tt-note"><span class="hl--changed" data-sweep="scroll">Moved:</span> from the post "OCC 8 tutorial moved to Friday 2pm". The old Mon 10:00 BK3 slot is struck through.</p>
-    </article>
-
-    <article class="sheet panel p-updates">
-      <h3>Updates</h3>
-      <ul class="feed">
-        <li>
-          <p class="meta"><span class="code">WIX1002</span><span>2 h ago</span></p>
-          <p class="item-title"><span class="hl">No physical class this Thursday</span></p>
-        </li>
-        <li>
-          <p class="meta"><span class="code">WIA2003</span><span>5 h ago</span></p>
-          <p class="item-title"><span class="hl">Week 6 slides uploaded</span><span class="badge">New material</span></p>
-        </li>
-        <li>
-          <p class="meta"><span class="code">WIX1003</span><span>Yesterday</span></p>
-          <p class="item-title"><span class="hl">Lecture shifted online due to haze</span></p>
-        </li>
-      </ul>
-    </article>
-
-    <article class="sheet panel p-due">
-      <h3>Due</h3>
-      <ul class="feed">
-        <li>
-          <p class="meta"><span class="code">WIA2003</span><span>due today 6:00 pm</span></p>
-          <p class="item-title"><span class="hl--due">Lab 3 · OCC 8 submission</span></p>
-          <p class="state state--open">Not submitted</p>
-          <p class="state">Reminder sent 3 h before</p>
-          <p class="state">Submit from the app: attach files and hand in.</p>
-        </li>
-        <li>
-          <p class="meta"><span class="code">WIX1002</span><span>due Fri 11:59 pm</span></p>
-          <p class="item-title">Assignment 2</p>
-          <p class="state">Submitted</p>
-        </li>
-        <li>
-          <p class="meta"><span class="code">WIX1003</span><span>due Mon 9:00 am</span></p>
-          <p class="item-title">Tutorial worksheet 4</p>
-          <p class="state">Submitted</p>
-        </li>
-      </ul>
-    </article>
-
+        <figcaption class="sr-only">Example of the Week tab</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
-<section class="sec" aria-labelledby="bg-title">
-  <div class="split">
-    <div>
-      <h2 class="sec-title" id="bg-title">It checks Spectrum so you don't have to.</h2>
+<section class="sec scene" id="updates" data-chapter="Updates" aria-labelledby="upd-title">
+  <div class="scene__grid">
+    <div class="scene__copy">
+      <h2 class="sec-title" id="upd-title">Every course's news in <span class="hl" data-sweep="scroll">one feed</span>.</h2>
+      <p>Announcements and new materials from all your courses, newest first, and searchable. Posts for other OCCs fold away under Other occurrences. A post that doesn't say which OCC is shown with a may-not-apply label instead of being hidden.</p>
+      <p class="fine">Example data.</p>
+    </div>
+    <div class="stage">
+      <figure class="phone">
+        <div class="screen screen--updates">
+          <div class="app-bar"><p class="app-title">Spectrum<span class="plus">+</span></p><p class="app-ex">Example</p></div>
+          <ul class="tabs">
+            <li>Week</li>
+            <li class="is-on" aria-current="page">Updates</li>
+            <li>Due</li>
+            <li>Courses</li>
+          </ul>
+          <div class="screen-body">
+            <div class="search" aria-hidden="true">Search updates</div>
+            <ul class="feed">
+              <li>
+                <p class="meta"><span class="code">WIX1002</span><span>2 h ago</span></p>
+                <p class="item-title"><span class="hl" data-ink>No physical class this Thursday</span></p>
+              </li>
+              <li>
+                <p class="meta"><span class="code">WIA2003</span><span>5 h ago</span></p>
+                <p class="item-title"><span class="hl" data-ink>Week 6 slides uploaded</span><span class="badge">New material</span></p>
+              </li>
+              <li>
+                <p class="meta"><span class="code">WIX1003</span><span>Yesterday</span></p>
+                <p class="item-title"><span class="hl" data-ink>Lecture shifted online due to haze</span></p>
+              </li>
+              <li class="row--other"><span>Other occurrences · 5</span></li>
+              <li>
+                <p class="meta"><span class="code">WIA2001</span><span>2 days ago</span></p>
+                <p class="item-title">K1 tutorial notes<span class="tag">may not apply</span></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <figcaption class="sr-only">Example of the Updates tab</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec scene" id="due" data-chapter="Due" aria-labelledby="due-title">
+  <div class="scene__grid">
+    <div class="scene__copy">
+      <h2 class="sec-title" id="due-title">Deadlines, with <span class="hl--due" data-sweep="scroll">a nudge</span> before each one.</h2>
+      <p>Due lists your assignments by deadline with their submission status. Anything you haven't submitted gets a reminder 24 hours and 3 hours before. Attach your files and hand in from the app.</p>
+      <p class="fine">Example data.</p>
+    </div>
+    <div class="stage">
+      <figure class="phone">
+        <div class="screen screen--due">
+          <div class="app-bar"><p class="app-title">Spectrum<span class="plus">+</span></p><p class="app-ex">Example</p></div>
+          <ul class="tabs">
+            <li>Week</li>
+            <li>Updates</li>
+            <li class="is-on" aria-current="page">Due</li>
+            <li>Courses</li>
+          </ul>
+          <div class="screen-body">
+            <ul class="feed">
+              <li>
+                <p class="meta"><span class="code">WIA2003</span><span>due today 6:00 pm</span></p>
+                <p class="item-title"><span class="hl--due" data-ink>Lab 3 · OCC 8 submission</span></p>
+                <p class="state state--open">Not submitted</p>
+                <p class="state">Reminder sent 3 h before</p>
+                <p class="state">Submit from the app: attach files and hand in.</p>
+                <span class="mini-ticket" aria-hidden="true">Submit</span>
+              </li>
+              <li>
+                <p class="meta"><span class="code">WIX1002</span><span>due Fri 11:59 pm</span></p>
+                <p class="item-title">Assignment 2</p>
+                <p class="state">Submitted</p>
+              </li>
+              <li>
+                <p class="meta"><span class="code">WIX1003</span><span>due Mon 9:00 am</span></p>
+                <p class="item-title">Tutorial worksheet 4</p>
+                <p class="state">Submitted</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <figcaption class="sr-only">Example of the Due tab</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec scene" id="checks" data-chapter="Checks" aria-labelledby="bg-title">
+  <div class="scene__grid">
+    <div class="scene__copy">
+      <h2 class="sec-title" id="bg-title">It checks Spectrum <span class="hl" data-sweep="scroll">so you don't have to</span>.</h2>
       <p>Spectrum+ checks Spectrum in the background every 30 minutes. You get a notification for new announcements, assignments and materials that apply to your OCC.</p>
       <p>Opening the app refreshes announcements and due dates within a minute, so you never wait for the next check.</p>
+      <p class="fine">Home-screen widget: today's classes and your next deadline. Example data.</p>
     </div>
-    <figure class="widget">
-      <div class="sheet widget-card">
-        <div class="widget-head"><p class="widget-title">Today</p><p class="widget-count">2 classes</p></div>
-        <ul class="widget-list">
-          <li><span>WIX1002 Lecture</span><span class="at">10:00 DK1</span></li>
-          <li><span>WIA2001 Tutorial</span><span class="at">14:00 BK5</span></li>
-        </ul>
-        <p class="widget-due">Next due: <span class="hl--due">Lab 3, 6:00 pm</span></p>
-      </div>
-      <figcaption class="fine">Home-screen widget: today's classes and your next deadline.</figcaption>
-    </figure>
+    <div class="stage">
+      <figure class="phone">
+        <div class="screen screen--home">
+          <div class="screen-body">
+            <div class="notif">
+              <p class="notif-app">Spectrum+ · now</p>
+              <p><strong>WIA2003</strong></p>
+              <p>OCC 8 tutorial moved to Friday 2pm</p>
+            </div>
+            <div class="sheet widget-card">
+              <div class="widget-head"><p class="widget-title">Today</p><p class="widget-count">2 classes</p></div>
+              <ul class="widget-list">
+                <li><span>WIX1002 Lecture</span><span class="at">10:00 DK1</span></li>
+                <li><span>WIA2001 Tutorial</span><span class="at">14:00 BK5</span></li>
+              </ul>
+              <p class="widget-due">Next due: <span class="hl--due" data-ink>Lab 3, 6:00 pm</span></p>
+            </div>
+          </div>
+        </div>
+        <figcaption class="sr-only">Example of the phone home screen with a Spectrum+ notification and the widget</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
-<section class="sec" aria-labelledby="login-title">
+<section class="sec scene" id="login" data-chapter="Login" aria-labelledby="login-title">
   <div class="split split--text">
-    <h2 class="sec-title" id="login-title">Your login stays with Microsoft.</h2>
-    <ul class="fact-list">
+    <h2 class="sec-title" id="login-title">Your login <span class="hl" data-sweep="scroll">stays with Microsoft</span>.</h2>
+    <ul class="fact-list" data-reveal>
       <li>Sign in with your UM Microsoft account (your siswa365 address), the same way Spectrum does.</li>
       <li>The password goes to Microsoft only. The app keeps just the Spectrum token, encrypted on your phone.</li>
       <li>Your posts, timetable and deadlines stay on your phone. The app talks to Spectrum and nothing else.</li>
@@ -278,14 +339,28 @@
   </div>
 </section>
 
-<section class="sec" aria-labelledby="full-title">
-  <h2 class="sec-title" id="full-title">Need the full Spectrum page? It's one tap away.</h2>
-  <p>Every item has "Open in Spectrum". It opens the real page inside the app, restyled for your phone, with sections for other occurrences hidden. Quizzes and attendance happen there, on Spectrum itself.</p>
+<section class="sec scene" id="full-page" data-chapter="Full page" aria-labelledby="full-title">
+  <div class="scene__grid">
+    <div class="scene__copy">
+      <h2 class="sec-title" id="full-title">Need the full Spectrum page? It's <span class="hl" data-sweep="scroll">one tap away</span>.</h2>
+      <p>Every item has "Open in Spectrum". It opens the real page inside the app, restyled for your phone, with sections for other occurrences hidden. Quizzes and attendance happen there, on Spectrum itself.</p>
+    </div>
+    <div class="course-visual">
+      <div class="sheet course-copy" data-reveal aria-hidden="true">
+        <p class="cc-head">WIA2003 · Example course page</p>
+        <div class="cc cc--other"><p class="cc-title">OCC 7 · Tutorial</p><span class="cc-bar"></span></div>
+        <div class="cc cc--yours"><p class="cc-title">OCC 8 · Tutorial</p><span class="cc-bar"></span></div>
+        <div class="cc cc--other"><p class="cc-title">OCC 9 · Tutorial</p><span class="cc-bar"></span></div>
+        <div class="cc"><p class="cc-title">Week 6 slides</p><span class="cc-bar"></span></div>
+      </div>
+      <span class="ticket" aria-hidden="true">Open in Spectrum ↗</span>
+    </div>
+  </div>
 </section>
 
-<section class="sec" aria-labelledby="close-title">
+<section class="sec scene" id="get" data-chapter="Get it" aria-labelledby="close-title">
   <div class="sheet close">
-    <h2 class="close-title" id="close-title"><span class="hl">Stop digging</span> through Spectrum.</h2>
+    <h2 class="close-title" id="close-title"><span class="hl" data-sweep="scroll">Stop digging</span> through Spectrum.</h2>
     <div class="tickets">
       <span class="ticket" aria-disabled="true" data-dl="play"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Google Play — <span class="nw">coming soon</span></span></span>
       <span class="ticket" aria-disabled="true" data-dl="apk"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span class="lbl">Download APK — <span class="nw">coming soon</span></span></span>
