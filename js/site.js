@@ -4,9 +4,12 @@
   // Old homepage anchors (#apps, #schedule, ...) now live on the projects page; send them there.
   var h = location.hash;
   if ((location.pathname === '/' || location.pathname === '/index.html') &&
-      ['#apps', '#offbridge', '#schedule', '#quick-vote', '#card-games', '#mif-finance', '#spectrum-agent'].indexOf(h) !== -1) {
-    location.replace('/projects/' + (h === '#apps' ? '' : h));
+      ['#apps', '#offbridge', '#schedule', '#quick-vote', '#card-games', '#mif-finance', '#spectrum', '#spectrum-agent'].indexOf(h) !== -1) {
+    location.replace('/projects/' + (h === '#apps' ? '' : h === '#spectrum-agent' ? '#spectrum' : h));
     return;
+  }
+  if ((location.pathname === '/projects/' || location.pathname === '/projects/index.html') && h === '#spectrum-agent') {
+    history.replaceState(null, '', '/projects/#spectrum');
   }
 
   var root = document.documentElement;
