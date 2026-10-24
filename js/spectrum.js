@@ -141,12 +141,15 @@
     }
 
     // --- Book mode ---------------------------------------------------------
-    // On a large pointer screen each section becomes one paper page of a flip-book. Leaving book mode puts
-    // the markup back exactly as it was, so the long scrolling page is the fallback everywhere else.
+    // On a large pointer screen each section becomes one sheet in a pile of paper: the top sheet slides off to
+    // the left to show the next one lying beneath it, and going back slides it on again. The four phones of
+    // pages 3-6 live in one shared floating dock instead. Leaving book mode puts the markup back exactly as it
+    // was, so the long scrolling page is the fallback everywhere else.
     const GATE = matchMedia('(min-width: 1000px) and (min-height: 560px) and (hover: hover) and (pointer: fine)');
     const main = document.getElementById('content');
     const foot = document.querySelector('.sp-foot');
-    const FLIP = reduce ? 0 : 700;
+    const SLIDE = reduce ? 0 : 700; // how long a sheet takes to slide
+    const REST = [-0.5, 0.35, -0.2, 0.45, -0.35, 0.25, -0.45, 0.3, -0.15]; // each sheet's resting tilt, in degrees
     const NAV_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown', 'ArrowUp', 'ArrowLeft', 'PageUp', 'Home', 'End', ' '];
     let book = null;
 
@@ -155,8 +158,8 @@
       page.el.querySelectorAll('[data-sweep]').forEach((el) => el.classList.toggle('swept', on));
     }
 
-    // A page that becomes current plays once the flip is past halfway; one that stops being current resets
-    // after its flip has finished, so it replays when you come back.
+    // A page that becomes current plays once its slide is past halfway; one that stops being current resets
+    // after its slide has finished, so it replays when you come back.
     function scheduleHooks(page, on, delay) {
       clearTimeout(page.timer);
       if (!delay) { setHooks(page, on); return; }
@@ -197,7 +200,73 @@
           p.pin.style.setProperty('--fit-y', dy.toFixed(1) + 'px');
         }
       });
-      book.wrap.classList.remove('is-measuring');
+      // Where each phone slot sits in the flat, untransformed layout (the dock flies to these).
+      book.story.forEach((e) => { e.rect = e.slot.getBoundingClientRect(); });
+      // End measuring without the sheets animating back to their poses.
+      const wrap = book.wrap;
+      const hadStill = wrap.classList.contains('is-still');
+      if (!hadStill) wrap.classList.add('is-still');
+      wrap.classList.remove('is-measuring');
+      void wrap.offsetWidth;
+      if (!hadStill) wrap.classList.remove('is-still');
+      // Re-placing after a resize snaps the dock to its slot rather than gliding there.
+      const dock = book.dock;
+      const dockStill = !!dock && dock.classList.contains('is-still');
+      if (dock && !dockStill) dock.classList.add('is-still');
+      placeDock();
+      if (dock && !dockStill) {
+        void dock.offsetWidth;
+        dock.classList.remove('is-still');
+      }
+    }
+
+    // Park the dock over the slot of the story page being shown (the first before them, the last after them).
+    function placeDock() {
+      if (!book || !book.dock || !book.story.length) return;
+      const s = book.story;
+      const c = Math.max(s[0].page, Math.min(s[s.length - 1].page, book.cur));
+      let a = s[0];
+      s.forEach((e) => { if (e.page <= c) a = e; });
+      if (!a.rect) return;
+      const d = book.dock;
+      d.style.setProperty('--dx', (a.rect.left + a.rect.width / 2).toFixed(1) + 'px');
+      d.style.setProperty('--dy', (a.rect.top + a.rect.height / 2).toFixed(1) + 'px');
+      d.style.setProperty('--dw', a.rect.width.toFixed(1) + 'px');
+    }
+
+    // The dock flies in when a story page becomes current, swaps screens between story pages, and flies out
+    // when you leave them. offDelay keeps the screen lit while the phone flies out.
+    function syncDock(prev, next, offDelay) {
+      const b = book;
+      if (!b || !b.dock) return;
+      const target = b.story.find((e) => e.page === next);
+      const on = !!target;
+      const wasOn = b.story.some((e) => e.page === prev);
+      placeDock();
+      b.dock.classList.toggle('is-on', on);
+      clearTimeout(b.dockTimer);
+      if (on) {
+        b.story.forEach((e) => {
+          if (e === target) {
+            e.stage.removeAttribute('aria-hidden');
+            e.stage.removeAttribute('inert');
+          } else {
+            e.stage.classList.remove('in');
+            e.stage.setAttribute('aria-hidden', 'true');
+            e.stage.setAttribute('inert', '');
+          }
+        });
+        const d = wasOn ? 0 : (reduce ? 0 : 350);
+        if (!d) target.stage.classList.add('in');
+        else b.dockTimer = setTimeout(() => target.stage.classList.add('in'), d);
+      } else {
+        b.story.forEach((e) => {
+          e.stage.setAttribute('aria-hidden', 'true');
+          e.stage.setAttribute('inert', '');
+        });
+        const clear = () => b.story.forEach((e) => e.stage.classList.remove('in'));
+        if (!offDelay) clear(); else b.dockTimer = setTimeout(clear, offDelay);
+      }
     }
 
     function focusPage(i) {
@@ -220,7 +289,7 @@
         if (o.focus) focusPage(next);
         return;
       }
-      // Pages that flip: turn forward from the top of the stack, or back from the most recently turned.
+      // Pages that slide: off from the top of the pile going forward, or back on from the most recently slid off.
       const ae = document.activeElement;
       const stranded = !!ae && ae !== document.body && book.pages.some((p, k) => k !== next && p.el.contains(ae));
       const changed = [];
@@ -236,12 +305,13 @@
         book.pages[k].el.style.setProperty('--fd', d + 'ms');
         span = Math.max(span, d);
       });
-      book.lockUntil = performance.now() + FLIP + span;
+      book.lockUntil = performance.now() + SLIDE + span;
       book.cur = next;
       book.pages.forEach((p, k) => {
         const cur = k === next;
         p.el.classList.toggle('is-turned', k < next);
         p.el.classList.toggle('is-current', cur);
+        p.el.classList.toggle('is-under', k === next + 1);
         if (cur) {
           p.el.removeAttribute('inert');
           p.el.removeAttribute('aria-hidden');
@@ -250,11 +320,12 @@
           p.el.setAttribute('aria-hidden', 'true');
         }
       });
+      syncDock(prev, next, SLIDE + span);
       book.tabs.forEach((b, k) => {
         if (k === next) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
       });
-      scheduleHooks(book.pages[prev], false, FLIP + span);
-      scheduleHooks(book.pages[next], true, reduce ? 0 : FLIP / 2);
+      scheduleHooks(book.pages[prev], false, SLIDE + span);
+      scheduleHooks(book.pages[next], true, reduce ? 0 : SLIDE / 2);
       book.live.textContent = 'Page ' + (next + 1) + ' of ' + n + ': ' + book.pages[next].label;
       try {
         history.replaceState(null, '', next === 0 ? location.pathname + location.search : '#' + book.pages[next].id);
@@ -287,6 +358,7 @@
         sec.appendChild(no);
         sec.classList.add('page');
         sec.style.setProperty('--pi', String(i));
+        sec.style.setProperty('--rest', REST[i % REST.length] + 'deg');
         wrap.appendChild(sec);
         return { el: sec, pin, no, id: sec.id, label: sec.dataset.chapter || sec.id, timer: 0 };
       });
@@ -321,15 +393,35 @@
       live.setAttribute('aria-live', 'polite');
       wrap.appendChild(live);
 
-      book = { wrap, pages, tabs, live, cur: -1, lockUntil: 0, armed: true, lastWheel: 0, focusable: [] };
+      // The phones of the story pages leave the paper for one shared dock; a slot keeps each one's place.
+      const story = [];
+      pages.forEach((p, i) => {
+        const stage = p.pin.querySelector('.stage');
+        if (!stage) return;
+        const slot = document.createElement('div');
+        slot.className = 'stage-slot';
+        slot.setAttribute('aria-hidden', 'true');
+        stage.replaceWith(slot);
+        story.push({ page: i, stage, slot, rect: null });
+      });
+      let dock = null;
+      if (story.length) {
+        dock = document.createElement('div');
+        dock.className = 'dock is-still';
+        story.forEach((e) => dock.appendChild(e.stage));
+        wrap.after(dock); // inside <main>, right after the pile, so the phone stays in the page's reading order
+      }
+
+      book = { wrap, pages, tabs, live, cur: -1, lockUntil: 0, armed: true, lastWheel: 0, focusable: [], dock, story, dockTimer: 0 };
       root.classList.add('is-book');
 
-      // Start on the page named by the hash, without a flip.
+      // Start on the page named by the hash, without a slide.
       const hashId = decodeURIComponent(location.hash.slice(1));
       const start = Math.max(0, pages.findIndex((p) => p.id === hashId));
       pages.forEach((p, k) => {
         p.el.classList.toggle('is-turned', k < start);
         p.el.classList.toggle('is-current', k === start);
+        p.el.classList.toggle('is-under', k === start + 1);
         if (k !== start) {
           p.el.setAttribute('inert', '');
           p.el.setAttribute('aria-hidden', 'true');
@@ -341,9 +433,13 @@
       scheduleHooks(pages[start], true, reduce ? 0 : 350);
       void wrap.offsetWidth;
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (book) book.wrap.classList.remove('is-still');
+        if (book) {
+          book.wrap.classList.remove('is-still');
+          if (book.dock) book.dock.classList.remove('is-still');
+        }
       }));
       fit();
+      syncDock(-1, start, 0);
     }
 
     function leaveBook() {
@@ -351,15 +447,23 @@
       const b = book;
       book = null;
       b.pages.forEach((p) => clearTimeout(p.timer));
+      clearTimeout(b.dockTimer);
+      b.story.forEach((e) => {
+        e.slot.replaceWith(e.stage);
+        e.stage.removeAttribute('inert');
+        e.stage.removeAttribute('aria-hidden');
+      });
+      if (b.dock) b.dock.remove();
       main.after(foot);
       b.pages.forEach((p) => {
         while (p.pin.firstChild) p.el.insertBefore(p.pin.firstChild, p.pin);
         p.pin.remove();
         p.no.remove();
-        p.el.classList.remove('page', 'is-current', 'is-turned');
+        p.el.classList.remove('page', 'is-current', 'is-turned', 'is-under');
         p.el.removeAttribute('inert');
         p.el.removeAttribute('aria-hidden');
         p.el.style.removeProperty('--pi');
+        p.el.style.removeProperty('--rest');
         p.el.style.removeProperty('--fd');
         main.insertBefore(p.el, b.wrap);
       });
