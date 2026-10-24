@@ -6,7 +6,7 @@
   <title>Card Games &middot; Entropic Software Labs</title>
   <meta name="description" content="Card Games is a web app with Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, plus online rooms for Dou Di Zhu and Big Two. Play-money coins, no account, and it installs to your home screen.">
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#F4F1EA">
+  <meta name="theme-color" content="#C8102E">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/card-games/">
   <meta property="og:title" content="Card Games &middot; Entropic Software Labs">
   <meta property="og:description" content="Dou Di Zhu, Big Two and Blackjack against bots, or online with friends. Play-money coins and no account.">
@@ -23,11 +23,13 @@
   <link rel="preload" href="/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/card-games.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
+  <script src="/js/segments.js" defer></script>
 </head>
-<body data-product="card-games">
+<body data-product="card-games" data-rail="off">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="topbar">
     <div class="container topbar-inner">
@@ -68,7 +70,7 @@
       <symbol id="s-spade" viewBox="0 0 24 24"><path d="M12 1.8C17 7 21.5 10 21.5 14.2c0 2.8-2.2 4.6-4.6 4.6-1.9 0-3.3-.9-4.1-2.2.1 2.4.8 4 2.3 5.4H8.9c1.5-1.4 2.2-3 2.3-5.4-.8 1.3-2.2 2.2-4.1 2.2-2.4 0-4.6-1.8-4.6-4.6C2.5 10 7 7 12 1.8z"/></symbol>
     </svg>
 
-    <section class="cg-hero" aria-labelledby="cg-title">
+    <section class="cg-hero scene" id="hero" aria-labelledby="cg-title">
       <div class="cg-placard cg-hero-card">
         <h1 id="cg-title">Card Games</h1>
         <p class="cg-status"><span>Web</span><span class="cg-dot" aria-hidden="true">&middot;</span><span>Live</span><span class="cg-dot" aria-hidden="true">&middot;</span><a href="https://github.com/josephting1105123/Card-Games" rel="noopener">Open source</a></p>
@@ -106,7 +108,7 @@
       </div>
     </section>
 
-    <section class="cg-fair" aria-labelledby="cg-fair-title">
+    <section class="cg-fair scene" id="fair" aria-labelledby="cg-fair-title">
       <div class="cg-placard cg-fair-panel">
         <h2 id="cg-fair-title">The bots only see their own seat.</h2>
         <p>A stronger bot plays better. It never sees more cards.</p>
@@ -145,7 +147,7 @@
       </div>
     </section>
 
-    <section class="cg-pad">
+    <section class="cg-pad scene" id="pad">
       <article class="cg-sheet cg-sheet--steps" aria-labelledby="cg-how-title">
         <h2 id="cg-how-title">How it works</h2>
         <ol class="cg-steps" role="list">
@@ -178,7 +180,7 @@
       </article>
     </section>
 
-    <section class="cg-close" aria-labelledby="cg-close-title">
+    <section class="cg-close scene" id="close" aria-labelledby="cg-close-title">
       <div class="cg-placard cg-close-card">
         <h2 id="cg-close-title">Pull up a stool.</h2>
         <p>Play against the bots now, or open a room and send the link.</p>
