@@ -27,12 +27,12 @@
   var DEV_W = 360;
   var SVGNS = "http://www.w3.org/2000/svg";
 
-  var QUESTION = "Where should we eat on Friday?";
-  var OPTIONS = ["Ramen place on 5th", "Sushi bar", "Tacos", "Stay in and cook"];
+  var QUESTION = "Who should be next year's fellowship president?";
+  var OPTIONS = ["Grace Lim", "Daniel Tan", "Esther Wong", "Joshua Lee"];
   var START_COUNTS = [5, 3, 2, 1];
   var WEIGHTS = [4, 3, 2, 1];
-  var WAITING = ["Mia", "Theo", "Priya"];
-  var IN_ROOM = 11;
+  var WAITING = ["Jason"];
+  var IN_ROOM = 14;
   var MAX_ADDED = 14;
   var JOIN_MS = 1200;
   var DOT = "·";

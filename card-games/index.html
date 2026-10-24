@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Card Games &middot; Entropic Software Labs</title>
   <meta name="description" content="Card Games is a web app with Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, plus online rooms for Dou Di Zhu and Big Two. Play-money coins, no account, and it installs to your home screen.">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F1EA">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/card-games/">
   <meta property="og:title" content="Card Games &middot; Entropic Software Labs">
   <meta property="og:description" content="Dou Di Zhu, Big Two and Blackjack against bots, or online with friends. Play-money coins and no account.">
@@ -21,8 +20,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image:alt" content="Card Games: a Dou Di Zhu table at phone size, next to the app name and tagline">
   <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/card-games.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
 </head>
@@ -59,53 +60,112 @@
     </div>
   </div>
 
-  <header class="hero product-hero" id="content">
-    <div class="container">
-      <div class="project-text">
-        <span class="cat-label">Games</span>
-        <h1>Card Games</h1>
-        <div class="chips">
-          <span class="chip">Web</span>
-          <span class="chip chip-status chip-live">Live</span>
-          <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Open source</a>
-        </div>
-        <p class="lead">Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, or Dou Di Zhu and Big Two online with friends. Coins are play money and there is no account. Once it has loaded, single player works offline.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
-          <a class="btn btn-secondary" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Source on GitHub</a>
-        </div>
-      </div>
-      <div class="media media-landscape">
-        <img class="landscape-shot" src="/assets/shots/card-games-table.webp" width="844" height="390" alt="A Dou Di Zhu hand at phone size: the bid panel over the felt, two opponents' card backs and the player's 17 cards">
-      </div>
-    </div>
-  </header>
+  <main id="content" class="cg-main">
+    <svg class="cg-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+      <symbol id="s-heart" viewBox="0 0 24 24"><path d="M12 21.5C5 15.5 2 12.2 2 8.4 2 5.2 4.4 3 7.2 3c2 0 3.7 1.1 4.8 2.9C13.1 4.1 14.8 3 16.8 3 19.6 3 22 5.2 22 8.4c0 3.8-3 7.1-10 13.1z"/></symbol>
+      <symbol id="s-diamond" viewBox="0 0 24 24"><path d="M12 1.5c2.4 3.4 5.9 7 8.5 10.5-2.6 3.5-6.1 7.1-8.5 10.5C9.6 19.1 6.1 15.5 3.5 12 6.1 8.5 9.6 4.9 12 1.5z"/></symbol>
+      <symbol id="s-club" viewBox="0 0 24 24"><circle cx="12" cy="6.6" r="4.7"/><circle cx="6.3" cy="13.4" r="4.7"/><circle cx="17.7" cy="13.4" r="4.7"/><path d="M12 11c0 5-.9 8.2-3.6 11.5h7.2C12.9 19.2 12 16 12 11z"/></symbol>
+      <symbol id="s-spade" viewBox="0 0 24 24"><path d="M12 1.8C17 7 21.5 10 21.5 14.2c0 2.8-2.2 4.6-4.6 4.6-1.9 0-3.3-.9-4.1-2.2.1 2.4.8 4 2.3 5.4H8.9c1.5-1.4 2.2-3 2.3-5.4-.8 1.3-2.2 2.2-4.1 2.2-2.4 0-4.6-1.8-4.6-4.6C2.5 10 7 7 12 1.8z"/></symbol>
+    </svg>
 
-  <main>
-    <section class="steps">
-      <div class="container">
-        <h2>How it works</h2>
-        <ol class="steps-list">
-          <li>
-            <h3>Pick a game</h3>
-            <p>Dou Di Zhu, Big Two or Blackjack, in either the American or the Malaysian Ban Luck rules. Niu Niu and Texas Hold'em are planned.</p>
-          </li>
-          <li>
-            <h3>Pick a table</h3>
-            <p>Choose a bot strength from Novice to Grandmaster and a stake, from a 400-chip rescue table up to a 1,000,000 pot.</p>
-          </li>
-          <li>
-            <h3>Play</h3>
-            <p>Play the bots on your own, or open a Dou Di Zhu or Big Two room and send friends the invite link. Bots fill any empty seat.</p>
-          </li>
-        </ol>
+    <section class="cg-hero" aria-labelledby="cg-title">
+      <div class="cg-placard cg-hero-card">
+        <h1 id="cg-title">Card Games</h1>
+        <p class="cg-status"><span>Web</span><span class="cg-dot" aria-hidden="true">&middot;</span><span>Live</span><span class="cg-dot" aria-hidden="true">&middot;</span><a href="https://github.com/josephting1105123/Card-Games" rel="noopener">Open source</a></p>
+        <p class="cg-lead">Dou Di Zhu, Big Two and Blackjack against bots at seven strengths, or Dou Di Zhu and Big Two online with friends. Coins are play money and there is no account. Once it has loaded, single player works offline.</p>
+        <div class="cg-actions">
+          <a class="btn-play" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
+          <a class="btn-src" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Source on GitHub</a>
+        </div>
+      </div>
+      <div class="cg-stage">
+        <div class="cg-phone">
+          <img src="/assets/shots/card-games-table.webp" width="844" height="390" alt="A Dou Di Zhu hand at phone size: the bid panel over the felt, two opponents' card backs and the player's 17 cards">
+        </div>
+        <div class="cg-hand" aria-hidden="true">
+          <div class="cg-pcard is-red"><span class="cg-corner"><b>3</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span><svg class="cg-suit cg-pip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg><span class="cg-corner cg-corner--end"><b>3</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span></div>
+          <div class="cg-pcard is-black"><span class="cg-corner"><b>7</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span><svg class="cg-suit cg-pip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg><span class="cg-corner cg-corner--end"><b>7</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></div>
+          <div class="cg-pcard is-red"><span class="cg-corner"><b>J</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span><svg class="cg-suit cg-pip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg><span class="cg-corner cg-corner--end"><b>J</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></div>
+          <div class="cg-pcard is-black"><span class="cg-corner"><b>2</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span><svg class="cg-suit cg-pip" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg><span class="cg-corner cg-corner--end"><b>2</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></div>
+          <div class="cg-pcard cg-joker is-red"><span class="cg-joker-word">Joker</span><svg class="cg-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.7 5.9 6.4.7-4.8 4.4 1.3 6.3L12 16.8l-5.6 3.3 1.3-6.3L2.9 9.4l6.4-.7z"/></svg></div>
+        </div>
+        <svg class="cg-oranges" viewBox="0 0 140 96" aria-hidden="true" focusable="false">
+          <path d="M46 24C68 24 84 38 84 58C84 78 68 90 46 90C24 90 8 78 8 58C8 38 24 24 46 24Z" fill="#F28C1E"/>
+          <path d="M84 58C84 78 68 90 46 90C30 90 18 84 12 74C26 82 44 82 58 72C72 62 78 50 76 38C81 43 84 50 84 58Z" fill="#E67E16"/>
+          <ellipse cx="27" cy="44" rx="9" ry="4.5" transform="rotate(-35 27 44)" fill="#F9B45C" opacity=".8"/>
+          <g fill="#D9701A"><circle cx="30" cy="62" r="1.3"/><circle cx="44" cy="55" r="1.3"/><circle cx="58" cy="64" r="1.3"/><circle cx="38" cy="75" r="1.3"/><circle cx="52" cy="80" r="1.3"/><circle cx="68" cy="52" r="1.3"/><circle cx="22" cy="54" r="1.3"/><circle cx="64" cy="76" r="1.3"/></g>
+          <path d="M46 25L47 18" fill="none" stroke="#7A4B1E" stroke-width="3" stroke-linecap="round"/>
+          <path d="M47 22C55 11 69 10 77 15C69 26 55 28 47 22Z" fill="#2E8B57"/>
+          <path d="M49 22C57 18 65 15 73 15" fill="none" stroke="#8FD3A8" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M100 35C118 35 133 47 133 64C133 81 118 93 100 93C82 93 67 81 67 64C67 47 82 35 100 35Z" fill="#F28C1E" stroke="#D9701A" stroke-width="1"/>
+          <path d="M133 64C133 81 118 93 100 93C88 93 78 88 72 80C84 85 99 83 110 74C119 67 123 57 121 49C129 51 133 57 133 64Z" fill="#E67E16"/>
+          <ellipse cx="84" cy="52" rx="8" ry="4" transform="rotate(-35 84 52)" fill="#F9B45C" opacity=".8"/>
+          <g fill="#D9701A"><circle cx="86" cy="68" r="1.3"/><circle cx="99" cy="60" r="1.3"/><circle cx="112" cy="70" r="1.3"/><circle cx="94" cy="80" r="1.3"/><circle cx="106" cy="84" r="1.3"/><circle cx="120" cy="62" r="1.3"/><circle cx="78" cy="62" r="1.3"/></g>
+          <path d="M100 36L101.500 28" fill="none" stroke="#7A4B1E" stroke-width="3" stroke-linecap="round"/>
+        </svg>
       </div>
     </section>
 
-    <section class="detail">
-      <div class="container">
-        <h2>Details</h2>
-        <ul class="facts">
+    <section class="cg-fair" aria-labelledby="cg-fair-title">
+      <div class="cg-placard cg-fair-panel">
+        <h2 id="cg-fair-title">The bots only see their own seat.</h2>
+        <p>A stronger bot plays better. It never sees more cards.</p>
+        <fieldset class="cg-seats">
+          <legend>Look from</legend>
+          <input type="radio" name="cg-seat" id="seat-landlord" value="landlord" aria-describedby="note-landlord" checked>
+          <label for="seat-landlord">Landlord</label>
+          <input type="radio" name="cg-seat" id="seat-left" value="left" aria-describedby="note-left">
+          <label for="seat-left">Farmer on the left</label>
+          <input type="radio" name="cg-seat" id="seat-right" value="right" aria-describedby="note-right">
+          <label for="seat-right">Farmer on the right</label>
+        </fieldset>
+        <div class="cg-seat-notes" aria-live="polite">
+          <p class="cg-seat-note cg-seat-note--landlord" id="note-landlord"><svg class="cg-eye" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#9E1328" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>The landlord bot sees its own 20 cards and what has been played. The farmers' hands stay face down to it.</p>
+          <p class="cg-seat-note cg-seat-note--left" id="note-left"><svg class="cg-eye" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#9E1328" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>This farmer bot sees its own 17 cards and what has been played. Nobody else's hand.</p>
+          <p class="cg-seat-note cg-seat-note--right" id="note-right"><svg class="cg-eye" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#9E1328" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>This farmer bot sees its own 17 cards and what has been played. Nobody else's hand.</p>
+        </div>
+      </div>
+      <div class="cg-table" aria-hidden="true">
+        <div class="cg-seat seat--left">
+          <div class="cg-fan cg-fan--v"><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>Q</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>J</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>10</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>7</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>6</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>4</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></span></div>
+          <span class="cg-tag">17 cards</span>
+        </div>
+        <div class="cg-center">
+          <div class="cg-pile"><span class="cg-card is-up"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>5</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span><span class="cg-card is-up"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>J</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card is-up"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>3</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></span></div>
+          <span class="cg-tag">On the table</span>
+        </div>
+        <div class="cg-seat seat--right">
+          <div class="cg-fan cg-fan--v"><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>A</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>A</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>10</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>8</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>6</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>2</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span></div>
+          <span class="cg-tag">17 cards</span>
+        </div>
+        <div class="cg-seat seat--landlord">
+          <div class="cg-fan"><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>K</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>K</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>9</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-club"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>8</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-diamond"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-black"><b>5</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-spade"/></svg></span></span><span class="cg-card"><span class="cg-face cg-back"></span><span class="cg-face cg-front is-red"><b>3</b><svg class="cg-suit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#s-heart"/></svg></span></span></div>
+          <span class="cg-tag">20 cards</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-pad">
+      <article class="cg-sheet cg-sheet--steps" aria-labelledby="cg-how-title">
+        <h2 id="cg-how-title">How it works</h2>
+        <ol class="cg-steps" role="list">
+          <li>
+          <h3>Pick a game</h3>
+          <p>Dou Di Zhu, Big Two or Blackjack, in either the American or the Malaysian Ban Luck rules. Niu Niu and Texas Hold'em are planned.</p>
+          </li>
+          <li>
+          <h3>Pick a table</h3>
+          <p>Choose a bot strength from Novice to Grandmaster and a stake, from a 400-chip rescue table up to a 1,000,000 pot.</p>
+          </li>
+          <li>
+          <h3>Play</h3>
+          <p>Play the bots on your own, or open a Dou Di Zhu or Big Two room and send friends the invite link. Bots fill any empty seat.</p>
+          </li>
+        </ol>
+      </article>
+      <article class="cg-sheet cg-sheet--facts" aria-labelledby="cg-details-title">
+        <h2 id="cg-details-title">Details</h2>
+        <ul class="cg-facts">
           <li>Dou Di Zhu (斗地主) has three players, one landlord against two farmers. Big Two (锄大地) has four.</li>
           <li>The bots only see what a player at their seat would see. A stronger bot plays better; it never sees more cards.</li>
           <li>Each game keeps an Elo rating for you.</li>
@@ -115,9 +175,16 @@
           <li>The room server sleeps when nobody has played for a while, so the first game after a quiet spell can take up to a minute to start.</li>
           <li>On a home network one computer can host rooms itself instead: run <code>node server/server.js</code> from the source code and everyone opens the address it prints.</li>
         </ul>
-        <div class="actions">
-          <a class="btn btn-primary" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
-          <a class="btn btn-secondary" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Source on GitHub</a>
+      </article>
+    </section>
+
+    <section class="cg-close" aria-labelledby="cg-close-title">
+      <div class="cg-placard cg-close-card">
+        <h2 id="cg-close-title">Pull up a stool.</h2>
+        <p>Play against the bots now, or open a room and send the link.</p>
+        <div class="cg-actions">
+          <a class="btn-play" href="https://josephting1105123.github.io/Card-Games/" rel="noopener">Play Card Games</a>
+          <a class="btn-src" href="https://github.com/josephting1105123/Card-Games" rel="noopener">Source on GitHub</a>
         </div>
       </div>
     </section>
