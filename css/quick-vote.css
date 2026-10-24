@@ -1,12 +1,6 @@
-/* Quick Vote product page: the hymn board at the front of a church hall, on a varnished-teak ground. Scoped to body[data-product="quick-vote"]. */
-
-@font-face {
-  font-family: "Big Shoulders Display";
-  src: url("/assets/fonts/bigshoulders-latin.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
+/* Quick Vote product page: a polling station's fine stationery on a deep charcoal field.
+   The ballot's counterfoil carries the PIN as its serial number, the voter roll shows who the host has let in.
+   Scoped to body[data-product="quick-vote"]. */
 
 @font-face {
   font-family: "Source Serif 4";
@@ -18,39 +12,39 @@
 
 /* --- Palette and ground --------------------------------------------------
    The doubled :root beats site.css's light-theme rules for this product, so
-   the page stays wood in either theme. */
+   the page keeps its one look in either theme. */
 
 :root:root body[data-product="quick-vote"] {
   color-scheme: dark;
-  --bg: #2A1710;
-  --card: #3B2116;
-  --surface: #4A2A1B;
-  --text: #F3EAD9;
-  --text-2: #D9C3A5;
-  --text-3: #CDB694;
-  --hairline: rgba(226, 196, 138, .16);
-  --hairline-strong: rgba(226, 196, 138, .3);
-  --accent: #B8893B;
-  --accent-text: #E2C48A;
-  --accent-on: #141110;
-  --accent-muted: rgba(184, 137, 59, .16);
-  --warn: #E2C48A;
-  --qv-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --bg: #111214;
+  --card: #1E1F23;
+  --surface: #26282C;
+  --text: #F2F0EB;
+  --text-2: #A9A7A2;
+  --text-3: #A9A7A2;
+  --hairline: rgba(242, 240, 235, .12);
+  --hairline-strong: rgba(242, 240, 235, .26);
+  --accent: #CFCAC0;
+  --accent-text: #E6E1D6;
+  --accent-on: #16171A;
+  --accent-muted: rgba(242, 240, 235, .08);
+  --warn: #E6E1D6;
   --qv-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --qv-ink: #1F1A24;
 
-  background-color: #3B2116;
+  background-color: #16171A;
   background-image:
-    linear-gradient(180deg, rgba(255, 200, 140, .07), rgba(0, 0, 0, .08)),
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, .35) 0 1px, rgba(255, 220, 170, .06) 1px 2px, transparent 2px 240px),
-    url("/assets/textures/teak.svg");
-  background-size: auto, auto, 512px 512px;
-  caret-color: #E2C48A;
+    radial-gradient(ellipse 900px 520px at 72% 260px, rgba(255, 255, 255, .035), transparent 70%),
+    url("/assets/textures/guilloche.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 240px 120px;
+  caret-color: #E6E1D6;
 }
 
 html:has(body[data-product="quick-vote"]) {
   color-scheme: dark;
-  background-color: #2A1710;
-  scrollbar-color: #7E1D2A #2A1710;
+  background-color: #16171A;
+  scrollbar-color: #3A3C41 #16171A;
   overflow-x: clip;
 }
 
@@ -58,490 +52,661 @@ body[data-product="quick-vote"] {
   overflow-x: clip;
 }
 
-@media (min-width: 900px) {
-  :root:root body[data-product="quick-vote"] { background-attachment: fixed; }
-}
-
 @media (max-width: 600px) {
   body[data-product="quick-vote"] { --gutter: 16px; }
 }
 
-/* On phones the text column is the whole width, so no board seams through it. */
-@media (max-width: 699px) {
-  :root:root body[data-product="quick-vote"] {
-    background-image:
-      linear-gradient(180deg, rgba(255, 200, 140, .07), rgba(0, 0, 0, .08)),
-      url("/assets/textures/teak.svg");
-    background-size: auto, 512px 512px;
-  }
-}
-
 body[data-product="quick-vote"] ::selection,
 body[data-product="quick-vote"]::selection {
-  background: #B8893B;
-  color: #141110;
+  background: #5B2A86;
+  color: #F2F0EB;
 }
 
 body[data-product="quick-vote"] :focus-visible:not(.qv-dev *) {
-  outline: 3px solid #E2C48A;
+  outline: 3px solid #E6E1D6;
   outline-offset: 3px;
 }
+
+body[data-product="quick-vote"] :is(.qv-ballot, .qv-roll, .facts) :focus-visible:not(.qv-dev *) {
+  outline: 3px solid #5B2A86;
+  outline-offset: 3px;
+}
+
+/* One look: no light/dark switch here. */
+body[data-product="quick-vote"] .theme-toggle { display: none; }
 
 /* --- Type ----------------------------------------------------------------- */
 
 body[data-product="quick-vote"] main {
-  color: #EFE3CE;
+  color: #F2F0EB;
   font-family: var(--qv-serif);
   font-size: 1.0625rem;
+  font-optical-sizing: auto;
   line-height: 1.65;
 }
 
 body[data-product="quick-vote"] .scene h2 {
-  color: #F3EAD9;
-  font-family: var(--qv-display);
-  font-size: clamp(2.4rem, 4.4vw, 3.6rem);
-  font-weight: 800;
-  line-height: .95;
-  letter-spacing: .005em;
-  text-transform: uppercase;
+  color: #F2F0EB;
+  font-family: var(--qv-serif);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-variation-settings: "opsz" 60;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -.015em;
   text-wrap: balance;
 }
 
 body[data-product="quick-vote"] .scene .lead {
-  color: #EFE3CE;
+  color: #F2F0EB;
   font-family: var(--qv-serif);
   font-size: 1.0625rem;
   line-height: 1.65;
   margin-top: 1.1rem;
 }
 
+body[data-product="quick-vote"] .qv-demo {
+  margin-top: .9rem;
+  color: #A9A7A2;
+  font-size: .95rem;
+  line-height: 1.5;
+}
+
 body[data-product="quick-vote"] .notes li {
-  padding-left: 24px;
-  color: #D9C3A5;
+  position: relative;
+  padding-left: 26px;
+  color: #A9A7A2;
   font-size: 1rem;
   line-height: 1.65;
 }
 
+/* A small ink tick, drawn with borders. */
 body[data-product="quick-vote"] .notes li::before {
-  top: .6em;
-  width: 8px;
+  top: .42em;
+  left: 4px;
+  width: 6px;
   height: 11px;
-  border-radius: 1px;
-  background: #B8893B;
+  border: solid #CFCAC0;
+  border-width: 0 2px 2px 0;
+  border-radius: 0;
+  background: none;
+  transform: rotate(40deg);
 }
 
 body[data-product="quick-vote"] .notes b {
-  color: #F3EAD9;
+  color: #F2F0EB;
   font-weight: 600;
-}
-
-body[data-product="quick-vote"] .hero-meta {
-  margin-top: 1.1rem;
-  color: #D9C3A5;
-  font-family: var(--qv-serif);
-  font-size: .95rem;
 }
 
 /* --- Buttons -------------------------------------------------------------- */
 
 body[data-product="quick-vote"] .btn {
-  min-height: 0;
-  padding: 14px 24px;
+  min-height: 48px;
+  padding: 12px 24px;
   border-radius: 4px;
-  font-family: var(--qv-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
+  font-family: var(--qv-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-transform: none;
+  transition: background-color .15s ease;
 }
 
 body[data-product="quick-vote"] .btn-primary {
-  background: #7E1D2A;
-  border: 1px solid #B8893B;
-  color: #F7EFE2;
-  box-shadow: 0 10px 18px -10px rgba(0, 0, 0, .6);
+  background: #FBF9F4;
+  border: 1px solid #FBF9F4;
+  color: #3E1A5E;
+  box-shadow: 0 8px 16px -10px rgba(0, 0, 0, .6);
 }
 
 body[data-product="quick-vote"] .btn-primary:hover {
-  background: #96243A;
+  background: #FFFFFF;
+  border-color: #FFFFFF;
   filter: none;
 }
 
 body[data-product="quick-vote"] .btn-secondary {
   background: transparent;
-  border: 1px solid #B8893B;
-  color: #E2C48A;
+  border: 1px solid #CFCAC0;
+  color: #F2F0EB;
 }
 
 body[data-product="quick-vote"] .btn-secondary:hover {
-  background: rgba(184, 137, 59, .12);
+  background: rgba(242, 240, 235, .08);
   filter: none;
 }
 
-/* --- Chips: small engraved brass text -------------------------------------- */
+/* --- Chips: thin outlined pills --------------------------------------------- */
 
 body[data-product="quick-vote"] .chips {
-  gap: 4px 18px;
-  margin: 1.25rem 0 1.25rem;
+  gap: 8px 10px;
+  margin: 1.25rem 0 1.5rem;
 }
 
 body[data-product="quick-vote"] .chip,
 body[data-product="quick-vote"] .chip-status {
-  padding: 0;
-  border: 0;
-  border-radius: 0;
+  padding: 4px 13px;
+  border: 1px solid rgba(207, 202, 192, .4);
+  border-radius: 999px;
   background: transparent;
-  color: #C9A04A;
-  font-family: var(--qv-display);
+  color: #A9A7A2;
+  font-family: var(--qv-serif);
   font-size: .9rem;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, .6), 0 1px 1px rgba(255, 220, 170, .1);
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: none;
+  text-shadow: none;
 }
 
 body[data-product="quick-vote"] .chip-link {
-  text-decoration: underline;
-  text-decoration-color: rgba(201, 160, 74, .5);
-  text-underline-offset: 4px;
+  text-decoration: none;
 }
 
 body[data-product="quick-vote"] .chip-link:hover {
-  color: #E2C48A;
+  border-color: #CFCAC0;
+  color: #F2F0EB;
 }
 
 body[data-product="quick-vote"] .chip-live::before {
   width: 7px;
   height: 7px;
-  border-radius: 1px;
-  background: #C9A04A;
+  border-radius: 50%;
+  background: #CFCAC0;
   animation: none;
   box-shadow: none;
+}
+
+@keyframes qv-dot {
+  50% { opacity: .35; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-product="quick-vote"] .chip-live::before {
+    animation: qv-dot 2.4s ease-in-out infinite;
+  }
+
+  body[data-product="quick-vote"] .btn {
+    transition: background-color .15s ease, transform .15s ease;
+  }
+
+  body[data-product="quick-vote"] .btn-primary:hover {
+    transform: translateY(-1px);
+  }
 }
 
 /* --- Hero ------------------------------------------------------------------ */
 
 body[data-product="quick-vote"] .scene--hero .scene__copy {
   max-width: none;
-  container-type: inline-size;
+}
+
+body[data-product="quick-vote"] .scene--hero .scene__grid {
+  align-items: center;
 }
 
 @media (min-width: 900px) {
   body[data-product="quick-vote"] .scene--hero .scene__grid {
-    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
     gap: clamp(2rem, 4vw, 3.5rem);
   }
 }
 
-/* Wider hero so the board, a 45ch lead and the phone all fit side by side. */
-@media (min-width: 1280px) {
-  body[data-product="quick-vote"] .scene--hero .scene__grid { max-width: 1280px; }
-}
-
 body[data-product="quick-vote"] .scene--hero h1 {
-  color: #F3EAD9;
-  font-family: var(--qv-display);
-  font-size: clamp(3.5rem, 8vw, 6rem);
-  font-weight: 800;
-  line-height: .88;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  color: #F2F0EB;
+  font-family: var(--qv-serif);
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-variation-settings: "opsz" 60;
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.02em;
+  text-wrap: balance;
 }
 
 body[data-product="quick-vote"] .qv-claim {
-  margin-top: .85rem;
-  color: #E2C48A;
-  font-family: var(--qv-display);
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  font-weight: 600;
-  line-height: 1.1;
+  text-wrap: balance;
+  margin-top: 1rem;
+  color: #CFCAC0;
+  font-family: var(--qv-serif);
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
-body[data-product="quick-vote"] .qv-board-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(1.5rem, 1rem + 2vw, 2.25rem);
-  align-items: start;
-  margin-top: 2rem;
-}
-
-body[data-product="quick-vote"] .scene .qv-text .lead {
+body[data-product="quick-vote"] .scene--hero .lead {
   max-width: 45ch;
-  margin-top: 0;
+  margin-top: 1.5rem;
 }
 
 body[data-product="quick-vote"] .qv-made {
+  max-width: 45ch;
   margin-top: 1rem;
-  color: #D9C3A5;
+  color: #A9A7A2;
   font-size: 1rem;
   line-height: 1.6;
 }
 
-body[data-product="quick-vote"] .qv-text .actions {
+body[data-product="quick-vote"] .scene--hero .actions {
   margin-top: 0;
 }
 
-/* Stacked: the text and the buttons come first, the board follows. */
 @media (max-width: 699px) {
-  body[data-product="quick-vote"] .qv-board-row {
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 1.25rem;
-  }
-
-  body[data-product="quick-vote"] .qv-text { order: -1; }
   body[data-product="quick-vote"] .qv-made { font-size: .95rem; }
-  body[data-product="quick-vote"] .hb { width: min(100%, 240px); }
 }
 
-@container (max-width: 36rem) {
-  body[data-product="quick-vote"] .qv-board-row {
-    grid-template-columns: minmax(0, 1fr);
-  }
+/* --- Ballot paper and voter roll -------------------------------------------- */
 
-  body[data-product="quick-vote"] .qv-text { order: -1; }
-  body[data-product="quick-vote"] .hb { width: min(100%, 240px); }
+body[data-product="quick-vote"] .qv-label {
+  margin: 0;
+  color: #6A6072;
+  font-size: 1rem;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+  letter-spacing: .06em;
+  line-height: 1.3;
 }
 
-/* --- The hymn board --------------------------------------------------------- */
-
-body[data-product="quick-vote"] .hb {
-  width: clamp(240px, 24vw, 340px);
+body[data-product="quick-vote"] .qv-ballot-set {
+  width: clamp(340px, 34vw, 500px);
   max-width: 100%;
   margin: 0;
-  container-type: inline-size;
+  justify-self: center;
+  color: var(--qv-ink);
 }
 
-/* The frame is teak under a darker stain. */
-body[data-product="quick-vote"] .hb-frame {
-  padding: 0 10px 10px;
-  border: 1px solid #2A140C;
-  border-radius: 50% 50% 3px 3px / 22px 22px 3px 3px;
-  background-color: #5A3420;
-  background-image:
-    linear-gradient(rgba(34, 15, 7, .5), rgba(34, 15, 7, .5)),
-    url("/assets/textures/teak.svg");
-  background-size: auto, 400px 400px;
-  box-shadow: 0 22px 30px -18px rgba(0, 0, 0, .8);
-}
-
-body[data-product="quick-vote"] .hb-body {
-  padding: 16px 12px 16px;
-  border-radius: 2px 2px 1px 1px;
-  background: #141110;
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, .6),
-    inset 0 8px 14px -8px rgba(0, 0, 0, .9);
-}
-
-/* "VOTE" is set into a header rail cut from the frame wood. */
-body[data-product="quick-vote"] .hb-head {
-  margin: 16px 0 8px;
-  padding: 5px 0 4px .3em;
-  border-radius: 2px;
-  background: rgba(255, 200, 140, .42);
-  color: #1B0D07;
-  font-family: var(--qv-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: .3em;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255, 225, 190, .45);
-}
-
-body[data-product="quick-vote"] .hb-row {
+body[data-product="quick-vote"] .qv-ballot,
+body[data-product="quick-vote"] .qv-roll {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
-  padding-bottom: 4px;
-  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgba(91, 42, 134, .45);
+  border-radius: 3px;
+  background-color: #FBF9F4;
+  color: #1F1A24;
+  box-shadow:
+    inset 0 0 0 6px #FBF9F4,
+    inset 0 0 0 7px rgba(91, 42, 134, .35),
+    0 24px 40px -18px rgba(0, 0, 0, .55),
+    0 2px 4px rgba(0, 0, 0, .25);
 }
 
-body[data-product="quick-vote"] .hb-row::after {
+body[data-product="quick-vote"] .qv-ballot {
+  display: grid;
+  grid-template-columns: minmax(112px, 30%) minmax(0, 1fr);
+  transform: rotate(-1.5deg);
+}
+
+/* Counterfoil: the stub with the serial number, torn off along a perforation. */
+body[data-product="quick-vote"] .qv-counterfoil {
+  position: relative;
+  padding: 18px 12px 18px 18px;
+}
+
+body[data-product="quick-vote"] .qv-counterfoil::after {
   content: "";
   position: absolute;
-  left: -4px;
-  right: -4px;
+  top: 0;
+  right: -2px;
   bottom: 0;
-  height: 3px;
-  border-bottom: 1px solid #7A5A22;
-  border-radius: 1px;
-  background: #B8893B;
+  width: 4px;
+  background: radial-gradient(circle, #B9AEC8 1.2px, transparent 1.7px) center top / 4px 8px repeat-y;
 }
 
-body[data-product="quick-vote"] .hb-tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: .62;
-  border-radius: 3px;
-  background: #F3EEE3;
-  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .25);
-  color: #141110;
-  font-family: var(--qv-display);
-  padding: 6px 0 2px;
-  box-sizing: border-box;
-  /* Tile width = (board - 46px frame/padding - 12px gaps) / 3, height = width / .62.
-     The numeral is sized to that height so it fills the tile. */
-  font-size: 5rem;
-  font-size: max(3.6rem, calc((100cqw - 58px) / 1.86 * .88));
-  font-weight: 800;
-  line-height: .86;
+body[data-product="quick-vote"] .qv-serial {
+  display: block;
+  width: min-content;
+  margin-top: 6px;
+  color: #3E1A5E;
+  font-family: var(--qv-serif);
+  font-size: 2.6rem;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-variation-settings: "opsz" 60;
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -.01em;
 }
 
-body[data-product="quick-vote"] .hb-rule {
-  height: 1px;
+body[data-product="quick-vote"] .qv-note {
+  margin: 10px 0 0;
+  color: #6A6072;
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+body[data-product="quick-vote"] .qv-ballot-body {
+  position: relative;
+  padding: 18px 18px 36px 22px;
+}
+
+body[data-product="quick-vote"] .qv-ballot-foot {
+  margin-top: 14px;
+  font-size: .95rem;
+}
+
+body[data-product="quick-vote"] .qv-ballot-head {
+  padding-right: 60px;
+}
+
+body[data-product="quick-vote"] .qv-question {
   margin: 6px 0 12px;
-  border-bottom: 1px solid #7A5A22;
-  background: #B8893B;
+  padding-right: 60px;
+  color: #1F1A24;
+  font-size: 1.2rem;
+  font-variation-settings: "opsz" 24;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
 }
 
-body[data-product="quick-vote"] .hb-door {
-  display: grid;
-  gap: 5px;
+body[data-product="quick-vote"] .qv-options {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-body[data-product="quick-vote"] .hb-slip {
+body[data-product="quick-vote"] .qv-options li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 5px 8px;
-  border-radius: 2px;
-  background: #F3EEE3;
-  color: #141110;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid #D9D2E0;
+  font-size: 1.0625rem;
+  line-height: 1.3;
 }
 
-body[data-product="quick-vote"] .hb-name {
-  font-family: var(--qv-display);
-  font-size: .95rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: .04em;
-  text-transform: uppercase;
+body[data-product="quick-vote"] .qv-options li:last-child {
+  border-bottom: 1px solid #D9D2E0;
 }
 
-body[data-product="quick-vote"] .hb-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #6B5A44;
-  font-family: var(--qv-display);
-  font-size: .8rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: .02em;
-  text-transform: lowercase;
-  white-space: nowrap;
-}
-
-body[data-product="quick-vote"] .hb-tick {
-  display: block;
-  flex: none;
-  width: 14px;
-  height: 14px;
-}
-
-body[data-product="quick-vote"] .hb-slot {
-  display: block;
+body[data-product="quick-vote"] .qv-box {
+  position: relative;
   flex: none;
   box-sizing: border-box;
-  width: 14px;
-  height: 14px;
-  border: 1.5px dashed #6B5A44;
-  border-radius: 2px;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid #1F1A24;
 }
 
-body[data-product="quick-vote"] .hb figcaption {
-  margin-top: 1rem;
-  color: #D9C3A5;
-  font-family: var(--qv-serif);
-  font-size: .9rem;
+body[data-product="quick-vote"] .qv-cross {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 34px;
+  height: 34px;
+  overflow: visible;
+}
+
+body[data-product="quick-vote"] .qv-seal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 64px;
+  height: 64px;
+  opacity: .35;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9));
+}
+
+/* Voter roll: the same paper, smaller, set down across the ballot's lower-left. */
+body[data-product="quick-vote"] .qv-roll {
+  position: relative;
+  z-index: 1;
+  width: max(250px, 68%);
+  margin-top: -30px;
+  padding: 18px 20px 14px;
+  transform: rotate(1.2deg);
+}
+
+@media (min-width: 900px) {
+  body[data-product="quick-vote"] .qv-roll { margin-left: -1.25rem; }
+}
+
+body[data-product="quick-vote"] .qv-roll ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-product="quick-vote"] .qv-roll li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px 4.4rem;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid #D9D2E0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+body[data-product="quick-vote"] .qv-roll li:last-child {
+  border-bottom: 1px solid #D9D2E0;
+}
+
+body[data-product="quick-vote"] .qv-check {
+  position: relative;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #1F1A24;
+}
+
+body[data-product="quick-vote"] .qv-stroke {
+  position: absolute;
+  top: -5px;
+  left: -3px;
+  width: 24px;
+  height: 24px;
+  overflow: visible;
+}
+
+body[data-product="quick-vote"] .qv-status {
+  color: #3E1A5E;
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+body[data-product="quick-vote"] .qv-roll .is-waiting .qv-check {
+  border-style: dashed;
+  border-color: #8F84A0;
+}
+
+body[data-product="quick-vote"] .qv-roll .is-waiting .qv-status {
+  color: #6F6482;
+  font-weight: 400;
+}
+
+body[data-product="quick-vote"] .qv-ballot-set figcaption {
+  margin-top: 1.5rem;
+  color: #A9A7A2;
+  font-size: .95rem;
   line-height: 1.5;
 }
 
-/* --- Details: the facts as a plain board ------------------------------------ */
+/* Stacked: the copy and buttons come first, then a flat ballot with the roll below it. */
+@media (max-width: 699px) {
+  body[data-product="quick-vote"] .qv-ballot-set {
+    width: 100%;
+    margin-top: .5rem;
+  }
+
+  body[data-product="quick-vote"] .qv-ballot,
+  body[data-product="quick-vote"] .qv-roll {
+    transform: none;
+  }
+
+  body[data-product="quick-vote"] .qv-roll {
+    width: 100%;
+    margin: 1rem 0 0;
+  }
+}
+
+/* Narrow phones: the counterfoil becomes a strip across the top, torn off along a horizontal perforation. */
+@media (max-width: 519px) {
+  body[data-product="quick-vote"] .qv-ballot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-product="quick-vote"] .qv-counterfoil {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 12px;
+    padding: 16px 64px 16px 20px;
+  }
+
+  body[data-product="quick-vote"] .qv-counterfoil::after {
+    top: auto;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    width: auto;
+    height: 4px;
+    background: radial-gradient(circle, #B9AEC8 1.2px, transparent 1.7px) left center / 8px 4px repeat-x;
+  }
+
+  body[data-product="quick-vote"] .qv-serial {
+    width: auto;
+    margin-top: 0;
+    font-size: 2.2rem;
+    white-space: nowrap;
+  }
+
+  body[data-product="quick-vote"] .qv-note {
+    flex-basis: 100%;
+    margin-top: 0;
+  }
+
+  body[data-product="quick-vote"] .qv-ballot-body {
+    position: static;
+    padding-left: 20px;
+  }
+
+  body[data-product="quick-vote"] .qv-ballot-head,
+  body[data-product="quick-vote"] .qv-question {
+    padding-right: 0;
+  }
+
+  body[data-product="quick-vote"] .qv-seal {
+    top: 12px;
+    right: 14px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* --- Details: the facts as a notice sheet ------------------------------------ */
 
 body[data-product="quick-vote"] .facts {
   display: block;
+  max-width: 44rem;
   margin: 1.75rem 0 0;
-  padding: 14px 18px 4px;
-  border: 10px solid #5A3420;
-  background: #141110;
-  color: #EFE3CE;
+  padding: 18px 22px 8px;
+  border: 1px solid rgba(91, 42, 134, .45);
+  border-radius: 3px;
+  background: #FBF9F4;
+  color: #1F1A24;
   box-shadow:
-    0 0 0 1px #2A140C,
-    inset 0 0 0 1px rgba(0, 0, 0, .6),
-    0 22px 30px -18px rgba(0, 0, 0, .8);
+    inset 0 0 0 6px #FBF9F4,
+    inset 0 0 0 7px rgba(91, 42, 134, .35),
+    0 24px 40px -18px rgba(0, 0, 0, .55),
+    0 2px 4px rgba(0, 0, 0, .25);
 }
 
 body[data-product="quick-vote"] .facts::before {
-  content: "";
+  content: "Notice";
   display: block;
-  height: 3px;
-  margin: 0 -4px 4px;
-  border-bottom: 1px solid #7A5A22;
-  border-radius: 1px;
-  background: #B8893B;
+  padding-bottom: 8px;
+  color: #6A6072;
+  font-size: 1rem;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+  letter-spacing: .06em;
+  line-height: 1.3;
 }
 
 body[data-product="quick-vote"] .facts li {
   padding: 12px 0;
-  border-top: 1px solid #3A2E22;
-  color: #EFE3CE;
+  border-top: 1px solid #D9D2E0;
+  color: #1F1A24;
   font-size: 1rem;
   line-height: 1.55;
-}
-
-body[data-product="quick-vote"] .facts li:first-child {
-  border-top: 0;
 }
 
 body[data-product="quick-vote"] .facts li::before {
   content: none;
 }
 
-/* --- Phone on the wood ------------------------------------------------------ */
+/* --- Phone ------------------------------------------------------------------ */
 
 body[data-product="quick-vote"] .stage .phone {
   box-shadow:
-    0 0 0 1px rgba(226, 196, 138, .2),
-    0 34px 50px -26px rgba(0, 0, 0, .8),
-    0 -12px 28px -20px rgba(226, 196, 138, .3);
+    0 0 0 1px rgba(207, 202, 192, .18),
+    0 28px 44px -22px rgba(0, 0, 0, .6),
+    0 2px 4px rgba(0, 0, 0, .25);
 }
 
-/* --- Motion: the board is set once on load ---------------------------------- */
+/* --- Projects drawer --------------------------------------------------------- */
 
-@keyframes qv-tile-drop {
-  from { opacity: 0; transform: translateY(-28px); }
+body[data-product="quick-vote"] dialog.drawer {
+  background-color: #16171A;
+  background-image: none;
 }
 
-@keyframes qv-tick-punch {
-  from { opacity: 0; transform: scale(.4); }
+body[data-product="quick-vote"] dialog.drawer .drawer-head h2 {
+  font-family: var(--qv-serif);
+  font-weight: 600;
+}
+
+body[data-product="quick-vote"] dialog.drawer .drawer-link[aria-current="page"] {
+  background: rgba(242, 240, 235, .08);
+}
+
+body[data-product="quick-vote"] dialog.drawer .drawer-link .src-badge {
+  background: transparent;
+  border: 1px solid #CFCAC0;
+  color: #E6E1D6;
+}
+
+body[data-product="quick-vote"] dialog.drawer .drawer-foot .drawer-all {
+  min-height: 48px;
+  border: 1px solid #FBF9F4;
+  border-radius: 4px;
+  background: #FBF9F4;
+  color: #3E1A5E;
+  font-family: var(--qv-serif);
+  font-weight: 600;
+}
+
+body[data-product="quick-vote"] dialog.drawer .drawer-foot .drawer-all:hover {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+/* --- Motion: the ballot is marked once on load -------------------------------- */
+
+@keyframes qv-rise {
+  from { opacity: 0; translate: 0 12px; }
+}
+
+@keyframes qv-draw {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  1% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  body[data-product="quick-vote"] .hb-tile {
-    animation: qv-tile-drop 600ms cubic-bezier(.16, 1, .3, 1) backwards;
+  body[data-product="quick-vote"] .qv-ballot {
+    animation: qv-rise 500ms cubic-bezier(.16, 1, .3, 1) backwards;
   }
 
-  body[data-product="quick-vote"] .hb-row:nth-child(1) .hb-tile:nth-child(1) { animation-delay: 200ms; }
-  body[data-product="quick-vote"] .hb-row:nth-child(1) .hb-tile:nth-child(2) { animation-delay: 280ms; }
-  body[data-product="quick-vote"] .hb-row:nth-child(1) .hb-tile:nth-child(3) { animation-delay: 360ms; }
-  body[data-product="quick-vote"] .hb-row:nth-child(2) .hb-tile:nth-child(1) { animation-delay: 440ms; }
-  body[data-product="quick-vote"] .hb-row:nth-child(2) .hb-tile:nth-child(2) { animation-delay: 520ms; }
-  body[data-product="quick-vote"] .hb-row:nth-child(2) .hb-tile:nth-child(3) { animation-delay: 600ms; }
-
-  body[data-product="quick-vote"] .hb-tick {
-    animation: qv-tick-punch 300ms cubic-bezier(.16, 1, .3, 1) backwards;
+  body[data-product="quick-vote"] .qv-cross path,
+  body[data-product="quick-vote"] .qv-stroke path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: qv-draw 500ms ease-out backwards;
   }
 
-  body[data-product="quick-vote"] .hb-slip:nth-child(1) .hb-tick { animation-delay: 1100ms; }
-  body[data-product="quick-vote"] .hb-slip:nth-child(2) .hb-tick { animation-delay: 1550ms; }
-  body[data-product="quick-vote"] .hb-slip:nth-child(3) .hb-tick { animation-delay: 2000ms; }
+  body[data-product="quick-vote"] .qv-cross path:nth-child(1) { animation-delay: 300ms; }
+  body[data-product="quick-vote"] .qv-cross path:nth-child(2) { animation-delay: 480ms; }
+
+  body[data-product="quick-vote"] .qv-roll li:nth-child(1) .qv-stroke path { animation-delay: 1000ms; }
+  body[data-product="quick-vote"] .qv-roll li:nth-child(2) .qv-stroke path { animation-delay: 1250ms; }
+  body[data-product="quick-vote"] .qv-roll li:nth-child(3) .qv-stroke path { animation-delay: 1500ms; }
 }

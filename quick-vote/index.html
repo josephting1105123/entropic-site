@@ -6,7 +6,7 @@
   <title>Quick Vote &middot; Entropic Software Labs</title>
   <meta name="description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#2A1710">
+  <meta name="theme-color" content="#16171A">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/quick-vote/">
   <meta property="og:title" content="Quick Vote &middot; Entropic Software Labs">
   <meta property="og:description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="/css/site.css">
   <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/schedule.css?v=4">
-  <link rel="preload" href="/assets/fonts/bigshoulders-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/sourceserif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/qv-phone.css">
   <link rel="stylesheet" href="/css/quick-vote.css">
@@ -75,59 +74,74 @@
         <div class="scene__copy">
           <h1 id="intro-title">Quick Vote</h1>
           <p class="qv-claim">Only the people you let in can vote.</p>
+          <p class="lead">Read out the PIN and people join from their phones with a name. Each name waits until the host lets it in, so only people with the right to vote can vote. Results stay hidden until the host turns them on.</p>
+          <p class="qv-made">Made for a church fellowship's committee election, and fine for any room where only some people should vote.</p>
+          <div class="chips">
+            <span class="chip">Web</span>
+            <span class="chip chip-status chip-live">Live</span>
+            <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Open source</a>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
+            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
+          </div>
+        </div>
 
-          <div class="qv-board-row">
-            <figure class="hb" aria-labelledby="hb-cap">
-              <div class="hb-frame">
-                <p class="hb-head">Vote</p>
-                <div class="hb-body">
-                  <div class="hb-pin" role="img" aria-label="PIN 482 915">
-                    <div class="hb-row">
-                      <span class="hb-tile">4</span>
-                      <span class="hb-tile">8</span>
-                      <span class="hb-tile">2</span>
-                    </div>
-                    <div class="hb-row">
-                      <span class="hb-tile">9</span>
-                      <span class="hb-tile">1</span>
-                      <span class="hb-tile">5</span>
-                    </div>
-                  </div>
-                  <div class="hb-rule" aria-hidden="true"></div>
-                  <ul class="hb-door">
-                    <li class="hb-slip"><span class="hb-name">Rachel</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
-                    <li class="hb-slip"><span class="hb-name">Samuel</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
-                    <li class="hb-slip"><span class="hb-name">Hui Min</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
-                    <li class="hb-slip"><span class="hb-name">Jason</span><span class="hb-status"><span class="hb-slot" aria-hidden="true"></span>waiting</span></li>
-                  </ul>
-                </div>
-              </div>
-              <figcaption id="hb-cap">Names wait at the door until the host lets them in. Jason can't vote until then.</figcaption>
-            </figure>
-
-            <div class="qv-text">
-              <p class="lead">Read out the PIN and people join from their phones with a name. Each name waits until the host lets it in, so only people with the right to vote can vote. Results stay hidden until the host turns them on.</p>
-              <p class="qv-made">Made for a church fellowship's committee election, and fine for any room where only some people should vote.</p>
-              <div class="chips">
-                <span class="chip">Web</span>
-                <span class="chip chip-status chip-live">Live</span>
-                <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Open source</a>
-              </div>
-              <div class="actions">
-                <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
-                <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
-              </div>
-              <p class="hero-meta">The phone is live. Tap around.</p>
+        <figure class="qv-ballot-set" aria-labelledby="qv-set-cap">
+          <div class="qv-ballot">
+            <div class="qv-counterfoil">
+              <p class="qv-label">Ballot no.</p>
+              <span class="qv-serial"><span class="sr-only">PIN </span>482 915</span>
+              <p class="qv-note">Read this out to the room</p>
+            </div>
+            <div class="qv-ballot-body">
+              <p class="qv-label qv-ballot-head">Kertas undi &middot; Ballot paper</p>
+              <p class="qv-question">Who should be next year's fellowship president?</p>
+              <ol class="qv-options">
+                <li><span class="qv-name">Grace Lim<span class="sr-only">, marked</span></span><span class="qv-box"><svg class="qv-cross" viewBox="0 0 34 34" width="34" height="34" fill="none" stroke="#5B2A86" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 2.5C9 10 21 22 31.5 31" pathLength="1"/><path d="M30.5 4C22 10 12.5 21.5 3.5 32" pathLength="1"/></svg></span></li>
+                <li><span class="qv-name">Daniel Tan</span><span class="qv-box"></span></li>
+                <li><span class="qv-name">Esther Wong</span><span class="qv-box"></span></li>
+                <li><span class="qv-name">Joshua Lee</span><span class="qv-box"></span></li>
+              </ol>
+              <p class="qv-label qv-ballot-foot">Mark one box with a cross.</p>
+              <svg class="qv-seal" viewBox="0 0 100 100" width="64" height="64" fill="none" stroke="#5B2A86" stroke-width=".9" aria-hidden="true" focusable="false">
+                <defs>
+                  <ellipse id="qv-petal" cx="50" cy="34" rx="5.5" ry="14"/>
+                  <path id="qv-seal-arc" d="M14 50A36 36 0 0 1 86 50"/>
+                </defs>
+                <circle cx="50" cy="50" r="48"/>
+                <circle cx="50" cy="50" r="45"/>
+                <circle cx="50" cy="50" r="30"/>
+                <circle cx="50" cy="50" r="5"/>
+                <use href="#qv-petal"/>
+                <use href="#qv-petal" transform="rotate(30 50 50)"/>
+                <use href="#qv-petal" transform="rotate(60 50 50)"/>
+                <use href="#qv-petal" transform="rotate(90 50 50)"/>
+                <use href="#qv-petal" transform="rotate(120 50 50)"/>
+                <use href="#qv-petal" transform="rotate(150 50 50)"/>
+                <use href="#qv-petal" transform="rotate(180 50 50)"/>
+                <use href="#qv-petal" transform="rotate(210 50 50)"/>
+                <use href="#qv-petal" transform="rotate(240 50 50)"/>
+                <use href="#qv-petal" transform="rotate(270 50 50)"/>
+                <use href="#qv-petal" transform="rotate(300 50 50)"/>
+                <use href="#qv-petal" transform="rotate(330 50 50)"/>
+                <text fill="#5B2A86" stroke="none" font-family="Source Serif 4, Georgia, serif" font-size="8.5" font-weight="600" letter-spacing="1.6"><textPath href="#qv-seal-arc" startOffset="50%" text-anchor="middle">QUICK VOTE</textPath></text>
+              </svg>
             </div>
           </div>
-        </div>
 
-        <div class="stage">
-          <div class="phone phone--live" data-qv="host">
-            <img class="qv-shot on-dark" src="/assets/shots/qv-join-dark.webp" width="1080" height="2280" alt="Quick Vote join screen, where voters type the PIN and their name" loading="lazy" decoding="async">
-            <img class="qv-shot on-light" src="/assets/shots/qv-join-light.webp" width="1080" height="2280" alt="Quick Vote join screen, where voters type the PIN and their name" loading="lazy" decoding="async">
+          <div class="qv-roll">
+            <p class="qv-label qv-roll-head">Voter roll &middot; let in by the host</p>
+            <ul>
+              <li><span class="qv-name">Rachel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#5B2A86" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li><span class="qv-name">Samuel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#5B2A86" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li><span class="qv-name">Hui Min</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#5B2A86" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li class="is-waiting"><span class="qv-name">Jason</span><span class="qv-check"></span><span class="qv-status">Waiting</span></li>
+            </ul>
           </div>
-        </div>
+
+          <figcaption id="qv-set-cap">Names wait on the roll until the host lets them in. Jason can't vote yet.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -137,6 +151,7 @@
         <div class="scene__copy">
           <h2 id="join-title">Six digits and a name.</h2>
           <p class="lead">Voters open the site and type the PIN the host reads out. Nobody signs up, and nothing gets installed.</p>
+          <p class="qv-demo">The phone is live. Tap around.</p>
           <ul class="notes">
             <li><b>The cursor moves on by itself.</b> After the sixth digit it jumps to the name field, so a room full of people can join fast.</li>
             <li><b>The host lets people in.</b> Each name waits in a queue until the host approves it, one at a time or all at once.</li>
