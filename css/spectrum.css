@@ -706,20 +706,25 @@ html.is-book .dock{
   display:grid;pointer-events:none;
   transform:translate(-50%,-50%) translateX(calc(50vw + 100%)) rotate(12deg);
   visibility:hidden;
-  transition:transform 700ms var(--ease),left 600ms var(--ease),top 600ms var(--ease),visibility 0s linear 700ms;
+  transition:transform 700ms var(--ease),visibility 0s linear 700ms;
 }
 html.is-book .dock.is-on{
   transform:translate(-50%,-50%) rotate(.8deg);
   visibility:visible;
-  transition:transform 700ms var(--ease),left 600ms var(--ease),top 600ms var(--ease),visibility 0s;
+  transition:transform 700ms var(--ease),visibility 0s;
 }
 html.is-book .dock.is-still{transition:none!important}
+/* Only the screen changes between pages 3-6: the incoming face fades in on top while the outgoing one
+   stays fully drawn underneath, so the frame never dims or moves. */
 html.is-book .dock>.stage{
   grid-area:1/1;width:100%;
-  transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s;
+  opacity:0;visibility:hidden;transform:none;
+  transition:opacity 0s linear .3s,visibility 0s linear .3s;
 }
-html.is-book .dock>.stage:not(.in){opacity:0;visibility:hidden;transform:translateY(14px) scale(.985)}
-html.is-book .dock>.stage.in{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+html.is-book .dock>.stage.is-shown{
+  z-index:1;opacity:1;visibility:visible;
+  transition:opacity .3s var(--ease),visibility 0s;
+}
 html.is-book .dock .phone{
   max-width:none;width:100%;
   box-shadow:6px 26px 50px -12px rgba(31,30,28,.45),0 2px 6px rgba(31,30,28,.22);

@@ -220,13 +220,10 @@
       }
     }
 
-    // Park the dock over the slot of the story page being shown (the first before them, the last after them).
+    // Park the dock over the first story page's slot: one fixed spot for pages 3-6, so the phone never shifts between them.
     function placeDock() {
       if (!book || !book.dock || !book.story.length) return;
-      const s = book.story;
-      const c = Math.max(s[0].page, Math.min(s[s.length - 1].page, book.cur));
-      let a = s[0];
-      s.forEach((e) => { if (e.page <= c) a = e; });
+      const a = book.story[0];
       if (!a.rect) return;
       const d = book.dock;
       d.style.setProperty('--dx', (a.rect.left + a.rect.width / 2).toFixed(1) + 'px');
@@ -235,7 +232,8 @@
     }
 
     // The dock flies in when a story page becomes current, swaps screens between story pages, and flies out
-    // when you leave them. offDelay keeps the screen lit while the phone flies out.
+    // when you leave them. offDelay keeps the screen lit while the phone flies out. is-shown decides which phone
+    // face shows (immediately); .in plays its screen.
     function syncDock(prev, next, offDelay) {
       const b = book;
       if (!b || !b.dock) return;
@@ -250,8 +248,10 @@
           if (e === target) {
             e.stage.removeAttribute('aria-hidden');
             e.stage.removeAttribute('inert');
+            e.stage.classList.add('is-shown');
           } else {
             e.stage.classList.remove('in');
+            e.stage.classList.remove('is-shown');
             e.stage.setAttribute('aria-hidden', 'true');
             e.stage.setAttribute('inert', '');
           }
@@ -264,7 +264,7 @@
           e.stage.setAttribute('aria-hidden', 'true');
           e.stage.setAttribute('inert', '');
         });
-        const clear = () => b.story.forEach((e) => e.stage.classList.remove('in'));
+        const clear = () => b.story.forEach((e) => e.stage.classList.remove('in', 'is-shown'));
         if (!offDelay) clear(); else b.dockTimer = setTimeout(clear, offDelay);
       }
     }
@@ -450,6 +450,7 @@
       clearTimeout(b.dockTimer);
       b.story.forEach((e) => {
         e.slot.replaceWith(e.stage);
+        e.stage.classList.remove('is-shown');
         e.stage.removeAttribute('inert');
         e.stage.removeAttribute('aria-hidden');
       });
