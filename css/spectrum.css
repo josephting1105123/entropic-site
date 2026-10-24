@@ -592,8 +592,8 @@ body[data-product="spectrum"] .drawer-foot .drawer-all:hover{background:var(--hl
 .motion .course-copy .cc--other .cc-title::after{transition-delay:200ms}
 .motion .course-copy .cc--yours~.cc--other .cc-title::after{transition-delay:340ms}
 
-/* Book mode. js/spectrum.js adds html.is-book on desktop and wraps the sections in .book, one paper page each.
-   Everything below is under html.is-book, so mobile, no-JS and narrow windows keep the long scrolling page. */
+/* Book mode. js/spectrum.js adds html.is-book on desktop and wraps the sections in .book, one sheet of paper each,
+   lying in a pile. Everything below is under html.is-book, so mobile, no-JS and narrow windows keep the long scrolling page. */
 html.is-book,html.is-book body{overflow:hidden}
 html.is-book .sp-main{
   max-width:1280px;
@@ -601,16 +601,14 @@ html.is-book .sp-main{
   padding-inline:var(--gut) calc(var(--gut) + 76px);
 }
 .book{
-  --flip:cubic-bezier(.45,.05,.25,1);
+  --slide:cubic-bezier(.5,0,.2,1);
   --ph:min(300px,calc(100svh - 64px - 2 * var(--sp-5) - 2 * var(--sp-6)) * .4615);
   position:relative;isolation:isolate;
   width:min(100%,1180px);
   height:calc(100svh - 64px - 2 * var(--sp-5));
   margin-inline:auto;
-  perspective:2200px;
-  transform:rotate(-.6deg);
 }
-/* the stack of sheets under the top page */
+/* the rest of the pile under the top sheet */
 .book::before,.book::after{
   content:"";position:absolute;inset:0;z-index:-1;
   background:var(--sheet);
@@ -629,24 +627,28 @@ html.is-book .page{
   background:radial-gradient(ellipse 125% 105% at 50% 45%,transparent 58%,rgba(31,30,28,.11) 100%),var(--sheet);
   border-radius:2px 3px 2px 4px;
   box-shadow:3px 14px 34px -8px rgba(31,30,28,.32),0 1px 3px rgba(31,30,28,.18);
-  transform-origin:left center;
-  transform:rotateY(0deg);
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  transform:rotate(var(--rest,0deg));
   visibility:hidden;
-  transition:transform 700ms var(--flip) var(--fd,0ms),visibility 0s linear calc(700ms + var(--fd,0ms));
+  transition:transform 700ms var(--slide) var(--fd,0ms),box-shadow 700ms var(--slide) var(--fd,0ms),visibility 0s linear calc(700ms + var(--fd,0ms));
 }
-html.is-book .page.is-turned{transform:rotateY(-180deg);z-index:calc(var(--pn,9) + var(--pi,0))}
-html.is-book .page.is-current{visibility:visible;transition:transform 700ms var(--flip) var(--fd,0ms),visibility 0s}
-/* shade toward the spine while a page is turned, and the shadow a page casts on the one beneath it */
-html.is-book .page::before,html.is-book .page::after{
+/* a sheet that has been slid off the pile to the left */
+html.is-book .page.is-turned{
+  transform:translate(calc(-100% - 12vw),-2%) rotate(-8deg);
+  z-index:calc(var(--pn,9) + var(--pi,0));
+  box-shadow:14px 30px 60px -14px rgba(31,30,28,.4),0 2px 6px rgba(31,30,28,.2);
+}
+/* the top sheet, and the one lying beneath it, already in place */
+html.is-book .page:is(.is-current,.is-under){visibility:visible;transition:transform 700ms var(--slide) var(--fd,0ms),box-shadow 700ms var(--slide) var(--fd,0ms),visibility 0s}
+/* a light shade on every sheet that is not on top, which lifts as it becomes the top one */
+html.is-book .page::before{
   content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
-  transition:opacity 700ms var(--flip) var(--fd,0ms);
+  background:rgba(31,30,28,.07);opacity:1;
+  transition:opacity 700ms var(--slide) var(--fd,0ms);
 }
-html.is-book .page::after{background:linear-gradient(to right,rgba(31,30,28,.28),transparent 70%);opacity:0}
-html.is-book .page.is-turned::after{opacity:1}
-html.is-book .page::before{background:linear-gradient(to right,rgba(31,30,28,.22),rgba(31,30,28,.05));opacity:1}
 html.is-book .page.is-current::before{opacity:0}
-.book.is-still .page,.book.is-still .page::before,.book.is-still .page::after{transition:none!important}
+.book.is-still .page,.book.is-still .page::before{transition:none!important}
+/* measure the flat resting layout, with no tilt or slide */
+.book.is-measuring .page{transform:none!important}
 /* the hero lands with its own animation outside book mode; here the book does the landing */
 html.is-book.motion .hero-sheet{animation:none}
 
@@ -697,6 +699,31 @@ html.is-book .scene__grid{grid-template-columns:minmax(0,1fr) var(--ph);gap:var(
 html.is-book #full-page .scene__grid{grid-template-columns:minmax(0,1fr) minmax(0,340px)}
 html.is-book .phone{max-width:var(--ph)}
 html.is-book .stage{align-self:center}
+/* the phones of pages 3-6 leave the paper: a slot holds each one's place, and one shared dock floats above the pile */
+html.is-book .stage-slot{width:100%;max-width:var(--ph);aspect-ratio:9/19.5;justify-self:center;align-self:center}
+html.is-book .dock{
+  position:fixed;z-index:30;left:var(--dx,0px);top:var(--dy,0px);width:var(--dw,300px);
+  display:grid;pointer-events:none;
+  transform:translate(-50%,-50%) translateX(calc(50vw + 100%)) rotate(12deg);
+  visibility:hidden;
+  transition:transform 700ms var(--ease),left 600ms var(--ease),top 600ms var(--ease),visibility 0s linear 700ms;
+}
+html.is-book .dock.is-on{
+  transform:translate(-50%,-50%) rotate(.8deg);
+  visibility:visible;
+  transition:transform 700ms var(--ease),left 600ms var(--ease),top 600ms var(--ease),visibility 0s;
+}
+html.is-book .dock.is-still{transition:none!important}
+html.is-book .dock>.stage{
+  grid-area:1/1;width:100%;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s;
+}
+html.is-book .dock>.stage:not(.in){opacity:0;visibility:hidden;transform:translateY(14px) scale(.985)}
+html.is-book .dock>.stage.in{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+html.is-book .dock .phone{
+  max-width:none;width:100%;
+  box-shadow:6px 26px 50px -12px rgba(31,30,28,.45),0 2px 6px rgba(31,30,28,.22);
+}
 
 html.is-book .hero-sheet{margin:0;min-height:0;--tilt:0deg}
 html.is-book .hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-6);align-items:center}
@@ -721,11 +748,11 @@ html.is-book .page .sp-foot{max-width:none;margin:auto 0 0;padding:var(--sp-4) 0
 html.is-book .page .sp-foot p{font-size:.8rem;line-height:1.4;max-width:none}
 html.is-book .page .sp-foot .fine{font-size:.75rem}
 
-/* print: undo the book and let the pages run one after another */
+/* print: undo the pile and let the pages run one after another */
 @media print{
   html.is-book,html.is-book body{overflow:visible}
   html.is-book .sp-main{padding-inline:var(--gut)}
-  html.is-book .book{height:auto;width:auto;transform:none;perspective:none}
+  html.is-book .book{height:auto;width:auto}
   html.is-book .book::before,html.is-book .book::after{display:none}
   html.is-book .page{
     position:static;z-index:auto;height:auto;overflow:visible;
@@ -733,7 +760,9 @@ html.is-book .page .sp-foot .fine{font-size:.75rem}
     break-after:page;page-break-after:always;
   }
   html.is-book .page:last-of-type{break-after:auto;page-break-after:auto}
-  html.is-book .page::before,html.is-book .page::after{display:none}
+  html.is-book .page::before{display:none}
+  html.is-book .dock{display:none}
+  html.is-book .stage-slot{display:none}
   html.is-book .page-in{flex:none;min-height:auto}
   html.is-book .page-in.is-fit{transform:none;width:auto;margin-inline:0;flex:none}
   html.is-book .book-tabs{display:none}
