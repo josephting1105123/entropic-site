@@ -4,13 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quick Vote &middot; Entropic Software Labs</title>
-  <meta name="description" content="Quick Vote: make a poll, read out the PIN, and everyone votes from their phone. No accounts and nothing to install.">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+  <meta name="description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#2A1710">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/quick-vote/">
   <meta property="og:title" content="Quick Vote &middot; Entropic Software Labs">
-  <meta property="og:description" content="Quick Vote: make a poll, read out the PIN, and everyone votes from their phone. No accounts and nothing to install.">
+  <meta property="og:description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
   <meta property="og:url" content="https://entropicsoftwarelabs.com/quick-vote/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Entropic Software Labs">
@@ -25,13 +24,16 @@
   <link rel="stylesheet" href="/css/site.css">
   <link rel="stylesheet" href="/css/segments.css">
   <link rel="stylesheet" href="/css/schedule.css?v=4">
+  <link rel="preload" href="/assets/fonts/bigshoulders-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/sourceserif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/qv-phone.css">
+  <link rel="stylesheet" href="/css/quick-vote.css">
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/qv-phone.js" defer></script>
   <script src="/js/segments.js" defer></script>
 </head>
-<body data-product="quick-vote">
+<body data-product="quick-vote" data-rail="off">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="topbar">
     <div class="container topbar-inner">
@@ -71,25 +73,59 @@
     <section class="scene scene--hero" id="intro" data-chapter="Intro" aria-labelledby="intro-title">
       <div class="container scene__grid">
         <div class="scene__copy">
-          <span class="cat-label">Utilities</span>
           <h1 id="intro-title">Quick Vote</h1>
-          <div class="chips">
-            <span class="chip">Web</span>
-            <span class="chip chip-status chip-live">Live</span>
-            <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Open source</a>
+          <p class="qv-claim">Only the people you let in can vote.</p>
+
+          <div class="qv-board-row">
+            <figure class="hb" aria-labelledby="hb-cap">
+              <div class="hb-frame">
+                <p class="hb-head">Vote</p>
+                <div class="hb-body">
+                  <div class="hb-pin" role="img" aria-label="PIN 482 915">
+                    <div class="hb-row">
+                      <span class="hb-tile">4</span>
+                      <span class="hb-tile">8</span>
+                      <span class="hb-tile">2</span>
+                    </div>
+                    <div class="hb-row">
+                      <span class="hb-tile">9</span>
+                      <span class="hb-tile">1</span>
+                      <span class="hb-tile">5</span>
+                    </div>
+                  </div>
+                  <div class="hb-rule" aria-hidden="true"></div>
+                  <ul class="hb-door">
+                    <li class="hb-slip"><span class="hb-name">Rachel</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
+                    <li class="hb-slip"><span class="hb-name">Samuel</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
+                    <li class="hb-slip"><span class="hb-name">Hui Min</span><span class="hb-status"><svg class="hb-tick" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><rect width="14" height="14" rx="2" fill="#141110"/><path d="M3.2 7.4l2.5 2.5 5.1-5.6" fill="none" stroke="#B8893B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>let in</span></li>
+                    <li class="hb-slip"><span class="hb-name">Jason</span><span class="hb-status"><span class="hb-slot" aria-hidden="true"></span>waiting</span></li>
+                  </ul>
+                </div>
+              </div>
+              <figcaption id="hb-cap">Names wait at the door until the host lets them in. Jason can't vote until then.</figcaption>
+            </figure>
+
+            <div class="qv-text">
+              <p class="lead">Read out the PIN and people join from their phones with a name. Each name waits until the host lets it in, so only people with the right to vote can vote. Results stay hidden until the host turns them on.</p>
+              <p class="qv-made">Made for a church fellowship's committee election, and fine for any room where only some people should vote.</p>
+              <div class="chips">
+                <span class="chip">Web</span>
+                <span class="chip chip-status chip-live">Live</span>
+                <a class="chip chip-status chip-link" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Open source</a>
+              </div>
+              <div class="actions">
+                <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
+                <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
+              </div>
+              <p class="hero-meta">The phone is live. Tap around.</p>
+            </div>
           </div>
-          <p class="lead">Make a poll, read out the PIN, and everyone votes from their phone. The host approves who gets in and decides when people see the results.</p>
-          <div class="actions">
-            <a class="btn btn-primary" href="https://vote.entropicsoftwarelabs.com/" rel="noopener">Open Quick Vote</a>
-            <a class="btn btn-secondary" href="https://github.com/josephting1105123/Voting-App" rel="noopener">Source on GitHub</a>
-          </div>
-          <p class="hero-meta">The phone is live. Tap around.</p>
         </div>
 
         <div class="stage">
-          <div class="phone phone--live" data-qv="results">
-            <img class="qv-shot on-dark" src="/assets/shots/qv-results-dark.webp" width="1080" height="2280" alt="Quick Vote after voting: Vote recorded, with live results as bars" loading="lazy" decoding="async">
-            <img class="qv-shot on-light" src="/assets/shots/qv-results-light.webp" width="1080" height="2280" alt="Quick Vote after voting: Vote recorded, with live results as bars" loading="lazy" decoding="async">
+          <div class="phone phone--live" data-qv="host">
+            <img class="qv-shot on-dark" src="/assets/shots/qv-join-dark.webp" width="1080" height="2280" alt="Quick Vote join screen, where voters type the PIN and their name" loading="lazy" decoding="async">
+            <img class="qv-shot on-light" src="/assets/shots/qv-join-light.webp" width="1080" height="2280" alt="Quick Vote join screen, where voters type the PIN and their name" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -99,7 +135,6 @@
     <section class="scene" id="join" data-chapter="Join" aria-labelledby="join-title">
       <div class="container scene__grid">
         <div class="scene__copy">
-          <p class="eyebrow"><b>02</b> <span>Join</span></p>
           <h2 id="join-title">Six digits and a name.</h2>
           <p class="lead">Voters open the site and type the PIN the host reads out. Nobody signs up, and nothing gets installed.</p>
           <ul class="notes">
@@ -122,7 +157,6 @@
     <section class="scene" id="vote" data-chapter="Vote" aria-labelledby="vote-title">
       <div class="container scene__grid scene__grid--flip">
         <div class="scene__copy">
-          <p class="eyebrow"><b>03</b> <span>Vote</span></p>
           <h2 id="vote-title">One tap, then submit.</h2>
           <p class="lead">Options are big rows you can hit with a thumb. Nothing counts until Submit, so a wrong tap is easy to fix.</p>
           <ul class="notes">
@@ -144,7 +178,6 @@
     <section class="scene" id="results" data-chapter="Results" aria-labelledby="results-title">
       <div class="container scene__grid">
         <div class="scene__copy">
-          <p class="eyebrow"><b>04</b> <span>Results</span></p>
           <h2 id="results-title">Bars that move as votes land.</h2>
           <p class="lead">Results stay hidden until the host turns Live on. Then every screen in the room shows the same bars at once, and they keep moving as votes come in.</p>
           <ul class="notes">
@@ -166,7 +199,6 @@
     <section class="scene" id="host" data-chapter="Host" aria-labelledby="host-title">
       <div class="container scene__grid scene__grid--flip">
         <div class="scene__copy">
-          <p class="eyebrow"><b>05</b> <span>Host</span></p>
           <h2 id="host-title">The host runs the room.</h2>
           <p class="lead">The host's screen has the PIN to read out, the queue of people waiting, and the switch that shows results.</p>
           <ul class="notes">
@@ -188,7 +220,6 @@
     <section class="scene scene--install" id="details" data-chapter="Details" aria-labelledby="details-title">
       <div class="container scene__grid">
         <div class="scene__copy">
-          <p class="eyebrow"><b>06</b> <span>Details</span></p>
           <h2 id="details-title">Details</h2>
           <ul class="facts">
             <li>No accounts and nothing to install.</li>
