@@ -1,8 +1,10 @@
 /* ==========================================================================
-   projects.css — the /projects/ page. Each project row is drawn as a panel in
-   its product's own look, so the list previews each product page's world.
-   Markup and site.css are untouched; tokens are redefined on the article, so
-   the shared components (chips, buttons, labels) pick up each world's inks.
+   projects.css — the /projects/ page. Each project row is a full-bleed band
+   (edge to edge) in its product's own look, so the list previews each product
+   page's world. site.css is untouched and the rows' markup is unchanged; tokens are
+   redefined on the article, so the shared components (chips, buttons, labels) pick up each
+   world's inks. The top bar and the Projects drawer take the same tokens for
+   whichever row is under the bar (js/projects.js sets data-product on them).
    ========================================================================== */
 
 /* --- Fonts: the product faces, self-hosted ------------------------- */
@@ -37,31 +39,56 @@
   font-display:swap;
 }
 
-/* --- Panel frame: every row is a framed room -----------------------------
-   The panel is a pseudo-element behind the row, so the article keeps its
-   height and margins (segments.js measures scene tops). OffBridge, Schedule
-   and MIF Finance keep this shell look and follow the light/dark toggle. */
+/* --- Panel frame: every row is a full-bleed band --------------------------
+   The band is a pseudo-element behind the row, stretched to the viewport
+   edges, so the article keeps its height and margins (segments.js measures
+   scene tops) and its content stays aligned to the container. Rows touch.
+   overflow-x is clipped, not hidden: the band's 100vw overshoot needs
+   clipping, and hidden would turn .apps into a scroll container.
+   OffBridge, Schedule and MIF Finance keep this shell look and follow the
+   light/dark toggle. */
+.apps{
+  padding-top:0;
+  border-top:0;
+  overflow-x:clip;
+}
+html:not(.is-segmented) .apps .project:first-of-type{
+  padding-top:var(--section);
+}
+html.is-segmented .apps .project:first-of-type{
+  padding-top:clamp(1.25rem, .5rem + 2vh, 2.5rem);
+}
 .apps .project{
   position:relative;
   isolation:isolate;
   border-top:0;
-  padding-inline:clamp(1.25rem, .5rem + 3vw, 3rem);
+  padding-inline:0;
 }
 .apps .project::before{
   content:"";
   position:absolute;
   z-index:-1;
-  inset:clamp(.75rem, .5rem + 1vh, 1.5rem) 0;
-  border-radius:var(--r-lg);
+  inset:0 calc(50% - 50vw);
+  border-radius:0;
   background:var(--card);
-  border:1px solid var(--hairline);
+  border:0;
+  border-top:1px solid var(--hairline);
   pointer-events:none;
+}
+
+/* Over any band the bar and drawer take the band colour, not the page's.
+   Kept at lower specificity than the world rules below, which set their own --bg. */
+.topbar[data-band],
+dialog.drawer[data-band]{
+  --bg:var(--card);
 }
 
 /* ==========================================================================
    Spectrum+ — the photocopied handout (light only)
    ========================================================================== */
-:root .apps .project[data-product="spectrum"]{
+:root .apps .project[data-product="spectrum"],
+:root .topbar[data-product="spectrum"],
+:root dialog.drawer[data-product="spectrum"]{
   color-scheme:light;
   --card:#ededeb;
   --surface:#d5d5d1;
@@ -76,15 +103,18 @@
   --accent-muted:rgba(244,255,58,.6);
   --warn:#1f1e1c;
   color:#1f1e1c;
+}
+:root .apps .project[data-product="spectrum"]{
   font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-stretch:100%;
+}
+:root .topbar[data-product="spectrum"],
+:root dialog.drawer[data-product="spectrum"]{
+  --bg:#ededeb;
 }
 :root .apps .project[data-product="spectrum"]::before{
   background:radial-gradient(ellipse 125% 105% at 50% 45%, transparent 58%, rgba(31,30,28,.11) 100%), #ededeb;
   border:0;
-  border-radius:2px 3px 2px 4px;
-  box-shadow:3px 14px 34px -8px rgba(31,30,28,.32), 0 1px 3px rgba(31,30,28,.18);
-  transform:rotate(-.4deg);
 }
 :root .apps .project[data-product="spectrum"] .project-name{
   font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -152,7 +182,9 @@
 /* ==========================================================================
    Card Games — the CNY open-house table (light only)
    ========================================================================== */
-:root .apps .project[data-product="card-games"]{
+:root .apps .project[data-product="card-games"],
+:root .topbar[data-product="card-games"],
+:root dialog.drawer[data-product="card-games"]{
   color-scheme:light;
   --bg:#FFFDF8;
   --card:#FFFDF8;
@@ -169,13 +201,14 @@
   --warn:#9E1328;
   color:#2B2622;
 }
+:root .topbar[data-product="card-games"]{
+  --bg:#F4F1EA;
+}
 :root .apps .project[data-product="card-games"]::before{
   background-color:#F4F1EA;
   background-image:linear-gradient(115deg, rgba(255,255,255,.35), rgba(255,255,255,0) 62%), url("/assets/textures/tablecloth.svg");
   background-size:auto, 360px 360px;
   border:0;
-  border-radius:6px;
-  box-shadow:0 14px 28px -14px rgba(90,20,20,.35), 0 2px 4px rgba(0,0,0,.08);
 }
 /* The text sits on a card-stock card so it reads over the floral vinyl. */
 :root .apps .project[data-product="card-games"] .project-text{
@@ -250,7 +283,9 @@
 /* ==========================================================================
    Quick Vote — stationery on a cream field, like the live voting site (light only)
    ========================================================================== */
-:root .apps .project[data-product="quick-vote"]{
+:root .apps .project[data-product="quick-vote"],
+:root .topbar[data-product="quick-vote"],
+:root dialog.drawer[data-product="quick-vote"]{
   color-scheme:light;
   --bg:#E3DCCE;
   --card:#FBF9F4;
@@ -268,15 +303,20 @@
   --shadow-shot:0 18px 32px -18px rgba(70,50,30,.28), 0 1px 3px rgba(70,50,30,.18);
   --shadow-btn:0 8px 16px -10px rgba(70,50,30,.45);
   color:#241B1A;
+}
+:root .apps .project[data-product="quick-vote"]{
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+:root .topbar[data-product="quick-vote"],
+:root dialog.drawer[data-product="quick-vote"]{
+  --bg:#ECE6DA;
 }
 :root .apps .project[data-product="quick-vote"]::before{
   background-color:#ECE6DA;
   background-image:radial-gradient(ellipse 900px 520px at 72% 40%, rgba(255,255,255,.45), transparent 70%), url("/assets/textures/guilloche-light.svg");
   background-repeat:no-repeat, repeat;
   background-size:auto, 240px 120px;
-  border:1px solid rgba(36,27,26,.1);
-  border-radius:4px;
+  border:0;
 }
 :root .apps .project[data-product="quick-vote"] .project-name{
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
@@ -353,22 +393,19 @@
   color:#241B1A;
 }
 
-/* --- Motion: button hover lift (site.css cancels transitions on reduce) -- */
+/* --- Motion: button hover lift, bar recolour (site.css cancels transitions on reduce) -- */
 @media (prefers-reduced-motion: no-preference){
+  .topbar,
+  .topbar .brand,
+  .topbar .mark,
+  .topbar .menu-btn,
+  .topbar .theme-toggle{
+    transition:background-color .3s ease, color .3s ease, border-color .3s ease;
+  }
   :root .apps .project[data-product="spectrum"] .btn-primary{
     transition:transform .15s ease, background-color .15s ease;
   }
   :root .apps .project[data-product="spectrum"] .btn-primary:hover{
     transform:translateY(-1px);
-  }
-}
-
-/* --- Small screens: tighter panel ---------------------------------------- */
-@media (max-width: 600px){
-  .apps .project{
-    padding-inline:1rem;
-  }
-  .apps .project::before{
-    inset-block:.5rem;
   }
 }
