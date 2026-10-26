@@ -1,42 +1,52 @@
-/* Quick Vote product page: matches the Quick Vote app's light theme, light only.
-   White rounded cards on a pale slate ground, green for the selected and live states.
+/* Quick Vote product page: a polling station's fine stationery on a cream field, matching the live voting site (light only).
    The ballot's counterfoil carries the PIN as its serial number, the voter roll shows who the host has let in.
    Scoped to body[data-product="quick-vote"]. */
 
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/assets/fonts/sourceserif4-latin.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* --- Palette and ground --------------------------------------------------
-   The doubled :root beats site.css's dark-theme rules for this product, so
+   The doubled :root beats site.css's light-theme rules for this product, so
    the page keeps its one look in either theme. */
 
 :root:root body[data-product="quick-vote"] {
   color-scheme: light;
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --surface: #f1f5f9;
-  --text: #0f172a;
-  --text-2: #475569;
-  --text-3: #5b6b80;
-  --hairline: rgba(15, 23, 42, .08);
-  --hairline-strong: rgba(15, 23, 42, .14);
-  --accent: #34d399;
-  --accent-text: #047857;
-  --accent-on: #042f1c;
-  --accent-muted: rgba(52, 211, 153, .16);
-  --warn: #b45309;
-  --qv-ui: 'QV Geist', system-ui, -apple-system, "Segoe UI", sans-serif;
-  --qv-ink: #0f172a;
+  --bg: #E3DCCE;
+  --card: #FBF9F4;
+  --surface: rgba(255, 255, 255, .4);
+  --text: #241B1A;
+  --text-2: #5F5450;
+  --text-3: #5F5450;
+  --hairline: rgba(36, 27, 26, .1);
+  --hairline-strong: rgba(36, 27, 26, .18);
+  --accent: #241B1A;
+  --accent-text: #5A1F1C;
+  --accent-on: #FBF9F4;
+  --accent-muted: rgba(36, 27, 26, .08);
+  --warn: #664200;
+  --qv-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --serif: var(--qv-serif);
+  --sans: var(--qv-serif);
+  --qv-ink: #241B1A;
 
-  background-color: #f8fafc;
+  background-color: #ECE6DA;
   background-image:
-    radial-gradient(120% 55% at 50% 0, rgba(16, 185, 129, .1), transparent 70%),
-    linear-gradient(#f8fafc, #eef2f7);
-  background-repeat: no-repeat;
-  caret-color: #047857;
+    radial-gradient(ellipse 900px 520px at 72% 260px, rgba(255, 255, 255, .45), transparent 70%),
+    url("/assets/textures/guilloche-light.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 240px 120px;
+  caret-color: #5A1F1C;
 }
 
 html:has(body[data-product="quick-vote"]) {
   color-scheme: light;
-  background-color: #f8fafc;
-  scrollbar-color: #cbd5e1 #f8fafc;
+  background-color: #ECE6DA;
+  scrollbar-color: #B8AE9C transparent;
   overflow-x: clip;
 }
 
@@ -50,13 +60,17 @@ body[data-product="quick-vote"] {
 
 body[data-product="quick-vote"] ::selection,
 body[data-product="quick-vote"]::selection {
-  background: rgba(52, 211, 153, .35);
-  color: #0f172a;
+  background: rgba(122, 46, 42, .25);
+  color: #241B1A;
 }
 
-body[data-product="quick-vote"] :focus-visible:not(.qv-dev *),
-body[data-product="quick-vote"] :is(.qv-ballot, .qv-roll, .facts) :focus-visible:not(.qv-dev *) {
-  outline: 3px solid #047857;
+body[data-product="quick-vote"] :is(.qv-ballot, .qv-roll, .facts) ::selection {
+  background: #7A2E2A;
+  color: #F2F0EB;
+}
+
+body[data-product="quick-vote"] :focus-visible:not(.qv-dev *) {
+  outline: 3px solid #7A2E2A;
   outline-offset: 3px;
 }
 
@@ -66,16 +80,16 @@ body[data-product="quick-vote"] .theme-toggle { display: none; }
 /* --- Type ----------------------------------------------------------------- */
 
 body[data-product="quick-vote"] main {
-  color: #0f172a;
-  font-family: var(--serif);
+  color: #241B1A;
+  font-family: var(--qv-serif);
   font-size: 1.0625rem;
   font-optical-sizing: auto;
   line-height: 1.65;
 }
 
 body[data-product="quick-vote"] .scene h2 {
-  color: #0f172a;
-  font-family: var(--serif);
+  color: #241B1A;
+  font-family: var(--qv-serif);
   font-size: clamp(2rem, 3.6vw, 3rem);
   font-variation-settings: "opsz" 60;
   font-weight: 600;
@@ -85,8 +99,8 @@ body[data-product="quick-vote"] .scene h2 {
 }
 
 body[data-product="quick-vote"] .scene .lead {
-  color: #0f172a;
-  font-family: var(--serif);
+  color: #241B1A;
+  font-family: var(--qv-serif);
   font-size: 1.0625rem;
   line-height: 1.65;
   margin-top: 1.1rem;
@@ -94,7 +108,7 @@ body[data-product="quick-vote"] .scene .lead {
 
 body[data-product="quick-vote"] .qv-demo {
   margin-top: .9rem;
-  color: #475569;
+  color: #5F5450;
   font-size: .95rem;
   line-height: 1.5;
 }
@@ -102,7 +116,7 @@ body[data-product="quick-vote"] .qv-demo {
 body[data-product="quick-vote"] .notes li {
   position: relative;
   padding-left: 26px;
-  color: #475569;
+  color: #5F5450;
   font-size: 1rem;
   line-height: 1.65;
 }
@@ -113,7 +127,7 @@ body[data-product="quick-vote"] .notes li::before {
   left: 4px;
   width: 6px;
   height: 11px;
-  border: solid #047857;
+  border: solid #7A2E2A;
   border-width: 0 2px 2px 0;
   border-radius: 0;
   background: none;
@@ -121,7 +135,7 @@ body[data-product="quick-vote"] .notes li::before {
 }
 
 body[data-product="quick-vote"] .notes b {
-  color: #0f172a;
+  color: #241B1A;
   font-weight: 600;
 }
 
@@ -129,9 +143,9 @@ body[data-product="quick-vote"] .notes b {
 
 body[data-product="quick-vote"] .btn {
   min-height: 48px;
-  padding: 12px 26px;
-  border-radius: 999px;
-  font-family: var(--qv-ui);
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-family: var(--qv-serif);
   font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: .01em;
@@ -140,26 +154,26 @@ body[data-product="quick-vote"] .btn {
 }
 
 body[data-product="quick-vote"] .btn-primary {
-  background: #34d399;
-  border: 1px solid #34d399;
-  color: #042f1c;
-  box-shadow: 0 10px 24px -14px rgba(5, 150, 105, .55);
+  background: #241B1A;
+  border: 1px solid #241B1A;
+  color: #FBF9F4;
+  box-shadow: 0 8px 16px -10px rgba(70, 50, 30, .45);
 }
 
 body[data-product="quick-vote"] .btn-primary:hover {
-  background: #2fc48c;
-  border-color: #2fc48c;
+  background: #3A2C2A;
+  border-color: #3A2C2A;
   filter: none;
 }
 
 body[data-product="quick-vote"] .btn-secondary {
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, .14);
-  color: #0f172a;
+  background: transparent;
+  border: 1px solid rgba(36, 27, 26, .4);
+  color: #241B1A;
 }
 
 body[data-product="quick-vote"] .btn-secondary:hover {
-  background: #f1f5f9;
+  background: rgba(36, 27, 26, .06);
   filter: none;
 }
 
@@ -173,11 +187,11 @@ body[data-product="quick-vote"] .chips {
 body[data-product="quick-vote"] .chip,
 body[data-product="quick-vote"] .chip-status {
   padding: 4px 13px;
-  border: 1px solid rgba(15, 23, 42, .14);
+  border: 1px solid rgba(36, 27, 26, .45);
   border-radius: 999px;
-  background: #ffffff;
-  color: #475569;
-  font-family: var(--qv-ui);
+  background: transparent;
+  color: #5F5450;
+  font-family: var(--qv-serif);
   font-size: .9rem;
   font-weight: 500;
   letter-spacing: .02em;
@@ -190,15 +204,15 @@ body[data-product="quick-vote"] .chip-link {
 }
 
 body[data-product="quick-vote"] .chip-link:hover {
-  border-color: #047857;
-  color: #047857;
+  border-color: #241B1A;
+  color: #241B1A;
 }
 
 body[data-product="quick-vote"] .chip-live::before {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #059669;
+  background: #7A2E2A;
   animation: none;
   box-shadow: none;
 }
@@ -239,8 +253,8 @@ body[data-product="quick-vote"] .scene--hero .scene__grid {
 }
 
 body[data-product="quick-vote"] .scene--hero h1 {
-  color: #0f172a;
-  font-family: var(--serif);
+  color: #241B1A;
+  font-family: var(--qv-serif);
   font-size: clamp(3rem, 6.5vw, 5.5rem);
   font-variation-settings: "opsz" 60;
   font-weight: 600;
@@ -252,8 +266,8 @@ body[data-product="quick-vote"] .scene--hero h1 {
 body[data-product="quick-vote"] .qv-claim {
   text-wrap: balance;
   margin-top: 1rem;
-  color: #047857;
-  font-family: var(--serif);
+  color: #5A1F1C;
+  font-family: var(--qv-serif);
   font-size: clamp(1.25rem, 2.2vw, 1.75rem);
   font-weight: 400;
   line-height: 1.2;
@@ -267,7 +281,7 @@ body[data-product="quick-vote"] .scene--hero .lead {
 body[data-product="quick-vote"] .qv-made {
   max-width: 45ch;
   margin-top: 1rem;
-  color: #475569;
+  color: #5F5450;
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -282,15 +296,14 @@ body[data-product="quick-vote"] .scene--hero .actions {
 
 /* --- Ballot paper and voter roll -------------------------------------------- */
 
-body[data-product="quick-vote"] .qv-label {
+body[data-product="quick-vote"] .qv-label:not(.qv-dev *) {
   margin: 0;
-  color: #5b6b80;
-  font-family: var(--qv-ui);
-  font-size: .8rem;
+  color: #6B5F5B;
+  font-size: 1rem;
+  font-variant-caps: all-small-caps;
   font-weight: 600;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   line-height: 1.3;
-  text-transform: uppercase;
 }
 
 body[data-product="quick-vote"] .qv-ballot-set {
@@ -305,18 +318,21 @@ body[data-product="quick-vote"] .qv-ballot,
 body[data-product="quick-vote"] .qv-roll {
   position: relative;
   box-sizing: border-box;
-  border: 1px solid rgba(15, 23, 42, .08);
-  border-radius: 20px;
-  background-color: #ffffff;
-  color: #0f172a;
+  border: 1px solid rgba(122, 46, 42, .45);
+  border-radius: 3px;
+  background-color: #FBF9F4;
+  color: #241B1A;
   box-shadow:
-    0 1px 2px rgba(15, 23, 42, .04),
-    0 18px 36px -26px rgba(15, 23, 42, .18);
+    inset 0 0 0 6px #FBF9F4,
+    inset 0 0 0 7px rgba(122, 46, 42, .35),
+    0 18px 32px -18px rgba(70, 50, 30, .28),
+    0 1px 3px rgba(70, 50, 30, .18);
 }
 
 body[data-product="quick-vote"] .qv-ballot {
   display: grid;
   grid-template-columns: minmax(112px, 30%) minmax(0, 1fr);
+  transform: rotate(-1.5deg);
 }
 
 /* Counterfoil: the stub with the serial number, torn off along a perforation. */
@@ -332,15 +348,15 @@ body[data-product="quick-vote"] .qv-counterfoil::after {
   right: -2px;
   bottom: 0;
   width: 4px;
-  background: radial-gradient(circle, #cbd5e1 1.2px, transparent 1.7px) center top / 4px 8px repeat-y;
+  background: radial-gradient(circle, #C8B3AA 1.2px, transparent 1.7px) center top / 4px 8px repeat-y;
 }
 
 body[data-product="quick-vote"] .qv-serial {
   display: block;
   width: min-content;
   margin-top: 6px;
-  color: #047857;
-  font-family: var(--serif);
+  color: #5A1F1C;
+  font-family: var(--qv-serif);
   font-size: 2.6rem;
   font-variant-numeric: tabular-nums lining-nums;
   font-variation-settings: "opsz" 60;
@@ -349,9 +365,9 @@ body[data-product="quick-vote"] .qv-serial {
   letter-spacing: -.01em;
 }
 
-body[data-product="quick-vote"] .qv-note {
+body[data-product="quick-vote"] .qv-note:not(.qv-dev *) {
   margin: 10px 0 0;
-  color: #5b6b80;
+  color: #6B5F5B;
   font-size: .8rem;
   line-height: 1.4;
 }
@@ -363,7 +379,7 @@ body[data-product="quick-vote"] .qv-ballot-body {
 
 body[data-product="quick-vote"] .qv-ballot-foot {
   margin-top: 14px;
-  font-size: .8rem;
+  font-size: .95rem;
 }
 
 body[data-product="quick-vote"] .qv-ballot-head {
@@ -373,8 +389,7 @@ body[data-product="quick-vote"] .qv-ballot-head {
 body[data-product="quick-vote"] .qv-question {
   margin: 6px 0 12px;
   padding-right: 60px;
-  color: #0f172a;
-  font-family: var(--serif);
+  color: #241B1A;
   font-size: 1.2rem;
   font-variation-settings: "opsz" 24;
   font-weight: 600;
@@ -394,13 +409,13 @@ body[data-product="quick-vote"] .qv-options li {
   justify-content: space-between;
   gap: 12px;
   padding: 8px 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #E0D6CF;
   font-size: 1.0625rem;
   line-height: 1.3;
 }
 
 body[data-product="quick-vote"] .qv-options li:last-child {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #E0D6CF;
 }
 
 body[data-product="quick-vote"] .qv-box {
@@ -409,8 +424,7 @@ body[data-product="quick-vote"] .qv-box {
   box-sizing: border-box;
   width: 26px;
   height: 26px;
-  border: 1.5px solid #94a3b8;
-  border-radius: 6px;
+  border: 1.5px solid #241B1A;
 }
 
 body[data-product="quick-vote"] .qv-cross {
@@ -429,15 +443,17 @@ body[data-product="quick-vote"] .qv-seal {
   width: 64px;
   height: 64px;
   opacity: .35;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9));
 }
 
-/* Voter roll: the same card, smaller, set down across the ballot's lower-left. */
+/* Voter roll: the same paper, smaller, set down across the ballot's lower-left. */
 body[data-product="quick-vote"] .qv-roll {
   position: relative;
   z-index: 1;
   width: max(250px, 68%);
   margin-top: -30px;
   padding: 18px 20px 14px;
+  transform: rotate(1.2deg);
 }
 
 @media (min-width: 900px) {
@@ -456,13 +472,13 @@ body[data-product="quick-vote"] .qv-roll li {
   align-items: center;
   gap: 10px;
   padding: 7px 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #E0D6CF;
   font-size: 1rem;
   line-height: 1.3;
 }
 
 body[data-product="quick-vote"] .qv-roll li:last-child {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #E0D6CF;
 }
 
 body[data-product="quick-vote"] .qv-check {
@@ -470,8 +486,7 @@ body[data-product="quick-vote"] .qv-check {
   box-sizing: border-box;
   width: 22px;
   height: 22px;
-  border: 1.5px solid #94a3b8;
-  border-radius: 6px;
+  border: 1.5px solid #241B1A;
 }
 
 body[data-product="quick-vote"] .qv-stroke {
@@ -484,25 +499,24 @@ body[data-product="quick-vote"] .qv-stroke {
 }
 
 body[data-product="quick-vote"] .qv-status {
-  color: #047857;
-  font-family: var(--qv-ui);
+  color: #5A1F1C;
   font-size: .95rem;
   font-weight: 600;
 }
 
 body[data-product="quick-vote"] .qv-roll .is-waiting .qv-check {
   border-style: dashed;
-  border-color: #94a3b8;
+  border-color: #9C8C85;
 }
 
 body[data-product="quick-vote"] .qv-roll .is-waiting .qv-status {
-  color: #5b6b80;
+  color: #7A6A64;
   font-weight: 400;
 }
 
 body[data-product="quick-vote"] .qv-ballot-set figcaption {
   margin-top: 1.5rem;
-  color: #475569;
+  color: #5F5450;
   font-size: .95rem;
   line-height: 1.5;
 }
@@ -512,6 +526,11 @@ body[data-product="quick-vote"] .qv-ballot-set figcaption {
   body[data-product="quick-vote"] .qv-ballot-set {
     width: 100%;
     margin-top: .5rem;
+  }
+
+  body[data-product="quick-vote"] .qv-ballot,
+  body[data-product="quick-vote"] .qv-roll {
+    transform: none;
   }
 
   body[data-product="quick-vote"] .qv-roll {
@@ -541,7 +560,7 @@ body[data-product="quick-vote"] .qv-ballot-set figcaption {
     left: 0;
     width: auto;
     height: 4px;
-    background: radial-gradient(circle, #cbd5e1 1.2px, transparent 1.7px) left center / 8px 4px repeat-x;
+    background: radial-gradient(circle, #C8B3AA 1.2px, transparent 1.7px) left center / 8px 4px repeat-x;
   }
 
   body[data-product="quick-vote"] .qv-serial {
@@ -551,7 +570,7 @@ body[data-product="quick-vote"] .qv-ballot-set figcaption {
     white-space: nowrap;
   }
 
-  body[data-product="quick-vote"] .qv-note {
+  body[data-product="quick-vote"] .qv-note:not(.qv-dev *) {
     flex-basis: 100%;
     margin-top: 0;
   }
@@ -574,39 +593,40 @@ body[data-product="quick-vote"] .qv-ballot-set figcaption {
   }
 }
 
-/* --- Details: the facts as a notice card ------------------------------------- */
+/* --- Details: the facts as a notice sheet ------------------------------------ */
 
 body[data-product="quick-vote"] .facts {
   display: block;
   max-width: 44rem;
   margin: 1.75rem 0 0;
   padding: 18px 22px 8px;
-  border: 1px solid rgba(15, 23, 42, .08);
-  border-radius: 20px;
-  background: #ffffff;
-  color: #0f172a;
+  border: 1px solid rgba(122, 46, 42, .45);
+  border-radius: 3px;
+  background: #FBF9F4;
+  color: #241B1A;
   box-shadow:
-    0 1px 2px rgba(15, 23, 42, .04),
-    0 18px 36px -26px rgba(15, 23, 42, .18);
+    inset 0 0 0 6px #FBF9F4,
+    inset 0 0 0 7px rgba(122, 46, 42, .35),
+    0 18px 32px -18px rgba(70, 50, 30, .28),
+    0 1px 3px rgba(70, 50, 30, .18);
 }
 
 body[data-product="quick-vote"] .facts::before {
   content: "Notice";
   display: block;
   padding-bottom: 8px;
-  color: #5b6b80;
-  font-family: var(--qv-ui);
-  font-size: .8rem;
+  color: #6B5F5B;
+  font-size: 1rem;
+  font-variant-caps: all-small-caps;
   font-weight: 600;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   line-height: 1.3;
-  text-transform: uppercase;
 }
 
 body[data-product="quick-vote"] .facts li {
   padding: 12px 0;
-  border-top: 1px solid #e2e8f0;
-  color: #0f172a;
+  border-top: 1px solid #E0D6CF;
+  color: #241B1A;
   font-size: 1rem;
   line-height: 1.55;
 }
@@ -619,46 +639,46 @@ body[data-product="quick-vote"] .facts li::before {
 
 body[data-product="quick-vote"] .stage .phone {
   box-shadow:
-    0 0 0 1px rgba(15, 23, 42, .08),
-    0 28px 44px -22px rgba(15, 23, 42, .28),
-    0 2px 4px rgba(15, 23, 42, .06);
+    0 0 0 1px rgba(36, 27, 26, .18),
+    0 28px 44px -22px rgba(70, 50, 30, .35),
+    0 2px 4px rgba(70, 50, 30, .18);
 }
 
 /* --- Projects drawer --------------------------------------------------------- */
 
 body[data-product="quick-vote"] dialog.drawer {
-  background-color: #ffffff;
+  background-color: #ECE6DA;
   background-image: none;
 }
 
 body[data-product="quick-vote"] dialog.drawer .drawer-head h2 {
-  font-family: var(--serif);
+  font-family: var(--qv-serif);
   font-weight: 600;
 }
 
 body[data-product="quick-vote"] dialog.drawer .drawer-link[aria-current="page"] {
-  background: rgba(52, 211, 153, .16);
+  background: rgba(36, 27, 26, .08);
 }
 
 body[data-product="quick-vote"] dialog.drawer .drawer-link .src-badge {
   background: transparent;
-  border: 1px solid #047857;
-  color: #047857;
+  border: 1px solid rgba(36, 27, 26, .45);
+  color: #5A1F1C;
 }
 
 body[data-product="quick-vote"] dialog.drawer .drawer-foot .drawer-all {
   min-height: 48px;
-  border: 1px solid #34d399;
-  border-radius: 999px;
-  background: #34d399;
-  color: #042f1c;
-  font-family: var(--qv-ui);
+  border: 1px solid #241B1A;
+  border-radius: 4px;
+  background: #241B1A;
+  color: #FBF9F4;
+  font-family: var(--qv-serif);
   font-weight: 600;
 }
 
 body[data-product="quick-vote"] dialog.drawer .drawer-foot .drawer-all:hover {
-  background: #2fc48c;
-  border-color: #2fc48c;
+  background: #3A2C2A;
+  border-color: #3A2C2A;
 }
 
 /* --- Motion: the ballot is marked once on load -------------------------------- */

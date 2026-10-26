@@ -37,7 +37,6 @@
   var JOIN_MS = 1200;
   var DOT = "·";
 
-  var root = document.documentElement;
   var reduceQ = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   var uid = 0;
   var apps = [];
@@ -70,17 +69,6 @@
 
   function iconCheck(cls) {
     return sv("qv-ic qv-ic--chk " + cls, "0 0 24 24", [["path", { d: "M5 12.5l4.5 4.5L19 7.5" }]]);
-  }
-
-  function iconSun() {
-    return sv("qv-ic qv-i-sun", "0 0 24 24", [
-      ["circle", { cx: "12", cy: "12", r: "4" }],
-      ["path", { d: "M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" }]
-    ]);
-  }
-
-  function iconMoon() {
-    return sv("qv-ic qv-i-moon", "0 0 24 24", [["path", { d: "M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" }]]);
   }
 
   // The studio flask. Each app copy needs its own mask id: up to five copies
@@ -133,12 +121,6 @@
   }
 
   function reduced() { return !!(reduceQ && reduceQ.matches); }
-
-  /* ----------------------------------------------------------------------
-     2. Theme: the phone starts light; only its own in-app button flips it
-     ---------------------------------------------------------------------- */
-
-  function pageIsLight() { return true; }
 
   /* ----------------------------------------------------------------------
      3. The results bars, shared by the voter and host screens
@@ -207,7 +189,7 @@
      4. One app instance
      ---------------------------------------------------------------------- */
 
-  function createApp(host, vp, dev, initial) {
+  function createApp(host, dev, initial) {
     var n = ++uid;
     var s = {
       screen: initial,
@@ -221,7 +203,6 @@
       live: true,
       waiting: WAITING.slice(),
       inRoom: IN_ROOM,
-      theme: null,
       joining: false
     };
     if (initial === "results") { s.voted = true; s.pick = 1; s.counts[1]++; syncRoom(); }
@@ -259,14 +240,8 @@
     seg.appendChild(segVoter);
     seg.appendChild(segAdmin);
 
-    var themeBtn = mk("button", "qv-theme");
-    themeBtn.type = "button";
-    themeBtn.appendChild(iconSun());
-    themeBtn.appendChild(iconMoon());
-
     bar.appendChild(brand);
     bar.appendChild(seg);
-    bar.appendChild(themeBtn);
 
     var page = mk("div", "qv-page");
 
@@ -280,25 +255,6 @@
       if (sayTimer) window.clearTimeout(sayTimer);
       sayTimer = window.setTimeout(function () { live.textContent = msg; }, 60);
     }
-
-    function isLight() {
-      if (s.theme) return s.theme === "light";
-      return pageIsLight();
-    }
-
-    function applyTheme() {
-      var l = isLight();
-      var fns = [dev, vp];
-      for (var i = 0; i < fns.length; i++) {
-        if (l) fns[i].classList.add("is-light"); else fns[i].classList.remove("is-light");
-      }
-      themeBtn.setAttribute("aria-label", l ? "Switch to dark theme" : "Switch to light theme");
-    }
-
-    themeBtn.addEventListener("click", function () {
-      s.theme = isLight() ? "dark" : "light";
-      applyTheme();
-    });
 
     function syncSeg() {
       segVoter.setAttribute("aria-pressed", s.mode === "voter" ? "true" : "false");
@@ -741,13 +697,11 @@
 
     /* --- Go ----------------------------------------------------------------- */
 
-    applyTheme();
     // The opening screen is built before the phone is in the page, so its bars
     // are filled by start(), once there is a layout for the width to animate from.
     show(initial, { announce: false, focus: false, defer: true });
 
     return {
-      applyTheme: applyTheme,
       setVisible: function (v) { visible = v; if (v) arm(); },
       arm: arm,
       start: function () {
@@ -770,7 +724,7 @@
     var dev = mk("div", "qv-dev qv");
     vp.appendChild(dev);
 
-    var app = createApp(host, vp, dev, initial);
+    var app = createApp(host, dev, initial);
     apps.push(app);
 
     // The app fills the frame exactly: the width sets the scale, and the
