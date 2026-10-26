@@ -1,0 +1,379 @@
+/* ==========================================================================
+   projects.css — the /projects/ page. Each project row is drawn as a panel in
+   its product's own look, so the list previews each product page's world.
+   Markup and site.css are untouched; tokens are redefined on the article, so
+   the shared components (chips, buttons, labels) pick up each world's inks.
+   ========================================================================== */
+
+/* --- Fonts: the three product faces, self-hosted ------------------------- */
+@font-face{
+  font-family:"Archivo";
+  src:url("/assets/fonts/archivo-latin.woff2") format("woff2");
+  font-weight:400 900;
+  font-stretch:62% 125%;
+  font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  src:url("/assets/fonts/archivo-latin-ext.woff2") format("woff2");
+  font-weight:400 900;
+  font-stretch:62% 125%;
+  font-display:swap;
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Bricolage Grotesque";
+  src:url("/assets/fonts/bricolage-latin.woff2") format("woff2");
+  font-weight:200 800;
+  font-stretch:75% 100%;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Source Serif 4";
+  src:url("/assets/fonts/sourceserif4-latin.woff2") format("woff2");
+  font-weight:200 900;
+  font-style:normal;
+  font-display:swap;
+}
+
+/* --- Panel frame: every row is a framed room -----------------------------
+   The panel is a pseudo-element behind the row, so the article keeps its
+   height and margins (segments.js measures scene tops). OffBridge, Schedule
+   and MIF Finance keep this shell look and follow the light/dark toggle. */
+.apps .project{
+  position:relative;
+  isolation:isolate;
+  border-top:0;
+  padding-inline:clamp(1.25rem, .5rem + 3vw, 3rem);
+}
+.apps .project::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:clamp(.75rem, .5rem + 1vh, 1.5rem) 0;
+  border-radius:var(--r-lg);
+  background:var(--card);
+  border:1px solid var(--hairline);
+  pointer-events:none;
+}
+
+/* ==========================================================================
+   Spectrum+ — the photocopied handout (light only)
+   ========================================================================== */
+:root .apps .project[data-product="spectrum"]{
+  color-scheme:light;
+  --card:#ededeb;
+  --surface:#d5d5d1;
+  --text:#1f1e1c;
+  --text-2:#474744;
+  --text-3:#474744;
+  --hairline:rgba(31,30,28,.2);
+  --hairline-strong:rgba(31,30,28,.4);
+  --accent:#f4ff3a;
+  --accent-text:#1f1e1c;
+  --accent-on:#1f1e1c;
+  --accent-muted:rgba(244,255,58,.6);
+  --warn:#1f1e1c;
+  color:#1f1e1c;
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-stretch:100%;
+}
+:root .apps .project[data-product="spectrum"]::before{
+  background:radial-gradient(ellipse 125% 105% at 50% 45%, transparent 58%, rgba(31,30,28,.11) 100%), #ededeb;
+  border:0;
+  border-radius:2px 3px 2px 4px;
+  box-shadow:3px 14px 34px -8px rgba(31,30,28,.32), 0 1px 3px rgba(31,30,28,.18);
+  transform:rotate(-.4deg);
+}
+:root .apps .project[data-product="spectrum"] .project-name{
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-stretch:66%;
+  font-weight:860;
+  letter-spacing:-.02em;
+  line-height:.95;
+  color:#1f1e1c;
+  width:fit-content;
+  background-image:linear-gradient(#f4ff3a,#f4ff3a);
+  background-repeat:no-repeat;
+  background-position:0 60%;
+  background-size:100% 82%;
+  border-radius:.2em .5em .3em .4em;
+  padding-inline:.14em;
+  margin-inline:-.14em;
+  mix-blend-mode:multiply;
+}
+:root .apps .project[data-product="spectrum"] .cat-label{
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:650;
+}
+:root .apps .project[data-product="spectrum"] p{
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root .apps .project[data-product="spectrum"] .chip{
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:transparent;
+  border:1.5px solid rgba(31,30,28,.4);
+  color:#1f1e1c;
+}
+:root .apps .project[data-product="spectrum"] .chip-closed{
+  border-style:dashed;
+  color:#474744;
+}
+:root .apps .project[data-product="spectrum"] .chip-soon{
+  background:#ff5aa8;
+  border-color:transparent;
+  color:#1f1e1c;
+  mix-blend-mode:multiply;
+}
+:root .apps .project[data-product="spectrum"] .btn-primary{
+  background:#f4ff3a;
+  color:#1f1e1c;
+  border:2px solid #1f1e1c;
+  border-radius:.3em .6em .35em .5em;
+  box-shadow:none;
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:650;
+  mix-blend-mode:multiply;
+}
+:root .apps .project[data-product="spectrum"] .btn-primary:hover{
+  filter:none;
+  background-color:#fbff9c;
+}
+:root .apps .project[data-product="spectrum"] :focus-visible{
+  outline:3px solid #ff5aa8;
+  outline-offset:2px;
+}
+:root .apps .project[data-product="spectrum"] ::selection{
+  background:#f4ff3a;
+  color:#1f1e1c;
+}
+
+/* ==========================================================================
+   Card Games — the CNY open-house table (light only)
+   ========================================================================== */
+:root .apps .project[data-product="card-games"]{
+  color-scheme:light;
+  --bg:#FFFDF8;
+  --card:#FFFDF8;
+  --surface:#F4F1EA;
+  --text:#2B2622;
+  --text-2:#5A4A40;
+  --text-3:#5A4A40;
+  --hairline:#E3DCCF;
+  --hairline-strong:#BFB3A3;
+  --accent:#C8102E;
+  --accent-text:#9E1328;
+  --accent-on:#FFFFFF;
+  --accent-muted:rgba(200,16,46,.10);
+  --warn:#9E1328;
+  color:#2B2622;
+}
+:root .apps .project[data-product="card-games"]::before{
+  background-color:#F4F1EA;
+  background-image:linear-gradient(115deg, rgba(255,255,255,.35), rgba(255,255,255,0) 62%), url("/assets/textures/tablecloth.svg");
+  background-size:auto, 360px 360px;
+  border:0;
+  border-radius:6px;
+  box-shadow:0 14px 28px -14px rgba(90,20,20,.35), 0 2px 4px rgba(0,0,0,.08);
+}
+/* The text sits on a card-stock card so it reads over the floral vinyl. */
+:root .apps .project[data-product="card-games"] .project-text{
+  background:#FFFDF8;
+  border:1px solid #E3DCCF;
+  border-radius:6px;
+  padding:clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  box-shadow:0 14px 28px -14px rgba(90,20,20,.35), 0 2px 4px rgba(0,0,0,.08);
+}
+:root .apps .project[data-product="card-games"] .project-name{
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:800;
+  font-stretch:100%;
+  letter-spacing:-.02em;
+  color:#C8102E;
+}
+:root .apps .project[data-product="card-games"] .cat-label{
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:700;
+  color:#9E1328;
+}
+:root .apps .project[data-product="card-games"] .chip{
+  background:#FFFDF8;
+  border:1.5px solid #C8102E;
+  color:#9E1328;
+}
+:root .apps .project[data-product="card-games"] .chip-closed{
+  border:1.5px dashed #5A4A40;
+  color:#5A4A40;
+}
+:root .apps .project[data-product="card-games"] .chip-live::before{
+  background:#2E8B57;
+  box-shadow:none;
+}
+:root .apps .project[data-product="card-games"] .btn{
+  min-height:48px;
+  padding:14px 22px;
+  border:2px solid #C8102E;
+  border-radius:12px;
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:700;
+  font-size:1.0625rem;
+  line-height:1.2;
+}
+:root .apps .project[data-product="card-games"] .btn-primary{
+  background:#C8102E;
+  color:#FFFFFF;
+  box-shadow:0 8px 14px -8px rgba(150,10,30,.6), inset 0 1px 0 rgba(255,255,255,.25);
+}
+:root .apps .project[data-product="card-games"] .btn-primary:hover{
+  background:#A50D25;
+  border-color:#A50D25;
+  filter:none;
+}
+:root .apps .project[data-product="card-games"] .btn-secondary{
+  background:#FFFFFF;
+  color:#A50D25;
+}
+:root .apps .project[data-product="card-games"] .btn-secondary:hover{
+  background:#FDEEF0;
+  filter:none;
+}
+:root .apps .project[data-product="card-games"] :focus-visible{
+  outline:3px solid #2E8B57;
+  outline-offset:3px;
+}
+:root .apps .project[data-product="card-games"] ::selection{
+  background:#FBD3D9;
+  color:#2B2622;
+}
+
+/* ==========================================================================
+   Quick Vote — the polling station, fine stationery on charcoal (dark only)
+   ========================================================================== */
+:root .apps .project[data-product="quick-vote"]{
+  color-scheme:dark;
+  --bg:#111214;
+  --card:#1E1F23;
+  --surface:#26282C;
+  --text:#F2F0EB;
+  --text-2:#A9A7A2;
+  --text-3:#A9A7A2;
+  --hairline:rgba(242,240,235,.12);
+  --hairline-strong:rgba(242,240,235,.26);
+  --accent:#CFCAC0;
+  --accent-text:#E6E1D6;
+  --accent-on:#16171A;
+  --accent-muted:rgba(242,240,235,.08);
+  --warn:#E6E1D6;
+  color:#F2F0EB;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+:root .apps .project[data-product="quick-vote"]::before{
+  background-color:#16171A;
+  background-image:radial-gradient(ellipse 900px 520px at 72% 40%, rgba(255,255,255,.035), transparent 70%), url("/assets/textures/guilloche.svg");
+  background-repeat:no-repeat, repeat;
+  background-size:auto, 240px 120px;
+  border:1px solid rgba(242,240,235,.12);
+  border-radius:4px;
+}
+/* Always the dark screenshot, whatever the site theme. */
+:root .apps .project[data-product="quick-vote"] .on-dark{
+  display:block;
+}
+:root .apps .project[data-product="quick-vote"] .on-light{
+  display:none;
+}
+:root .apps .project[data-product="quick-vote"] .project-name{
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-weight:600;
+  font-variation-settings:"opsz" 60;
+  letter-spacing:-.015em;
+  line-height:1.05;
+  color:#F2F0EB;
+}
+:root .apps .project[data-product="quick-vote"] .cat-label{
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  letter-spacing:.12em;
+  color:#A9A7A2;
+}
+:root .apps .project[data-product="quick-vote"] p{
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color:#F2F0EB;
+  line-height:1.65;
+}
+:root .apps .project[data-product="quick-vote"] .chip{
+  padding:4px 13px;
+  border:1px solid rgba(207,202,192,.4);
+  border-radius:999px;
+  background:transparent;
+  color:#A9A7A2;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:.9rem;
+  font-weight:500;
+  letter-spacing:.02em;
+}
+:root .apps .project[data-product="quick-vote"] .chip-link:hover{
+  border-color:#CFCAC0;
+  color:#F2F0EB;
+}
+:root .apps .project[data-product="quick-vote"] .chip-live::before{
+  background:#CFCAC0;
+  box-shadow:none;
+  animation:none;
+}
+:root .apps .project[data-product="quick-vote"] .btn{
+  padding:12px 24px;
+  border-radius:4px;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:1.0625rem;
+  font-weight:600;
+  letter-spacing:.01em;
+}
+:root .apps .project[data-product="quick-vote"] .btn-primary{
+  background:#FBF9F4;
+  border:1px solid #FBF9F4;
+  color:#3E1A5E;
+  box-shadow:0 8px 16px -10px rgba(0,0,0,.6);
+}
+:root .apps .project[data-product="quick-vote"] .btn-primary:hover{
+  background:#FFFFFF;
+  border-color:#FFFFFF;
+  filter:none;
+}
+:root .apps .project[data-product="quick-vote"] .btn-secondary{
+  background:transparent;
+  border:1px solid #CFCAC0;
+  color:#F2F0EB;
+}
+:root .apps .project[data-product="quick-vote"] .btn-secondary:hover{
+  background:rgba(242,240,235,.08);
+  filter:none;
+}
+:root .apps .project[data-product="quick-vote"] :focus-visible{
+  outline:3px solid #E6E1D6;
+  outline-offset:3px;
+}
+:root .apps .project[data-product="quick-vote"] ::selection{
+  background:#5B2A86;
+  color:#F2F0EB;
+}
+
+/* --- Motion: button hover lift (site.css cancels transitions on reduce) -- */
+@media (prefers-reduced-motion: no-preference){
+  :root .apps .project[data-product="spectrum"] .btn-primary{
+    transition:transform .15s ease, background-color .15s ease;
+  }
+  :root .apps .project[data-product="spectrum"] .btn-primary:hover{
+    transform:translateY(-1px);
+  }
+}
+
+/* --- Small screens: tighter panel ---------------------------------------- */
+@media (max-width: 600px){
+  .apps .project{
+    padding-inline:1rem;
+  }
+  .apps .project::before{
+    inset-block:.5rem;
+  }
+}
