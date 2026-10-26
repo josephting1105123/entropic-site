@@ -83,6 +83,20 @@ dialog.drawer[data-band]{
   --bg:var(--card);
 }
 
+/* Hidden twin of the bar that js/projects.js tags per zone to read the background
+   colour the bar would have there. Never visible, never interactive. */
+.topbar[data-probe]{
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+  pointer-events:none;
+  transition:none;
+}
+
 /* ==========================================================================
    Spectrum+ — the photocopied handout (light only)
    ========================================================================== */
@@ -819,20 +833,22 @@ dialog.drawer[data-band]{
 }
 
 /* --- Motion: button hover lift, bar swap (site.css cancels transitions on reduce) --
-   Colours cross-fade. What cannot animate (fonts, radii shapes, border widths) changes
-   while js/projects.js holds .is-swapping on the bar and its contents are faded out. */
+   The bar's background is not transitioned: js/projects.js scrubs it inline with the
+   scroll. Borders, shadows and button colours ease over .3s. What cannot animate (fonts,
+   radii shapes, border widths) changes at the scroll midpoint while js/projects.js holds
+   .is-swapping on the bar and its contents are briefly faded out. */
 @media (prefers-reduced-motion: no-preference){
   .topbar{
-    transition:background-color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1), box-shadow .5s cubic-bezier(.4,0,.2,1);
+    transition:border-color .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1);
   }
   .topbar .brand,
   .topbar .mark,
   .topbar .menu-btn,
   .topbar .theme-toggle{
-    transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1);
+    transition:background-color .3s cubic-bezier(.4,0,.2,1), color .3s cubic-bezier(.4,0,.2,1), border-color .3s cubic-bezier(.4,0,.2,1);
   }
   .topbar .topbar-inner{
-    transition:opacity .22s ease, transform .22s ease;
+    transition:opacity .16s ease, transform .16s ease;
   }
   .topbar.is-swapping .topbar-inner{
     opacity:0;
@@ -850,4 +866,102 @@ dialog.drawer[data-band]{
   :root dialog.drawer[data-product="spectrum"] .drawer-foot .drawer-all{
     transition:transform 150ms;
   }
+}
+
+/* --- Horizontal panels (html.is-hscroll, set by projects.js) ---------------
+   The hero and the six project rows become full-screen panels in one flex track.
+   .hs is as tall as the scroll needed to cross all panels; .hs-pin sticks under
+   the top bar for that whole stretch, and js/projects.js slides .hs-track left by
+   (scroll progress x panel width). Vertical snapping is native: one .hs-snap span
+   per panel marks where each panel rests. Without the class (no JS, or reduced
+   motion) none of this applies and the rows stack as before. */
+html.is-hscroll{
+  scroll-snap-type:y mandatory;
+}
+html.is-hscroll .hs{
+  position:relative;
+  height:calc((var(--hs-n) - 1) * (100svh - var(--nav-h)) + 100lvh - var(--nav-h));
+}
+html.is-hscroll .hs-pin{
+  position:sticky;
+  top:var(--nav-h);
+  height:calc(100lvh - var(--nav-h));
+  overflow:clip;
+}
+html.is-hscroll .hs-track{
+  display:flex;
+  height:100%;
+  will-change:transform;
+}
+html.is-hscroll .hs-track > .apps,
+html.is-hscroll .hs-track > .apps > .container{
+  display:contents;
+}
+html.is-hscroll .hs-track > .hero,
+html.is-hscroll .hs-track .apps .container .project{
+  flex:0 0 100%;
+  height:100%;
+  box-sizing:border-box;
+  margin:0;
+  border-top:0;
+  padding-inline:max(var(--gutter), (100% - 1120px) / 2);
+  padding-block:clamp(1.25rem, .5rem + 2vh, 2.5rem) calc(clamp(1.25rem, .5rem + 2vh, 2.5rem) + 100lvh - 100svh);
+  display:grid;
+  align-content:center;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-margin-top:0;
+}
+html.is-hscroll .hs-track > .hero .container{
+  padding-inline:0;
+  margin:0;
+  max-width:none;
+}
+html.is-hscroll .hs-track .apps .project::before{
+  inset:0;
+}
+
+/* Media has to fit inside the panel. */
+html.is-hscroll .phone-shot{
+  width:auto;
+  height:auto;
+  max-width:300px;
+  max-height:calc(100svh - var(--nav-h) - 6rem);
+}
+html.is-hscroll .media-offbridge{
+  width:min(100%, calc((100svh - var(--nav-h) - 6rem) * 100 / 95));
+  margin-inline:auto;
+}
+html.is-hscroll .landscape-shot{
+  max-height:calc(100svh - var(--nav-h) - 6rem);
+  width:auto;
+  max-width:100%;
+}
+@media (max-width:899px){
+  html.is-hscroll .phone-shot{
+    max-height:34svh;
+  }
+  html.is-hscroll .media-offbridge{
+    width:min(100%, 36svh);
+  }
+  html.is-hscroll .landscape-shot{
+    max-height:30svh;
+  }
+  html.is-hscroll .hs-track > .hero,
+  html.is-hscroll .hs-track .apps .container .project{
+    gap:1.25rem;
+  }
+}
+
+html.is-hscroll .footer{
+  scroll-snap-align:end;
+}
+html.is-hscroll .hs-snap{
+  position:absolute;
+  left:0;
+  width:1px;
+  height:calc(100svh - var(--nav-h));
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  pointer-events:none;
 }
