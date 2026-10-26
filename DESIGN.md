@@ -365,7 +365,7 @@ Selection is #FBD3D9 on graphite.
 - **Tablecloth.** `assets/textures/tablecloth.svg` tiles at 360px over Vinyl White: red (#D9283C, #E8576A) and pink (#F4A3AE) peonies with green leaves (#2E8B57, #3FA36B) on #F6F3EC. A fixed 115° white sheen gradient on top makes the vinyl look glossy.
 - **Card stock.** Placards are 14px radius with a 1px Card Edge border and the paper shadow.
 - **Score pad.** Pad Paper with blue rules, a pink margin line, a 14px Cloth Red binding strip across the top, a 3px radius, and a tilt from 700px (−1.2° for steps, +0.8° for facts).
-- **Phone.** A #161412 body with a 30px radius, a 12px bezel and a side button and camera bump drawn in pseudo-elements. It holds the real screenshot `card-games-table.webp` at an 18px radius and lies at −2° (−4° from 900px).
+- **Phone.** A #161412 body with a 30px radius, a 12px bezel and a side button and camera bump drawn in pseudo-elements. It holds the real screenshot `card-games-bid.webp` at an 18px radius and lies at −2° (−4° from 900px).
 - **Cards.** Built from markup with an inline SVG suit sprite (`#s-heart`, `#s-diamond`, `#s-club`, `#s-spade`). Corners carry rank and suit, with a centre pip. The joker has a vertical "JOKER" and an outlined star.
 - **Oranges.** An inline SVG of two mandarins with a soft drop shadow, at the stage's lower right.
 - **Round table.** A 560px max circle of tablecloth with a 10px Card Stock rim and an inset shadow.

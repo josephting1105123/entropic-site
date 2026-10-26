@@ -44,8 +44,8 @@ Show each app doing its job and get the visitor into it: Play for Card Games, Op
 
 ## Evidence on Hand
 
-- Screenshots: `assets/shots/card-games-table.webp`, `assets/shots/qv-*.webp` (light and dark).
-- OG images: `assets/og/card-games.jpg`, `assets/og/quick-vote.jpg`.
+- Screenshots: `assets/shots/card-games-bid.webp`, `assets/shots/qv-*.webp` (light and dark).
+- OG images: `assets/og/card-games-2.jpg`, `assets/og/quick-vote.jpg`.
 - `js/qv-phone.js` is a working, tappable replica of the Quick Vote web app.
 - No testimonials, user counts or ratings exist. Do not invent them.
 
