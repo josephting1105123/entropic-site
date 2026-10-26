@@ -201,9 +201,6 @@ dialog.drawer[data-band]{
   --warn:#9E1328;
   color:#2B2622;
 }
-:root .topbar[data-product="card-games"]{
-  --bg:#F4F1EA;
-}
 :root .apps .project[data-product="card-games"]::before{
   background-color:#F4F1EA;
   background-image:linear-gradient(115deg, rgba(255,255,255,.35), rgba(255,255,255,0) 62%), url("/assets/textures/tablecloth.svg");
@@ -307,7 +304,6 @@ dialog.drawer[data-band]{
 :root .apps .project[data-product="quick-vote"]{
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
 }
-:root .topbar[data-product="quick-vote"],
 :root dialog.drawer[data-product="quick-vote"]{
   --bg:#ECE6DA;
 }
@@ -393,19 +389,465 @@ dialog.drawer[data-band]{
   color:#241B1A;
 }
 
-/* --- Motion: button hover lift, bar recolour (site.css cancels transitions on reduce) -- */
+/* ==========================================================================
+   Top bar and drawer: each subsite's own shell (light only)
+   Ported from the subsites' own css (spectrum.css, card-games.css, quick-vote.css),
+   selectors rewritten from the subsites' body tag to the tagged bar / drawer, and the
+   subsites' private variables replaced by values so nothing depends on their sheets.
+   The theme toggle stays (it still drives the page) and takes the bar's button look.
+   ========================================================================== */
+
+/* --- Spectrum+: photocopied sheet, toner rules, highlighter ---------------- */
+:root .topbar[data-product="spectrum"],
+:root dialog.drawer[data-product="spectrum"]{
+  --sp-font:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --paper:#e3e3e0;
+  --paper-2:#d5d5d1;
+  --sheet:#ededeb;
+  --toner:#1f1e1c;
+  --toner-2:#474744;
+  --hl-yours:#f4ff3a;
+  --hl-changed:#ff5aa8;
+  --sp-2:8px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --rule:rgba(31,30,28,.4);
+  --on-hl:#1f1e1c;
+  --hl-blend:multiply;
+  --occ-hover:rgba(244,255,58,.45);
+  --vignette:rgba(31,30,28,.11);
+  --shadow-drawer:-10px 0 34px -8px rgba(31,30,28,.32),-1px 0 3px rgba(31,30,28,.18);
+  --backdrop:rgba(31,30,28,.45);
+  --hair:rgba(31,30,28,.2);
+  --hair-strong:rgba(31,30,28,.5);
+  --accent-ink:#5C6100;
+}
+/* Spectrum's 2px toner rule: the bar keeps site.css's 1px border (so its 64px box and
+   content position do not move) and an inset 1px shadow makes up the second pixel. */
+:root .topbar[data-product="spectrum"]{
+  background:var(--sheet);
+  border-bottom-color:var(--toner);
+  box-shadow:inset 0 -1px 0 var(--toner);
+}
+:root .topbar[data-product="spectrum"] :is(.brand,.menu-btn,.menu-label){
+  font-family:var(--sp-font);
+  font-stretch:100%;
+}
+:root .topbar[data-product="spectrum"] .mark{
+  background:var(--sheet);
+  color:var(--toner);
+  border:1.5px solid var(--toner);
+  border-radius:4px 7px 4px 6px;
+}
+:root .topbar[data-product="spectrum"] :is(.menu-btn,.theme-toggle),
+:root dialog.drawer[data-product="spectrum"] .drawer-close{
+  background:var(--sheet);
+  color:var(--toner);
+  border:2px solid var(--toner);
+  border-radius:5px 8px 5px 7px;
+}
+:root .topbar[data-product="spectrum"] :is(.menu-btn,.theme-toggle):hover,
+:root dialog.drawer[data-product="spectrum"] .drawer-close:hover{
+  background:var(--occ-hover);
+  mix-blend-mode:var(--hl-blend);
+}
+:root .topbar[data-product="spectrum"] :focus-visible,
+:root dialog.drawer[data-product="spectrum"] :focus-visible{
+  outline:3px solid var(--hl-changed);
+  outline-offset:2px;
+}
+
+:root dialog.drawer[data-product="spectrum"],
+:root dialog.drawer[data-product="spectrum"] *{
+  font-family:var(--sp-font);
+}
+:root dialog.drawer[data-product="spectrum"]{
+  border-left:0;
+  background:radial-gradient(ellipse 125% 105% at 50% 45%,transparent 58%,var(--vignette) 100%),var(--sheet);
+  color:var(--toner);
+  box-shadow:var(--shadow-drawer);
+  scrollbar-color:#1f1e1c #d5d5d1;
+}
+:root dialog.drawer[data-product="spectrum"]:not(.open){
+  box-shadow:none;
+}
+:root dialog.drawer[data-product="spectrum"]::backdrop{
+  background:var(--backdrop);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-head{
+  border-bottom:2px solid var(--toner);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-head h2,
+:root dialog.drawer[data-product="spectrum"] .drawer-group h3{
+  font-stretch:66%;
+  font-weight:860;
+  letter-spacing:-.02em;
+  text-transform:none;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-head h2{
+  font-size:1.75rem;
+  line-height:1;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-group h3{
+  font-size:1.1rem;
+  color:var(--toner);
+  background:var(--sheet);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-group h3::after{
+  height:0;
+  background:transparent;
+  border-top:1px dashed var(--rule);
+}
+:root dialog.drawer[data-product="spectrum"] .view-switch{
+  background:var(--paper);
+  border:1.5px solid var(--toner);
+  border-radius:6px 9px 6px 8px;
+}
+:root dialog.drawer[data-product="spectrum"] .view-switch::before{
+  background:var(--hl-yours);
+  border:1.5px solid var(--toner);
+  border-radius:4px 7px 4px 6px;
+  mix-blend-mode:var(--hl-blend);
+}
+:root dialog.drawer[data-product="spectrum"] .view-switch button{
+  color:var(--toner-2);
+  font-weight:650;
+  border-radius:4px 7px 4px 6px;
+}
+:root dialog.drawer[data-product="spectrum"] .view-switch button[aria-pressed="true"]{
+  color:var(--on-hl);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-group li{
+  border-top:1px dashed var(--rule);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-group li:first-child{
+  border-top:0;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-link{
+  border-radius:0;
+  color:var(--toner);
+}
+:root dialog.drawer[data-product="spectrum"] a.drawer-link:hover{
+  background:transparent;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-link[aria-current="page"]{
+  background:transparent;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-name{
+  justify-self:start;
+  --hl:var(--hl-yours);
+  background-image:linear-gradient(var(--hl),var(--hl));
+  background-repeat:no-repeat;
+  background-position:0 60%;
+  background-size:0% 82%;
+  border-radius:.2em .5em .3em .4em;
+  mix-blend-mode:var(--hl-blend);
+  padding-inline:.14em;
+  margin-inline:-.14em;
+  color:inherit;
+}
+:root dialog.drawer[data-product="spectrum"] a.drawer-link:is(:hover,:focus-visible) .drawer-name,
+:root dialog.drawer[data-product="spectrum"] .drawer-link[aria-current="page"] .drawer-name{
+  background-size:100% 82%;
+  color:var(--on-hl);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-meta{
+  color:var(--toner-2);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-link.is-soon{
+  color:var(--toner-2);
+}
+:root dialog.drawer[data-product="spectrum"] .src-badge{
+  border:1.5px solid var(--toner);
+  border-radius:3px 6px 3px 5px;
+  color:var(--toner);
+}
+:root dialog.drawer[data-product="spectrum"] .src-open{
+  background:transparent;
+  color:var(--toner);
+}
+:root dialog.drawer[data-product="spectrum"] .src-closed{
+  background:transparent;
+  color:var(--toner-2);
+  border-style:dashed;
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-foot{
+  border-top:1px dashed var(--rule);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-foot .drawer-all{
+  min-height:48px;
+  justify-content:center;
+  align-items:center;
+  gap:var(--sp-2);
+  background:var(--hl-yours);
+  color:var(--on-hl);
+  border:2px solid var(--on-hl);
+  border-radius:.3em .6em .35em .5em;
+  font-weight:650;
+  text-decoration:none;
+  box-shadow:none;
+  mix-blend-mode:var(--hl-blend);
+}
+:root dialog.drawer[data-product="spectrum"] .drawer-foot .drawer-all:hover{
+  background:var(--hl-yours);
+  transform:translateY(-1px);
+}
+
+/* --- Card Games: red banner over the table, card-stock drawer -------------- */
+:root .topbar[data-product="card-games"],
+:root dialog.drawer[data-product="card-games"]{
+  --cg-red:#D9283C;
+  --cg-stool:#C8102E;
+  --cg-deep:#9E1328;
+  --cg-leaf:#2E8B57;
+  --cg-leaf-ink:#236C44;
+  --cg-vinyl:#F4F1EA;
+  --cg-ink:#2B2622;
+  --cg-card:#FFFDF8;
+  --cg-edge:#E3DCCF;
+  --cg-ease:cubic-bezier(.16,1,.3,1);
+  --cg-display:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+/* The banner has no rule: the 1px border stays (keeps the bar's box) and takes the banner colour. */
+:root .topbar[data-product="card-games"]{
+  background:var(--cg-stool);
+  border-bottom-color:var(--cg-stool);
+  box-shadow:0 6px 14px -10px rgba(90,20,20,.5);
+}
+:root .topbar[data-product="card-games"] .brand,
+:root .topbar[data-product="card-games"] .brand-text{
+  color:#FFFDF8;
+  font-family:var(--cg-display);
+  font-weight:700;
+}
+:root .topbar[data-product="card-games"] .mark{
+  background:#FFFDF8;
+  color:#C8102E;
+  border:0;
+  border-radius:6px;
+}
+:root .topbar[data-product="card-games"] .mark svg{
+  color:#C8102E;
+  stroke:currentColor;
+}
+:root .topbar[data-product="card-games"] .menu-btn,
+:root .topbar[data-product="card-games"] .theme-toggle{
+  background:transparent;
+  color:#FFFDF8;
+  border:1.5px solid rgba(255,253,248,.6);
+  border-radius:999px;
+  font-family:var(--cg-display);
+  font-weight:700;
+}
+:root .topbar[data-product="card-games"] .menu-btn:hover,
+:root .topbar[data-product="card-games"] .theme-toggle:hover{
+  background:rgba(255,253,248,.14);
+}
+:root .topbar[data-product="card-games"] :focus-visible{
+  outline:3px solid #FFFDF8;
+  outline-offset:2px;
+}
+
+:root dialog.drawer[data-product="card-games"]{
+  background:#FFFDF8;
+  color:#2B2622;
+  border-left:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow-btn:0 8px 14px -8px rgba(150,10,30,.6);
+  scrollbar-color:#C8102E #F4F1EA;
+}
+:root dialog.drawer[data-product="card-games"].open{
+  box-shadow:-12px 0 32px -10px rgba(90,20,20,.35);
+}
+:root dialog.drawer[data-product="card-games"]::backdrop{
+  background:rgba(43,38,34,.5);
+}
+:root dialog.drawer[data-product="card-games"] :focus-visible{
+  outline:3px solid var(--cg-leaf);
+  outline-offset:2px;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-head{
+  background:var(--cg-stool);
+  border-bottom:0;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-head h2{
+  color:#FFFDF8;
+  font-family:var(--cg-display);
+  font-weight:800;
+  font-size:1.6rem;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-head :focus-visible{
+  outline:3px solid #FFFDF8;
+  outline-offset:2px;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-close{
+  background:transparent;
+  color:#FFFDF8;
+  border:1.5px solid rgba(255,253,248,.6);
+  border-radius:999px;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-close svg{
+  color:#FFFDF8;
+  stroke:currentColor;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-close:hover{
+  background:rgba(255,253,248,.14);
+}
+:root dialog.drawer[data-product="card-games"] .view-switch{
+  background:#F4F1EA;
+  border:1px solid var(--cg-edge);
+  border-radius:999px;
+}
+:root dialog.drawer[data-product="card-games"] .view-switch button{
+  background:transparent;
+  color:#2B2622;
+  border:0;
+  border-radius:999px;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root dialog.drawer[data-product="card-games"] .view-switch button[aria-pressed="true"]{
+  background:var(--cg-stool);
+  color:#FFFFFF;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-group h3{
+  color:var(--cg-deep);
+  font-family:var(--cg-display);
+  font-weight:800;
+  text-transform:none;
+  letter-spacing:0;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-group h3::after{
+  background:var(--cg-edge);
+  height:1px;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-link{
+  color:#2B2622;
+  border-radius:10px;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-link:hover{
+  background:#F4F1EA;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-link[aria-current="page"]{
+  background:rgba(200,16,46,.08);
+}
+:root dialog.drawer[data-product="card-games"] .drawer-link[aria-current="page"] .drawer-name{
+  color:var(--cg-deep);
+}
+:root dialog.drawer[data-product="card-games"] .drawer-name{
+  color:#2B2622;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-meta{
+  color:#5A4A40;
+}
+:root dialog.drawer[data-product="card-games"] .src-badge{
+  background:transparent;
+  color:#C8102E;
+  border:1.5px solid #C8102E;
+}
+:root dialog.drawer[data-product="card-games"] .src-badge.src-closed{
+  color:#5A4A40;
+  border:1.5px dashed #5A4A40;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-foot{
+  border-top:1px solid var(--cg-edge);
+}
+:root dialog.drawer[data-product="card-games"] .drawer-foot .drawer-all{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:0 24px;
+  background:var(--cg-stool);
+  color:#FFFFFF;
+  border:2px solid var(--cg-stool);
+  border-radius:999px;
+  font-family:var(--cg-display);
+  font-weight:700;
+  text-align:center;
+  text-decoration:none;
+}
+:root dialog.drawer[data-product="card-games"] .drawer-foot .drawer-all:hover{
+  background:#A50D25;
+  border-color:#A50D25;
+  color:#FFFFFF;
+}
+
+/* --- Quick Vote: serif stationery ------------------------------------------ */
+:root .topbar[data-product="quick-vote"],
+:root dialog.drawer[data-product="quick-vote"]{
+  --qv-serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+:root .topbar[data-product="quick-vote"] .brand{
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+:root dialog.drawer[data-product="quick-vote"]{
+  background-color:#ECE6DA;
+  background-image:none;
+  font-family:var(--qv-serif);
+  scrollbar-color:#B8AE9C transparent;
+}
+:root dialog.drawer[data-product="quick-vote"] .drawer-head h2{
+  font-family:var(--qv-serif);
+  font-weight:600;
+}
+:root dialog.drawer[data-product="quick-vote"] .drawer-link[aria-current="page"]{
+  background:rgba(36,27,26,.08);
+}
+:root dialog.drawer[data-product="quick-vote"] .drawer-link .src-badge{
+  background:transparent;
+  border:1px solid rgba(36,27,26,.45);
+  color:#5A1F1C;
+}
+:root dialog.drawer[data-product="quick-vote"] .drawer-foot .drawer-all{
+  min-height:48px;
+  border:1px solid #241B1A;
+  border-radius:4px;
+  background:#241B1A;
+  color:#FBF9F4;
+  font-family:var(--qv-serif);
+  font-weight:600;
+}
+:root dialog.drawer[data-product="quick-vote"] .drawer-foot .drawer-all:hover{
+  background:#3A2C2A;
+  border-color:#3A2C2A;
+}
+:root .topbar[data-product="quick-vote"] :focus-visible,
+:root dialog.drawer[data-product="quick-vote"] :focus-visible{
+  outline:3px solid #7A2E2A;
+  outline-offset:3px;
+}
+
+/* --- Motion: button hover lift, bar swap (site.css cancels transitions on reduce) --
+   Colours cross-fade. What cannot animate (fonts, radii shapes, border widths) changes
+   while js/projects.js holds .is-swapping on the bar and its contents are faded out. */
 @media (prefers-reduced-motion: no-preference){
-  .topbar,
+  .topbar{
+    transition:background-color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1), box-shadow .5s cubic-bezier(.4,0,.2,1);
+  }
   .topbar .brand,
   .topbar .mark,
   .topbar .menu-btn,
   .topbar .theme-toggle{
-    transition:background-color .3s ease, color .3s ease, border-color .3s ease;
+    transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1);
+  }
+  .topbar .topbar-inner{
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .topbar.is-swapping .topbar-inner{
+    opacity:0;
+    transform:translateY(-3px);
   }
   :root .apps .project[data-product="spectrum"] .btn-primary{
     transition:transform .15s ease, background-color .15s ease;
   }
   :root .apps .project[data-product="spectrum"] .btn-primary:hover{
     transform:translateY(-1px);
+  }
+  :root dialog.drawer[data-product="spectrum"] .drawer-name{
+    transition:background-size 520ms var(--ease), color 520ms var(--ease);
+  }
+  :root dialog.drawer[data-product="spectrum"] .drawer-foot .drawer-all{
+    transition:transform 150ms;
   }
 }
