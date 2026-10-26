@@ -33,22 +33,20 @@ colors:
   cg-ink: "#2B2622"
   cg-pip-black: "#1D1B19"
   cg-label: "#5A4A40"
-  qv-field: "#16171A"
-  qv-shell-bg: "#111214"
-  qv-shell-card: "#1E1F23"
-  qv-guilloche: "#2A2C31"
-  qv-ivory: "#F2F0EB"
-  qv-grey: "#A9A7A2"
-  qv-silver: "#CFCAC0"
-  qv-focus: "#E6E1D6"
-  qv-paper: "#FBF9F4"
-  qv-violet: "#5B2A86"
-  qv-violet-deep: "#3E1A5E"
-  qv-ink: "#1F1A24"
-  qv-form-grey: "#6A6072"
-  qv-rule: "#D9D2E0"
-  qv-perforation: "#B9AEC8"
-  qv-waiting: "#6F6482"
+  qv-ground: "#F8FAFC"
+  qv-ground-bottom: "#EEF2F7"
+  qv-card: "#FFFFFF"
+  qv-surface: "#F1F5F9"
+  qv-text: "#0F172A"
+  qv-text-2: "#475569"
+  qv-text-3: "#5B6B80"
+  qv-divider: "#E2E8F0"
+  qv-box: "#94A3B8"
+  qv-perforation: "#CBD5E1"
+  qv-emerald: "#34D399"
+  qv-on-emerald: "#042F1C"
+  qv-emerald-deep: "#047857"
+  qv-emerald-mid: "#059669"
 typography:
   shell-sans:
     fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
@@ -101,49 +99,45 @@ typography:
     fontWeight: 700
     letterSpacing: "0.08em"
   qv-display:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Noto Serif, Georgia, Times New Roman, serif"
     fontSize: "clamp(3rem, 6.5vw, 5.5rem)"
     fontWeight: 600
     lineHeight: 0.95
     letterSpacing: "-0.02em"
-    fontVariation: "\"opsz\" 60"
   qv-headline:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Noto Serif, Georgia, Times New Roman, serif"
     fontSize: "clamp(2rem, 3.6vw, 3rem)"
     fontWeight: 600
     lineHeight: 1.05
     letterSpacing: "-0.015em"
-    fontVariation: "\"opsz\" 60"
   qv-claim:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Noto Serif, Georgia, Times New Roman, serif"
     fontSize: "clamp(1.25rem, 2.2vw, 1.75rem)"
     fontWeight: 400
     lineHeight: 1.2
   qv-serial:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Noto Serif, Georgia, Times New Roman, serif"
     fontSize: "2.6rem"
     fontWeight: 600
     lineHeight: 1.02
     letterSpacing: "-0.01em"
     fontFeature: "\"tnum\" 1, \"lnum\" 1"
-    fontVariation: "\"opsz\" 60"
   qv-body:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Noto Serif, Georgia, Times New Roman, serif"
     fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.65
   qv-label:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
-    fontSize: "1rem"
+    fontFamily: "Geist, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "0.8rem"
     fontWeight: 600
     lineHeight: 1.3
-    letterSpacing: "0.06em"
-    fontFeature: "\"smcp\" 1, \"c2sc\" 1"
+    letterSpacing: "0.08em"
+    textTransform: "uppercase"
   qv-button:
-    fontFamily: "Source Serif 4, Georgia, Times New Roman, serif"
+    fontFamily: "Geist, system-ui, -apple-system, Segoe UI, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 600
-    letterSpacing: "0.01em"
 rounded:
   shell-sm: "8px"
   shell-md: "12px"
@@ -154,8 +148,8 @@ rounded:
   cg-button: "12px"
   cg-playing-card: "7px"
   cg-pad: "3px"
-  qv-button: "4px"
-  qv-paper: "3px"
+  qv-button: "999px"
+  qv-card: "20px"
 spacing:
   sp-1: "4px"
   sp-2: "8px"
@@ -224,35 +218,35 @@ components:
     typography: "{typography.cg-title}"
     height: "64px"
   qv-button-primary:
-    backgroundColor: "{colors.qv-paper}"
-    textColor: "{colors.qv-violet-deep}"
+    backgroundColor: "{colors.qv-emerald}"
+    textColor: "{colors.qv-on-emerald}"
     typography: "{typography.qv-button}"
     rounded: "{rounded.qv-button}"
-    padding: "12px 24px"
+    padding: "12px 26px"
     height: "48px"
   qv-button-primary-hover:
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#2FC48C"
   qv-button-secondary:
-    backgroundColor: "transparent"
-    textColor: "{colors.qv-ivory}"
+    backgroundColor: "{colors.qv-card}"
+    textColor: "{colors.qv-text}"
     typography: "{typography.qv-button}"
     rounded: "{rounded.qv-button}"
-    padding: "12px 24px"
+    padding: "12px 26px"
     height: "48px"
   qv-chip:
-    backgroundColor: "transparent"
-    textColor: "{colors.qv-grey}"
+    backgroundColor: "{colors.qv-card}"
+    textColor: "{colors.qv-text-2}"
     rounded: "{rounded.pill}"
     padding: "4px 13px"
   qv-ballot:
-    backgroundColor: "{colors.qv-paper}"
-    textColor: "{colors.qv-ink}"
-    rounded: "{rounded.qv-paper}"
+    backgroundColor: "{colors.qv-card}"
+    textColor: "{colors.qv-text}"
+    rounded: "{rounded.qv-card}"
     width: "clamp(340px, 34vw, 500px)"
   qv-notice:
-    backgroundColor: "{colors.qv-paper}"
-    textColor: "{colors.qv-ink}"
-    rounded: "{rounded.qv-paper}"
+    backgroundColor: "{colors.qv-card}"
+    textColor: "{colors.qv-text}"
+    rounded: "{rounded.qv-card}"
     padding: "18px 22px 8px"
 ---
 
@@ -262,14 +256,14 @@ components:
 
 **Creative North Star: "Each product in its own room"**
 
-The site is a plain shell (a sticky top bar, a footer, light and dark tokens in `css/site.css`) with product pages that each commit to one physical setting and draw everything from it: the ground, the inks, the type, the components. A world page sets its own `color-scheme`, overrides the shell tokens or scopes its rules under `body[data-product="..."]`, and ignores the visitor's light/dark choice. Three pages do this now: Spectrum+ (a photocopied handout), Card Games (a Chinese New Year open-house card table) and Quick Vote (a polling station's fine stationery on a charcoal field). The worlds don't share inks, faces or components with each other.
+The site is a plain shell (a sticky top bar, a footer, light and dark tokens in `css/site.css`) with product pages that each commit to one physical setting and draw everything from it: the ground, the inks, the type, the components. A world page sets its own `color-scheme`, overrides the shell tokens or scopes its rules under `body[data-product="..."]`, and ignores the visitor's light/dark choice. Three pages do this now: Spectrum+ (a photocopied handout), Card Games (a Chinese New Year open-house card table) and Quick Vote (the app's own light theme). The worlds don't share inks, faces or components with each other.
 
 Everything ships under a `default-src 'self'` CSP. There are no inline styles or scripts, fonts are self-hosted WOFF2 under `/assets/fonts/`, textures are SVG files under `/assets/textures/`, and interaction is CSS where it can be (Card Games' seat view is pure `:has()` on radios). Per-element sizes that JS has to set go through the CSSOM, never a `style=""` attribute.
 
 **Key Characteristics:**
 - A shared shell, plus one world per product page, each scoped to `body[data-product]`.
-- Grounds are real materials drawn in CSS and SVG: toner noise on grey paper, floral vinyl, a guilloche-engraved charcoal field.
-- Each world has one self-hosted face for display. Spectrum+ and Quick Vote also set body text in it (Archivo, Source Serif 4); Card Games uses system sans for body.
+- Grounds are real materials drawn in CSS and SVG: toner noise on grey paper, floral vinyl, and the Quick Vote app's pale slate ground.
+- Each world has one self-hosted face for display. Spectrum+ also sets body text in it (Archivo); Quick Vote uses the app's Noto Serif and Geist pair; Card Games uses system sans for body.
 - Motion plays once on load, is gated on `prefers-reduced-motion: no-preference`, and the static end state is the default.
 - The real app always appears: as a screenshot in a CSS phone, or as a working replica.
 
@@ -278,7 +272,7 @@ Everything ships under a `default-src 'self'` CSP. There are no inline styles or
 - **Tokens.** Dark is the default (`--bg` #141414, `--card` #1F1F1F, `--text` #F5F5F5, `--accent` #22C55E). Light applies under `prefers-color-scheme: light` unless `data-theme="dark"`, or under `data-theme="light"` (`--bg` #F8FAFC, `--text` #0F172A, `--accent-text` #047857). Radii are `--r-sm` 8px, `--r-md` 12px, `--r-lg` 16px and `--r-pill` 999px. `--gutter` is clamp(16px, 5vw, 48px) and `--section` is clamp(4rem, 3rem + 5vw, 7rem).
 - **Type.** System sans (`--sans`) for UI, Noto Serif (`--serif`) for shell headings.
 - **Per-product accents.** `site.css` sets `--accent`, `--accent-text`, `--accent-on` and `--accent-muted` per `[data-product]`, in both themes. They tint the shell's selection, links, focus ring and drawer state.
-- **Top bar.** `.topbar` is sticky, 64px tall, on `var(--bg)` with a hairline bottom border. World pages keep it and recolour it. Spectrum+ puts it on Sheet with a 2px toner rule. Card Games turns it into a Stool Red strip with cream type. Quick Vote overrides the shell tokens on its body, so the bar goes charcoal. Card Games and Quick Vote hide the theme toggle.
+- **Top bar.** `.topbar` is sticky, 64px tall, on `var(--bg)` with a hairline bottom border. World pages keep it and recolour it. Spectrum+ puts it on Sheet with a 2px toner rule. Card Games turns it into a Stool Red strip with cream type. Quick Vote overrides the shell tokens on its body with the app's light palette, so the bar stays light in either OS theme. Card Games and Quick Vote hide the theme toggle.
 - **Footer.** `.footer` has a hairline top border and `--text-3` at 0.9rem. World pages may restyle it in their own inks (Card Games puts it on a solid vinyl strip).
 
 **The Own World Rule.** A world page pins its `color-scheme`, scopes every rule to `body[data-product="..."]` or a page prefix (`sp-`, `cg-`, `qv-`), and leaves `site.css` alone. The only shared parts are the top bar, the Projects drawer and the footer, and a world may restyle them in its own inks.
@@ -402,87 +396,63 @@ Everything sits inside `@media (prefers-reduced-motion: no-preference)`, and the
 - Any new interaction is CSS-first: radios, `:has()` and an `@supports not selector(:has(*))` fallback.
 - Add new materials only from the same table (tea cups, red packets, a cloth corner), drawn in SVG or CSS and served from `/assets`.
 
-## Quick Vote: the polling station
+## Quick Vote: the app's own light theme
 
-`quick-vote/index.html`, `css/quick-vote.css`, `assets/textures/guilloche.svg`, `assets/fonts/sourceserif4-latin.woff2`. The scroll story and phone frame come from `css/schedule.css` and `css/segments.css`/`js/segments.js`, with `data-rail="off"`, so there is no chapter rail. The phone replica is `js/qv-phone.js` + `css/qv-phone.css`.
+`quick-vote/index.html`, `css/quick-vote.css`. The scroll story and phone frame come from `css/schedule.css` and `css/segments.css`/`js/segments.js`, with `data-rail="off"`, so there is no chapter rail. The phone replica is `js/qv-phone.js` + `css/qv-phone.css`.
 
-**Thesis.** A polling station's fine stationery laid on a charcoal field: a ballot paper whose counterfoil serial is the meeting PIN, and the host's voter roll set down across it with one name still waiting.
+**Thesis.** The page wears the Quick Vote web app's light theme, so the marketing page and the app a voter opens look like one product. The hero still shows the host gate: a ballot card whose PIN is the meeting code, and the host's voter roll laid across it with one name still waiting.
 
 ### Colors
-Dark only (`color-scheme: dark`, `theme-color` #16171A). The page overrides the shell tokens on `:root:root body[data-product="quick-vote"]`, so the top bar, footer and drawer join the field (`--bg` #111214, `--card` #1E1F23, `--surface` #26282C, `--text` Ivory, `--text-2`/`--text-3` Warm Grey, `--accent` Warm Silver, `--accent-text` Pale Silver, `--accent-on` Charcoal). The theme toggle is hidden.
+Light only (`color-scheme: light`, `theme-color` #F8FAFC). There is no dark mode: the page overrides the shell tokens on `:root:root body[data-product="quick-vote"]`, so the top bar, footer and drawer go light in either OS theme, and the theme toggle is hidden. The values are the app's own light tokens (`.qv.is-light` in `css/qv-phone.css`).
 
-#### Primary
-- **Ballot Violet** (#5B2A86): ink. The cross in Grace Lim's box, the ticks on the voter roll, the rosette seal, the paper's double hairline (45% for the outer border, 35% for the inner line), the focus ring inside paper, and text selection (with Ivory text).
-- **Deep Violet** (#3E1A5E): the counterfoil serial, the "Let in" status, and the text of the paper-filled buttons.
+- **Ground** #F8FAFC fading to #EEF2F7, under a soft emerald glow at the top (`rgba(16,185,129,.1)`). Scrollbar #CBD5E1 on #F8FAFC.
+- **Card** #FFFFFF with a 1px `rgba(15,23,42,.08)` hairline: the ballot, the roll, the Notice and the drawer. **Surface** #F1F5F9 is the secondary button's hover.
+- **Text** #0F172A, **Text 2** #475569 (notes, captions, chips), **Text 3** #5B6B80 (printed labels, the PIN note, "Waiting").
+- **Divider** #E2E8F0: row rules on the ballot, roll and Notice. **Box grey** #94A3B8: the 1.5px box borders, dashed for Jason. **Perforation** #CBD5E1.
+- **Emerald** #34D399: fills only (the primary button, the drawer's "all projects" button), with **On Emerald** #042F1C text. **Deep Emerald** #047857: green text and ink on white (the claim, the PIN, the cross, the ticks, the seal, "Let in", the focus ring, the caret). **Mid Emerald** #059669: the live dot and the ticks in the notes lists.
 
-#### Secondary
-- **Warm Silver** (#CFCAC0): the accent on charcoal. The claim line, the secondary button border, chip borders (40%, full on hover), the ticks in the notes lists, the live dot, the phone's hairline (18%) and the drawer's source badges.
-- **Pale Silver** (#E6E1D6): the focus ring on charcoal and the caret.
-
-#### Neutral
-- **Charcoal** (#16171A): the field, `html`, the theme colour and the drawer. The top bar sits on the slightly darker shell `--bg` (#111214). The scrollbar thumb is #3A3C41.
-- **Guilloche Grey** (#2A2C31, with #24262A for the inner bands): the engraved lines in the field texture.
-- **Ivory** (#F2F0EB): headings and reading text on charcoal. **Warm Grey** (#A9A7A2): notes, captions, the demo line, the "made for" line and chip text.
-- **Fine Paper** (#FBF9F4): the ballot, the voter roll and the Notice sheet, and the fill of the primary button and the drawer's "all projects" button.
-- **Ballot Ink** (#1F1A24): text on paper and the 1.5px box borders.
-- **Form Grey** (#6A6072): the small-caps printed labels and the counterfoil note.
-- **Rule Lilac** (#D9D2E0): the row rules on the ballot, roll and Notice. **Perforation** (#B9AEC8): the counterfoil's tear dots.
-- **Waiting** (#6F6482): Jason's "Waiting" status, beside a dashed #8F84A0 box.
-
-**The Violet Is Ink Rule.** Violet is what a pen or a printer puts on paper: the cross, the ticks, the seal, the hairlines, the serial. It never fills a button or a panel, and it never sets text on the charcoal. On charcoal the accent is Warm Silver.
+**The Green Means Picked Rule.** Green marks what has been chosen or let in, as in the app: the crossed box, the ticked names, the primary action. Everything else is slate on white.
 
 ### Typography
-**One face:** Source Serif 4, self-hosted variable (200–900) with optical sizing on and a Georgia fallback. There is no second face.
+Two faces, the same pair the app uses: the shell's `--serif` (Noto Serif, Georgia fallback) for headings, reading text, the question and the PIN, and Geist (`QV Geist`, self-hosted in `css/qv-phone.css`) for buttons, chips, printed labels and statuses.
 
-- **Display:** H1 at 600, clamp(3rem, 6.5vw, 5.5rem), line-height 0.95, −0.02em, `opsz` 60, balanced wrap.
-- **Headline:** scene H2s at 600, clamp(2rem, 3.6vw, 3rem), line-height 1.05, −0.015em, `opsz` 60, balanced.
-- **Claim:** "Only the people you let in can vote." at 400, clamp(1.25rem, 2.2vw, 1.75rem), line-height 1.2, in Warm Silver.
-- **Serial:** the PIN at 600, 2.6rem (2.2rem at 519px and below), line-height 1.02, tabular lining figures, `opsz` 60, in Deep Violet.
-- **Printed labels:** "Ballot no.", "Kertas undi · Ballot paper", "Voter roll · let in by the host", "Mark one box with a cross." and the Notice header, at 600, 1rem, `all-small-caps`, tracked 0.06em, in Form Grey.
-- **Ballot question:** 600 at 1.2rem, `opsz` 24, line-height 1.3. Candidate names are 1.0625rem, roll names 1rem, and the roll status 600 at 0.95rem.
-- **Body:** 1.0625rem, line-height 1.65. The hero lead and the "made for" line are capped at 45ch. Notes are 1rem; captions and the demo line are 0.95rem; the counterfoil note is 0.8rem.
-- **Buttons:** 600 at 1.0625rem, tracked 0.01em, sentence case.
-- **Chips:** 500 at 0.9rem, tracked 0.02em, sentence case.
-
-**The One Serif Rule.** Everything on the page, from the 5.5rem H1 to the 0.8rem counterfoil note, is Source Serif 4. Hierarchy comes from size, weight (400, 500, 600), optical size and printed small caps, never from a second face.
-
-### Materials and ground
-- **Charcoal field.** `assets/textures/guilloche.svg` (a 240×120 tile of 0.7px interlaced wave bands, the engraving found on certificates and banknotes) repeats over Charcoal, under one faint white glow (a 900×520 ellipse at 72% 260px, 3.5%). The ground scrolls with the page.
-- **Fine paper.** Fine Paper with a 1px violet border at 45%, a 3px radius, a 6px paper margin and then a second violet line at 35% (the double hairline, drawn with inset shadows), and a soft drop shadow (`0 24px 40px -18px` at 55% black plus `0 2px 4px` at 25%). The ballot, the roll and the Notice all use it.
-- **Counterfoil.** A stub on the ballot's left (at least 112px, 30%), torn off along a vertical line of 1.2px Perforation dots every 8px.
-- **Rosette seal.** An inline SVG at the ballot's top right: three rings, twelve petals and "QUICK VOTE" on an arc, in violet hairline at 35% opacity with a 1px white emboss shadow. 64px, or 48px at 519px and below.
-- **Ink marks.** The cross and the ticks are hand-drawn SVG paths in Ballot Violet with round caps (3px and 2.2px strokes) that run slightly past their boxes.
+- **Display:** H1 at 600, clamp(3rem, 6.5vw, 5.5rem), line-height 0.95, −0.02em, balanced wrap.
+- **Headline:** scene H2s at 600, clamp(2rem, 3.6vw, 3rem), line-height 1.05, −0.015em, balanced.
+- **Claim:** "Only the people you let in can vote." at 400, clamp(1.25rem, 2.2vw, 1.75rem), in Deep Emerald.
+- **PIN:** 600 at 2.6rem (2.2rem at 519px and below), tabular lining figures, in Deep Emerald.
+- **Labels:** Geist 600, 0.8rem, uppercase, tracked 0.08em, in Text 3.
+- **Body:** 1.0625rem, line-height 1.65. Notes are 1rem; captions and the demo line 0.95rem.
+- **Buttons:** Geist 600 at 1.0625rem, sentence case. **Chips:** Geist 500 at 0.9rem.
 
 ### Layout
-- From 900px the hero is a 44fr / 56fr grid, copy on the left and the ballot set on the right. The ballot sits at −1.5°, and the roll overlaps its lower edge by 30px at +1.2°, pulled 1.25rem further left.
-- At 699px and below the copy and buttons come first, then the ballot set at full width. Both papers lie flat and the roll sits 1rem below the ballot.
-- At 519px and below the counterfoil becomes a strip across the top of the ballot (label and serial on one line, the note under them) with a horizontal perforation, and the seal shrinks into the strip's right side.
+- From 900px the hero is a 44fr / 56fr grid, copy on the left and the ballot set on the right. The roll overlaps the ballot's lower edge by 30px, pulled 1.25rem further left. Both cards lie flat, as cards do in the app.
+- At 699px and below the copy and buttons come first, then the ballot set at full width, with the roll 1rem below the ballot.
+- At 519px and below the PIN stub becomes a strip across the top of the ballot with a horizontal perforation, and the seal shrinks into the strip's right side.
 - At 600px and below the gutter is 16px.
 
 ### Signature components
-- `.qv-ballot-set` (a `figure`, clamp(340px, 34vw, 500px) wide): the ballot, the roll and a caption ("Names wait on the roll until the host lets them in. Jason can't vote yet.").
-- `.qv-ballot`: the counterfoil (`.qv-label`, `.qv-serial` reading 482 915 with a visually hidden "PIN", `.qv-note` "Read this out to the room") and the body: the question, four candidates in `.qv-options` with 26px boxes, Grace Lim crossed (with a visually hidden ", marked"), the footer instruction and the seal.
-- `.qv-roll`: the voter roll, in rows of name, a 22px box and a status. Rachel, Samuel and Hui Min have a violet tick and "Let in"; Jason has a dashed empty box and "Waiting".
-- `.facts`: the details list as a Notice sheet on Fine Paper, 44rem max, with a generated "Notice" header, Rule Lilac row dividers and no bullets.
-- `.btn-primary` (Fine Paper fill and border, Deep Violet text, a soft shadow, white on hover) and `.btn-secondary` (transparent, Warm Silver border, Ivory text, an 8% ivory wash on hover): 48px minimum height, 4px radius, 12px 24px padding.
-- `.chips`: thin outlined pills. `.chip-live` carries a 7px round silver dot.
-- `.stage .phone`: the shell's phone frame with a silver hairline and a drop shadow. Inside it, `js/qv-phone.js` runs the working app replica in the real app's own look and theme, not the stationery.
-- Projects drawer: Charcoal, a serif heading, an 8% ivory wash on the current page, outlined silver source badges, and a Fine Paper "all projects" button with Deep Violet text.
+- `.qv-ballot-set` (a `figure`, clamp(340px, 34vw, 500px) wide): the ballot, the roll and a caption.
+- `.qv-ballot`, `.qv-roll`, `.facts`: app cards. White, 20px radius, hairline border, the app's card shadow (`0 1px 2px` at 4% plus `0 18px 36px -26px` at 18% slate).
+- `.qv-ballot`: the PIN stub (482 915, with a visually hidden "PIN") and the body: the question, four candidates with 26px rounded boxes, Grace Lim crossed in Deep Emerald, and a rosette seal at 35%.
+- `.qv-roll`: name, a 22px box and a status. Rachel, Samuel and Hui Min have a green tick and "Let in"; Jason has a dashed empty box and "Waiting".
+- `.btn-primary` (an Emerald pill with On Emerald text and a soft green shadow) and `.btn-secondary` (a white pill with a slate hairline): 48px minimum height.
+- `.chips`: white outlined pills. `.chip-live` carries a 7px green dot.
+- `.stage .phone`: the shell's phone frame with a slate hairline. The replica inside starts in light; only its own in-app theme button flips it, as in the real app. The fallback screenshots are the light ones.
+- Projects drawer: white, a serif heading, an emerald wash on the current page, outlined green source badges, and an Emerald "all projects" pill.
 
-**The Mark, Not Colour Rule.** State on the roll is a mark plus a word: a violet tick and "Let in", or a dashed empty box and "Waiting". Never use colour alone to show state.
+**The Mark, Not Colour Rule.** State on the roll is a mark plus a word: a tick and "Let in", or a dashed empty box and "Waiting". Never use colour alone to show state.
 
 ### Motion
 The animations sit inside `@media (prefers-reduced-motion: no-preference)`, and the marked ballot is the static state.
 - **Ballot:** rises 12px and fades in over 500ms on `cubic-bezier(.16,1,.3,1)`.
-- **Ink:** the cross draws its two strokes (`stroke-dashoffset` on `pathLength="1"`) over 500ms ease-out, at 300ms and 480ms. The roll ticks follow at 1000ms, 1250ms and 1500ms. Jason's box stays empty.
+- **Ink:** the cross draws its two strokes over 500ms ease-out, at 300ms and 480ms. The roll ticks follow at 1000ms, 1250ms and 1500ms. Jason's box stays empty.
 - **Live dot:** fades to 35% and back on a 2.4s loop.
 - **Buttons:** the primary button lifts 1px on hover over 150ms.
 
 ### Extending it
-- **The Host Gate Rule.** The selling point is that only people the host lets in can vote. Any new hero, paper or illustration keeps the gate visible: the PIN, the voter roll, and at least one name still waiting. Don't lead with results, charts or speed.
-- New information goes on Fine Paper with the double hairline (the Notice sheet is the model), or as Ivory serif text on the charcoal. Paper items are things a polling station prints: ballots, rolls, notices, counterfoils.
-- Keep the demo PIN 482 915 consistent between the counterfoil and the live phone.
-- The phone replica stays the real app in its own theme. Don't restyle it into the stationery.
+- **The Host Gate Rule.** The selling point is that only people the host lets in can vote. Any new hero or illustration keeps the gate visible: the PIN, the voter roll, and at least one name still waiting. Don't lead with results, charts or speed.
+- Take new colours from the app's light tokens, never invent page-only ones. If the app's palette changes, change this page with it.
+- Keep the demo PIN 482 915 consistent between the ballot and the live phone.
 
 ## Do's and Don'ts
 
@@ -491,7 +461,7 @@ The animations sit inside `@media (prefers-reduced-motion: no-preference)`, and 
 - **Do** self-host every face as WOFF2 with `font-display: swap`, and draw textures as SVG files in `/assets/textures/`. The CSP allows nothing inline.
 - **Do** gate every animation and transition under `@media (prefers-reduced-motion: no-preference)` and make the static layout the finished state.
 - **Do** show the real product, as a screenshot in a CSS phone (Card Games) or a working replica (Quick Vote).
-- **Do** keep focus rings at 3px in a colour from the world: Leaf Green (#2E8B57) on Card Games (Card Stock cream inside its red top bar and drawer head), Pale Silver (#E6E1D6) on Quick Vote's charcoal and Ballot Violet (#5B2A86) inside its paper, Highlighter Pink (#ff5aa8) on Spectrum+.
+- **Do** keep focus rings at 3px in a colour from the world: Leaf Green (#2E8B57) on Card Games (Card Stock cream inside its red top bar and drawer head), Deep Emerald (#047857) on Quick Vote, Highlighter Pink (#ff5aa8) on Spectrum+.
 - **Do** keep touch targets at 44px minimum (48px for primary buttons).
 
 ### Don't:

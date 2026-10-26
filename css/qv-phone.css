@@ -12,9 +12,9 @@
    so every size below is in px at the 360px device scale and the whole app
    shrinks as one piece to fit whatever width the frame has.
 
-   Theme: dark by default, .is-light swaps the palette. The script puts the
-   class on this phone alone, following the page theme until the visitor taps
-   the phone's own theme button.
+   Theme: dark by default, .is-light swaps the palette. The script starts each
+   phone light by putting the class on it, and only the phone's own theme
+   button flips it.
    ========================================================================== */
 
 @font-face {
