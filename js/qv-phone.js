@@ -38,7 +38,6 @@
   var DOT = "·";
 
   var root = document.documentElement;
-  var lightQ = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
   var reduceQ = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   var uid = 0;
   var apps = [];
@@ -136,27 +135,10 @@
   function reduced() { return !!(reduceQ && reduceQ.matches); }
 
   /* ----------------------------------------------------------------------
-     2. Theme: follow the page unless this phone has been flipped by hand
+     2. Theme: the phone starts light; only its own in-app button flips it
      ---------------------------------------------------------------------- */
 
-  function pageIsLight() {
-    var t = root.getAttribute("data-theme");
-    if (t === "light") return true;
-    if (t === "dark") return false;
-    return !!(lightQ && lightQ.matches);
-  }
-
-  function syncAllThemes() {
-    for (var i = 0; i < apps.length; i++) apps[i].applyTheme();
-  }
-
-  if (typeof MutationObserver === "function") {
-    new MutationObserver(syncAllThemes).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-  }
-  if (lightQ) {
-    if (lightQ.addEventListener) lightQ.addEventListener("change", syncAllThemes);
-    else if (lightQ.addListener) lightQ.addListener(syncAllThemes);
-  }
+  function pageIsLight() { return true; }
 
   /* ----------------------------------------------------------------------
      3. The results bars, shared by the voter and host screens
