@@ -278,13 +278,6 @@
   border:1px solid rgba(36,27,26,.1);
   border-radius:4px;
 }
-/* Always the light screenshot, whatever the site theme. */
-:root .apps .project[data-product="quick-vote"] .on-dark{
-  display:none;
-}
-:root .apps .project[data-product="quick-vote"] .on-light{
-  display:block;
-}
 :root .apps .project[data-product="quick-vote"] .project-name{
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
   font-weight:600;
