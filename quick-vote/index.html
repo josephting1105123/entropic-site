@@ -6,7 +6,7 @@
   <title>Quick Vote &middot; Entropic Software Labs</title>
   <meta name="description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f8fafc">
+  <meta name="theme-color" content="#E3DCCE">
   <link rel="canonical" href="https://entropicsoftwarelabs.com/quick-vote/">
   <meta property="og:title" content="Quick Vote &middot; Entropic Software Labs">
   <meta property="og:description" content="Quick Vote: read out the PIN, let in the people who may vote, and they vote from their phones. No accounts and nothing to install.">
@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/css/schedule.css?v=4">
   <link rel="stylesheet" href="/css/qv-phone.css">
   <link rel="stylesheet" href="/css/quick-vote.css">
+  <link rel="preload" href="/assets/fonts/sourceserif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/js/site.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/qv-phone.js" defer></script>
@@ -97,13 +98,13 @@
               <p class="qv-label qv-ballot-head">Kertas undi &middot; Ballot paper</p>
               <p class="qv-question">Who should be next year's fellowship president?</p>
               <ol class="qv-options">
-                <li><span class="qv-name">Grace Lim<span class="sr-only">, marked</span></span><span class="qv-box"><svg class="qv-cross" viewBox="0 0 34 34" width="34" height="34" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 2.5C9 10 21 22 31.5 31" pathLength="1"/><path d="M30.5 4C22 10 12.5 21.5 3.5 32" pathLength="1"/></svg></span></li>
+                <li><span class="qv-name">Grace Lim<span class="sr-only">, marked</span></span><span class="qv-box"><svg class="qv-cross" viewBox="0 0 34 34" width="34" height="34" fill="none" stroke="#7A2E2A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 2.5C9 10 21 22 31.5 31" pathLength="1"/><path d="M30.5 4C22 10 12.5 21.5 3.5 32" pathLength="1"/></svg></span></li>
                 <li><span class="qv-name">Daniel Tan</span><span class="qv-box"></span></li>
                 <li><span class="qv-name">Esther Wong</span><span class="qv-box"></span></li>
                 <li><span class="qv-name">Joshua Lee</span><span class="qv-box"></span></li>
               </ol>
               <p class="qv-label qv-ballot-foot">Mark one box with a cross.</p>
-              <svg class="qv-seal" viewBox="0 0 100 100" width="64" height="64" fill="none" stroke="#047857" stroke-width=".9" aria-hidden="true" focusable="false">
+              <svg class="qv-seal" viewBox="0 0 100 100" width="64" height="64" fill="none" stroke="#7A2E2A" stroke-width=".9" aria-hidden="true" focusable="false">
                 <defs>
                   <ellipse id="qv-petal" cx="50" cy="34" rx="5.5" ry="14"/>
                   <path id="qv-seal-arc" d="M14 50A36 36 0 0 1 86 50"/>
@@ -124,7 +125,7 @@
                 <use href="#qv-petal" transform="rotate(270 50 50)"/>
                 <use href="#qv-petal" transform="rotate(300 50 50)"/>
                 <use href="#qv-petal" transform="rotate(330 50 50)"/>
-                <text fill="#047857" stroke="none" font-family="Noto Serif, Georgia, serif" font-size="8.5" font-weight="600" letter-spacing="1.6"><textPath href="#qv-seal-arc" startOffset="50%" text-anchor="middle">QUICK VOTE</textPath></text>
+                <text fill="#7A2E2A" stroke="none" font-family="Source Serif 4, Georgia, serif" font-size="8.5" font-weight="600" letter-spacing="1.6"><textPath href="#qv-seal-arc" startOffset="50%" text-anchor="middle">QUICK VOTE</textPath></text>
               </svg>
             </div>
           </div>
@@ -132,9 +133,9 @@
           <div class="qv-roll">
             <p class="qv-label qv-roll-head">Voter roll &middot; let in by the host</p>
             <ul>
-              <li><span class="qv-name">Rachel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
-              <li><span class="qv-name">Samuel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
-              <li><span class="qv-name">Hui Min</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li><span class="qv-name">Rachel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#7A2E2A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li><span class="qv-name">Samuel</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#7A2E2A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
+              <li><span class="qv-name">Hui Min</span><span class="qv-check"><svg class="qv-stroke" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#7A2E2A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5C5.5 12 7 13.8 8.5 15.8 11 10.5 14 6.5 17.5 3.5" pathLength="1"/></svg></span><span class="qv-status">Let in</span></li>
               <li class="is-waiting"><span class="qv-name">Jason</span><span class="qv-check"></span><span class="qv-status">Waiting</span></li>
             </ul>
           </div>

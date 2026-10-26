@@ -30,9 +30,10 @@
   font-display:swap;
 }
 @font-face{
-  font-family:"QV Geist";
-  src:url("/assets/fonts/geist_variable.ttf") format("truetype-variations");
-  font-weight:100 900;
+  font-family:"Source Serif 4";
+  src:url("/assets/fonts/sourceserif4-latin.woff2") format("woff2");
+  font-weight:200 900;
+  font-style:normal;
   font-display:swap;
 }
 
@@ -247,32 +248,35 @@
 }
 
 /* ==========================================================================
-   Quick Vote — the app's own light theme (light only)
+   Quick Vote — stationery on a cream field, like the live voting site (light only)
    ========================================================================== */
 :root .apps .project[data-product="quick-vote"]{
   color-scheme:light;
-  --bg:#F8FAFC;
-  --card:#FFFFFF;
-  --surface:#F1F5F9;
-  --text:#0F172A;
-  --text-2:#475569;
-  --text-3:#5B6B80;
-  --hairline:rgba(15,23,42,.08);
-  --hairline-strong:rgba(15,23,42,.14);
-  --accent:#34D399;
-  --accent-text:#047857;
-  --accent-on:#042F1C;
-  --accent-muted:rgba(52,211,153,.16);
-  --warn:#B45309;
-  color:#0F172A;
-  font-family:var(--serif);
+  --bg:#E3DCCE;
+  --card:#FBF9F4;
+  --surface:rgba(255,255,255,.4);
+  --text:#241B1A;
+  --text-2:#5F5450;
+  --text-3:#5F5450;
+  --hairline:rgba(36,27,26,.1);
+  --hairline-strong:rgba(36,27,26,.18);
+  --accent:#241B1A;
+  --accent-text:#5A1F1C;
+  --accent-on:#FBF9F4;
+  --accent-muted:rgba(36,27,26,.08);
+  --warn:#664200;
+  --shadow-shot:0 18px 32px -18px rgba(70,50,30,.28), 0 1px 3px rgba(70,50,30,.18);
+  --shadow-btn:0 8px 16px -10px rgba(70,50,30,.45);
+  color:#241B1A;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
 }
 :root .apps .project[data-product="quick-vote"]::before{
-  background-color:#F8FAFC;
-  background-image:radial-gradient(120% 55% at 50% 0, rgba(16,185,129,.1), transparent 70%), linear-gradient(#F8FAFC, #EEF2F7);
-  background-repeat:no-repeat;
-  border:1px solid rgba(15,23,42,.08);
-  border-radius:20px;
+  background-color:#ECE6DA;
+  background-image:radial-gradient(ellipse 900px 520px at 72% 40%, rgba(255,255,255,.45), transparent 70%), url("/assets/textures/guilloche-light.svg");
+  background-repeat:no-repeat, repeat;
+  background-size:auto, 240px 120px;
+  border:1px solid rgba(36,27,26,.1);
+  border-radius:4px;
 }
 /* Always the light screenshot, whatever the site theme. */
 :root .apps .project[data-product="quick-vote"] .on-dark{
@@ -282,77 +286,78 @@
   display:block;
 }
 :root .apps .project[data-product="quick-vote"] .project-name{
-  font-family:var(--serif);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
   font-weight:600;
+  font-variation-settings:"opsz" 60;
   letter-spacing:-.015em;
   line-height:1.05;
-  color:#0F172A;
+  color:#241B1A;
 }
 :root .apps .project[data-product="quick-vote"] .cat-label{
-  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
-  letter-spacing:.08em;
-  color:#5B6B80;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  letter-spacing:.12em;
+  color:#5F5450;
 }
 :root .apps .project[data-product="quick-vote"] p{
-  font-family:var(--serif);
-  color:#0F172A;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color:#241B1A;
   line-height:1.65;
 }
 :root .apps .project[data-product="quick-vote"] .chip{
   padding:4px 13px;
-  border:1px solid rgba(15,23,42,.14);
+  border:1px solid rgba(36,27,26,.45);
   border-radius:999px;
-  background:#FFFFFF;
-  color:#475569;
-  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:transparent;
+  color:#5F5450;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
   font-size:.9rem;
   font-weight:500;
   letter-spacing:.02em;
 }
 :root .apps .project[data-product="quick-vote"] .chip-link:hover{
-  border-color:#047857;
-  color:#047857;
+  border-color:#241B1A;
+  color:#241B1A;
 }
 :root .apps .project[data-product="quick-vote"] .chip-live::before{
-  background:#059669;
+  background:#7A2E2A;
   box-shadow:none;
   animation:none;
 }
 :root .apps .project[data-product="quick-vote"] .btn{
-  padding:12px 26px;
-  border-radius:999px;
-  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  padding:12px 24px;
+  border-radius:4px;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
   font-size:1.0625rem;
   font-weight:600;
   letter-spacing:.01em;
 }
 :root .apps .project[data-product="quick-vote"] .btn-primary{
-  background:#34D399;
-  border:1px solid #34D399;
-  color:#042F1C;
-  box-shadow:0 10px 24px -14px rgba(5,150,105,.55);
+  background:#241B1A;
+  border:1px solid #241B1A;
+  color:#FBF9F4;
+  box-shadow:0 8px 16px -10px rgba(70,50,30,.45);
 }
 :root .apps .project[data-product="quick-vote"] .btn-primary:hover{
-  background:#2FC48C;
-  border-color:#2FC48C;
+  background:#3A2C2A;
+  border-color:#3A2C2A;
   filter:none;
 }
 :root .apps .project[data-product="quick-vote"] .btn-secondary{
-  background:#FFFFFF;
-  border:1px solid rgba(15,23,42,.14);
-  color:#0F172A;
+  background:transparent;
+  border:1px solid rgba(36,27,26,.4);
+  color:#241B1A;
 }
 :root .apps .project[data-product="quick-vote"] .btn-secondary:hover{
-  background:#F1F5F9;
+  background:rgba(36,27,26,.06);
   filter:none;
 }
 :root .apps .project[data-product="quick-vote"] :focus-visible{
-  outline:3px solid #047857;
+  outline:3px solid #7A2E2A;
   outline-offset:3px;
 }
 :root .apps .project[data-product="quick-vote"] ::selection{
-  background:rgba(52,211,153,.35);
-  color:#0F172A;
+  background:rgba(122,46,42,.25);
+  color:#241B1A;
 }
 
 /* --- Motion: button hover lift (site.css cancels transitions on reduce) -- */

@@ -12,17 +12,10 @@
    so every size below is in px at the 360px device scale and the whole app
    shrinks as one piece to fit whatever width the frame has.
 
-   Theme: dark by default, .is-light swaps the palette. The script starts each
-   phone light by putting the class on it, and only the phone's own theme
-   button flips it.
+   Theme: the replica copies the live app's single light theme (cream field
+   with a guilloche texture, ballot-paper cards, oxblood ink). There is no
+   theme switch.
    ========================================================================== */
-
-@font-face {
-  font-family: 'QV Geist';
-  src: url('/assets/fonts/geist_variable.ttf') format('truetype-variations');
-  font-weight: 100 900;
-  font-display: swap;
-}
 
 /* --- Fallback screenshots, until the script replaces them ---------------- */
 
@@ -38,53 +31,48 @@
 
 /* --- Palette -------------------------------------------------------------- */
 
+/* Field tokens first: what sits straight on the cream page. Cards (.qv-card)
+   re-declare the ink-on-paper set further down, the way the live app does. */
 .qv {
-  --q-bg: #141414;
-  --q-bg-bottom: #0f0f0f;
-  --q-glow: rgba(34, 197, 94, .1);
-  --q-card: #1f1f1f;
-  --q-surface: #2a2a2a;
-  --q-track: #303030;
-  --q-text: #f5f5f5;
-  --q-text-2: #a3a3a3;
-  --q-text-3: #909090;
-  --q-divider: #303030;
-  --q-hairline: rgba(255, 255, 255, .08);
-  --q-hairline-strong: rgba(255, 255, 255, .14);
-  --q-accent: #22c55e;
-  --q-accent-text: #4ade88;
-  --q-accent-on: #06210f;
-  --q-accent-muted: rgba(34, 197, 94, .14);
-  --q-bar-lead: #22c55e;
-  --q-bar-other: #4a4a4a;
-  --q-shadow-card: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 20px 40px -28px rgba(0, 0, 0, .7);
-  --q-md: 14px;
-  --q-lg: 20px;
+  --q-bg: #ece6da;
+  --q-bar-bg: #e3dcce;
+  --q-glow: rgba(255, 255, 255, .45);
+  --q-texture: url('/assets/textures/guilloche-light.svg');
+  --q-paper: #fbf9f4;
+  --q-card: #fbf9f4;
+  --q-surface: rgba(255, 255, 255, .4);
+  --q-track: rgba(36, 27, 26, .08);
+  --q-text: #241b1a;
+  --q-text-2: #5f5450;
+  --q-text-3: #5f5450;
+  --q-divider: rgba(36, 27, 26, .12);
+  --q-hairline: rgba(36, 27, 26, .1);
+  --q-hairline-strong: rgba(36, 27, 26, .18);
+  --q-accent: #241b1a;
+  --q-accent-text: #5a1f1c;
+  --q-accent-on: #fbf9f4;
+  --q-accent-muted: rgba(36, 27, 26, .08);
+  --q-oxblood: #7a2e2a;
+  --q-serial: #5a1f1c;
+  --q-focus: #7a2e2a;
+  --q-btn-bg: #241b1a;
+  --q-btn-fg: #fbf9f4;
+  --q-btn-hover: #3a2c2a;
+  --q-btn2-border: rgba(36, 27, 26, .4);
+  --q-btn2-hover: rgba(36, 27, 26, .06);
+  --q-input-bg: rgba(255, 255, 255, .6);
+  --q-input-border: rgba(36, 27, 26, .7);
+  --q-bar-lead: #241b1a;
+  --q-bar-other: #8e8498;
+  --q-waiting: #7a6a64;
+  --q-shadow-card: inset 0 0 0 6px #fbf9f4, inset 0 0 0 7px rgba(122, 46, 42, .35), 0 18px 32px -18px rgba(70, 50, 30, .28), 0 1px 3px rgba(70, 50, 30, .18);
+  --q-check-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' fill='none' stroke='%237A2E2A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 6.5L20.5 19.5'/%3E%3Cpath d='M20 5.5L6 20.5'/%3E%3C/svg%3E");
+  --q-md: 3px;
+  --q-btn: 4px;
+  --q-paper-r: 3px;
   --q-pill: 999px;
-  --q-serif: "Noto Serif", Georgia, serif;
-  --q-ui: 'QV Geist', system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-
-.qv.is-light {
-  --q-bg: #f8fafc;
-  --q-bg-bottom: #eef2f7;
-  --q-glow: rgba(16, 185, 129, .1);
-  --q-card: #ffffff;
-  --q-surface: #f1f5f9;
-  --q-track: #e8edf3;
-  --q-text: #0f172a;
-  --q-text-2: #475569;
-  --q-text-3: #5b6b80;
-  --q-divider: #e2e8f0;
-  --q-hairline: rgba(15, 23, 42, .08);
-  --q-hairline-strong: rgba(15, 23, 42, .14);
-  --q-accent: #34d399;
-  --q-accent-text: #047857;
-  --q-accent-on: #042f1c;
-  --q-accent-muted: rgba(52, 211, 153, .16);
-  --q-bar-lead: #059669;
-  --q-bar-other: #94a3b8;
-  --q-shadow-card: 0 1px 2px rgba(15, 23, 42, .04), 0 18px 36px -26px rgba(15, 23, 42, .18);
+  --q-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --q-ui: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 }
 
 /* --- Viewport and scaled device ------------------------------------------ */
@@ -116,9 +104,12 @@
   text-align: left;
   letter-spacing: 0;
   color: var(--q-text);
-  background:
+  background-color: var(--q-bg);
+  background-image:
     radial-gradient(120% 55% at 50% 0, var(--q-glow), transparent 70%),
-    linear-gradient(var(--q-bg), var(--q-bg-bottom));
+    var(--q-texture);
+  background-size: auto, 240px 120px;
+  background-repeat: no-repeat, repeat;
 }
 
 /* --- Reset: keep the host page's rules out of the app ---------------------- */
@@ -160,7 +151,7 @@
 .qv-dev svg { display: block; max-width: none; flex: none; }
 
 .qv-dev :focus-visible {
-  outline: 2px solid var(--q-accent-text);
+  outline: 3px solid var(--q-focus);
   outline-offset: 2px;
 }
 
@@ -195,12 +186,14 @@
 
 .qv-bar {
   flex: none;
-  height: 60px;
+  height: 63px;
   padding: 0 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
   border-bottom: 1px solid var(--q-hairline);
+  background: var(--q-bar-bg);
   font-family: var(--q-ui);
 }
 
@@ -210,7 +203,7 @@
   align-items: center;
   gap: 12px;
   font-family: var(--q-serif);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
   color: var(--q-text);
   white-space: nowrap;
@@ -224,58 +217,43 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--q-card);
-  border: 1px solid var(--q-hairline);
-  border-radius: 8px;
-  color: var(--q-accent-text);
+  background: transparent;
+  border: 1px solid var(--q-hairline-strong);
+  border-radius: var(--q-btn);
+  color: var(--q-accent);
 }
 
 .qv-mark__svg { width: 16px; height: 16px; display: block; }
 
+/* The Voter/Admin slider: two squared options, the picked one filled with ink. */
 .qv-seg {
   margin-left: auto;
   display: inline-flex;
-  gap: 2px;
-  padding: 2px;
+  gap: 0;
+  padding: 4px;
   border: 1px solid var(--q-hairline-strong);
-  border-radius: var(--q-pill);
-  background: var(--q-card);
+  border-radius: var(--q-btn);
+  background: transparent;
 }
 
 .qv-seg__b {
-  height: 30px;
-  padding: 0 14px;
-  border: 1px solid transparent;
-  border-radius: var(--q-pill);
-  font-size: 13px;
-  font-weight: 500;
+  width: 64px;
+  height: 34px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1;
   color: var(--q-text-2);
+  transition: background-color .3s, color .3s;
 }
 
 .qv-seg__b.is-on {
-  background: var(--q-accent-muted);
-  border-color: var(--q-accent);
-  color: var(--q-accent-text);
-  font-weight: 600;
+  background: var(--q-btn-bg);
+  color: var(--q-btn-fg);
 }
-
-.qv-theme {
-  flex: none;
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--q-hairline-strong);
-  border-radius: 50%;
-  background: var(--q-card);
-  color: var(--q-text-2);
-}
-
-.qv-theme .qv-ic { width: 18px; height: 18px; }
-.qv .qv-i-sun { display: none; }
-.qv.is-light .qv-i-sun { display: block; }
-.qv.is-light .qv-i-moon { display: none; }
 
 /* --- Page area ---------------------------------------------------------------- */
 
@@ -308,7 +286,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   margin: 0 0 12px;
   font-family: var(--q-serif);
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -.01em;
 }
@@ -317,7 +295,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   margin: 0 0 6px;
   font-family: var(--q-serif);
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -325,7 +303,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   margin: 0;
   font-family: var(--q-serif);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
 }
 
@@ -350,12 +328,15 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   line-height: 1.4;
 }
 
+/* Printed form labels: small caps, tracked out. */
 .qv-label {
-  margin-bottom: 8px;
-  color: var(--q-text-2);
+  margin-bottom: 6px;
+  color: var(--q-text-3);
   font-family: var(--q-ui);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: .06em;
   line-height: 1.2;
 }
 
@@ -370,15 +351,40 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 
 .qv-q--left { margin: 0; color: var(--q-text); font-size: 17px; font-weight: 600; }
 
-/* --- Cards ----------------------------------------------------------------------- */
+/* --- Cards: sheets of ballot paper ----------------------------------------------- */
 
 .qv-card {
+  /* ink-on-paper tokens, as the live app's .paper declares them */
+  --q-surface: #f3f0ea;
+  --q-track: #f1e6e2;
+  --q-text: #241b1a;
+  --q-text-2: #4d4240;
+  --q-text-3: #6b5f5b;
+  --q-divider: #e0d6cf;
+  --q-hairline: rgba(36, 27, 26, .12);
+  --q-hairline-strong: rgba(36, 27, 26, .22);
+  --q-accent: #241b1a;
+  --q-accent-text: #7a2e2a;
+  --q-accent-on: #fbf9f4;
+  --q-accent-muted: rgba(122, 46, 42, .08);
+  --q-focus: #7a2e2a;
+  --q-input-bg: #fff;
+  --q-bar-lead: #7a2e2a;
+  --q-bar-other: #7a6a64;
+
   margin: 0 0 14px;
-  padding: 18px;
-  border-radius: var(--q-lg);
-  border: 1px solid var(--q-hairline);
-  background: var(--q-card);
+  padding: 20px;
+  border: 1px solid rgba(122, 46, 42, .45);
+  border-radius: var(--q-paper-r);
+  background: var(--q-paper);
   box-shadow: var(--q-shadow-card);
+  color: var(--q-text);
+  caret-color: var(--q-oxblood);
+}
+
+.qv-card ::selection {
+  background: var(--q-oxblood);
+  color: #f2f0eb;
 }
 
 .qv-card__h {
@@ -391,18 +397,28 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 
 .qv-center { text-align: center; }
 
+/* "Vote recorded": an oxblood rubber stamp */
 .qv-badge {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   margin: 2px auto 14px;
   display: grid;
   place-items: center;
+  border: 2.5px solid var(--q-oxblood);
   border-radius: 50%;
-  background: var(--q-accent);
-  color: var(--q-accent-on);
+  background: transparent;
+  box-shadow: inset 0 0 0 4px var(--q-paper), inset 0 0 0 5px rgba(122, 46, 42, .6);
+  color: var(--q-oxblood);
+  transform: rotate(-8deg);
+  animation: qv-pop .4s cubic-bezier(.16, 1, .3, 1) both;
 }
 
-.qv-badge__ic { width: 28px; height: 28px; }
+.qv-badge__ic { width: 28px; height: 28px; stroke-width: 2.5; }
+
+@keyframes qv-pop {
+  from { transform: rotate(-8deg) scale(.8); opacity: 0; }
+  to { transform: rotate(-8deg) scale(1); opacity: 1; }
+}
 
 /* --- Join ------------------------------------------------------------------------- */
 
@@ -416,8 +432,8 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-pill {
   display: block;
   height: 8px;
-  border-radius: var(--q-pill);
-  background: var(--q-bar-other);
+  border-radius: 1px;
+  background: var(--q-waiting);
 }
 
 .qv-pill--a { width: 60%; }
@@ -429,31 +445,31 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-cells {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
 }
 
 .qv-cell {
   height: 52px;
   display: grid;
   place-items: center;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: var(--q-surface);
-  color: var(--q-text);
+  border: 1.5px solid var(--q-text);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--q-serial);
   font-family: var(--q-ui);
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 .qv-cell.is-filled {
-  background: var(--q-accent-muted);
-  border-color: var(--q-accent);
+  box-shadow: inset 0 0 0 1px rgba(122, 46, 42, .25);
 }
 
 .qv-cell.is-empty {
   color: var(--q-text-3);
   font-weight: 400;
+  opacity: .6;
 }
 
 /* The real input sits over the cells, invisible but focusable. */
@@ -468,7 +484,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   font-family: var(--q-ui);
   font-size: 16px;
   letter-spacing: 40px;
-  border-radius: 12px;
+  border-radius: 2px;
   cursor: text;
 }
 
@@ -477,33 +493,40 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-dev .qv-input {
   display: block;
   width: 100%;
-  height: 48px;
+  height: 50px;
   padding: 0 14px;
-  border: 1px solid transparent;
+  border: 1.5px solid var(--q-input-border);
   border-radius: var(--q-md);
-  background: var(--q-surface);
+  background: var(--q-input-bg);
   color: var(--q-text);
   font-family: var(--q-ui);
   font-size: 16px;
+  transition: border-color .2s;
 }
+
+.qv-dev .qv-input:focus { border-color: var(--q-focus); }
 
 .qv-input::placeholder { color: var(--q-text-3); opacity: 1; }
 
+/* Primary button: ink fill, paper text, a 4px rectangle. */
 .qv-dev .qv-btn {
   display: block;
   width: 100%;
-  height: 52px;
+  height: 48px;
   margin-top: 20px;
-  border-radius: var(--q-pill);
-  background: var(--q-accent);
-  color: var(--q-accent-on);
+  border: 1px solid transparent;
+  border-radius: var(--q-btn);
+  background: var(--q-btn-bg);
+  color: var(--q-btn-fg);
   font-family: var(--q-ui);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
+  letter-spacing: .01em;
   text-align: center;
-  transition: opacity .2s, transform .12s;
+  transition: background-color .15s, opacity .2s, transform .12s;
 }
 
+.qv-dev .qv-btn:hover:not(:disabled) { background: var(--q-btn-hover); }
 .qv-btn:disabled { opacity: .45; }
 .qv-btn:not(:disabled):active { transform: scale(.98); }
 
@@ -522,7 +545,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--q-accent);
+  background: var(--q-waiting);
   animation: qv-dot 1s ease-in-out infinite;
 }
 
@@ -534,82 +557,91 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   50% { opacity: 1; transform: scale(1); }
 }
 
-/* --- Ballot ------------------------------------------------------------------------ */
+/* --- Ballot: ruled rows, a box on the right, marked with a hand-drawn cross ------- */
 
 .qv-opts {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 0;
+  margin-top: 12px;
 }
 
 .qv-dev .qv-opt {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
-  min-height: 54px;
-  padding: 8px 16px;
-  border: 1px solid var(--q-hairline-strong);
-  border-radius: var(--q-pill);
-  background: var(--q-surface);
+  min-height: 56px;
+  padding: 10px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--q-divider);
+  border-radius: 0;
+  background: transparent;
   color: var(--q-text);
   font-family: var(--q-serif);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.3;
-  transition: background-color .15s, border-color .15s, color .15s;
+  transition: background-color .15s;
 }
 
-.qv-opt.is-on {
-  background: var(--q-accent);
-  border-color: var(--q-accent);
-  color: var(--q-accent-on);
-  font-weight: 600;
-}
+.qv-dev .qv-opt:first-child { border-top: 1px solid var(--q-divider); }
+.qv-dev .qv-opt:not(.is-on):hover { background: rgba(122, 46, 42, .04); }
+
+.qv-opt__t { flex: 1 1 auto; order: 1; min-width: 0; }
 
 .qv-ring {
   flex: none;
-  width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  border: 2px solid var(--q-text-3);
-  border-radius: 50%;
+  order: 2;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--q-text);
+  border-radius: 2px;
+  background-color: #fff;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 
 .qv-opt.is-on .qv-ring {
-  border-color: var(--q-accent-on);
-  background: var(--q-accent-on);
-  color: var(--q-accent);
+  background-image: var(--q-check-img);
+  animation: qv-cross .2s ease-out;
 }
 
-.qv-ring__ic { width: 12px; height: 12px; opacity: 0; }
-.qv-opt.is-on .qv-ring__ic { opacity: 1; }
-.qv-opt__t { min-width: 0; }
+/* The cross is the background image; the script's tick icon stays unused. */
+.qv-dev .qv-ring .qv-ring__ic { display: none; }
 
-/* --- Results bars --------------------------------------------------------------------- */
+@keyframes qv-cross {
+  from { background-size: 45%; opacity: .4; }
+  to { background-size: 100%; opacity: 1; }
+}
 
-.qv-rows {
+/* --- Results bars: square-ended --------------------------------------------------- */
+
+/* .qv-dev prefix: the reset's `.qv-dev ul { display: block; margin: 0 }` would
+   otherwise beat these single-class rules and drop the row gap. */
+.qv-dev .qv-rows {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   margin-top: 14px;
 }
 
-.qv-h3 + .qv-rows { margin-top: 18px; }
+.qv-dev .qv-h3 + .qv-rows { margin-top: 18px; }
 
 .qv-row__h {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 }
 
 .qv-row__n {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   min-width: 0;
   font-size: 16px;
   line-height: 1.3;
@@ -619,38 +651,40 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   flex: none;
   color: var(--q-text-2);
   font-family: var(--q-ui);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.qv-row.is-lead .qv-row__v { color: var(--q-text); }
+.qv-row.is-lead .qv-row__v { color: var(--q-serial); }
 
+/* "Your vote" mark: an oxblood-edged circle with a tick. */
 .qv-tag {
   flex: none;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--q-accent-muted);
-  border: 1px solid var(--q-accent);
-  color: var(--q-accent-text);
+  background: transparent;
+  border: 1px solid rgba(122, 46, 42, .45);
+  color: var(--q-oxblood);
 }
 
-.qv-tag__ic { width: 10px; height: 10px; }
+.qv-tag__ic { width: 14px; height: 14px; stroke-width: 2.5; }
 
 .qv-track {
-  height: 22px;
-  border-radius: var(--q-pill);
+  height: 26px;
+  border-radius: 2px;
   background: var(--q-track);
+  box-shadow: inset 0 0 0 1px var(--q-hairline);
   overflow: hidden;
 }
 
 .qv-fill {
   width: var(--w, 0%);
   height: 100%;
-  border-radius: var(--q-pill);
+  border-radius: 2px;
   background: var(--q-bar-other);
   transition: width .6s cubic-bezier(.16, 1, .3, 1), background-color .3s;
 }
@@ -661,7 +695,7 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   padding: 8px 4px;
   color: var(--q-accent-text);
   font-family: var(--q-ui);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -669,21 +703,22 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-link:disabled { color: var(--q-text-3); opacity: .6; }
 .qv-link--center { display: block; margin: 2px auto 0; }
 
-/* --- Host ------------------------------------------------------------------------------- */
+/* --- Host ------------------------------------------------------------------------- */
 
 .qv-bigpin {
   margin-top: 2px;
+  color: var(--q-serial);
   font-family: var(--q-ui);
   font-size: 40px;
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: .06em;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.qv-queue { margin: 10px 0 0; }
+.qv-dev .qv-queue { margin: 10px 0 0; }
 
-.qv-person {
+.qv-dev .qv-person {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -695,17 +730,21 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-person:first-child { border-top: 0; }
 .qv-person__n { font-size: 16px; }
 
+/* Small secondary button: a hairline-edged 4px rectangle. */
 .qv-dev .qv-pillbtn {
-  height: 32px;
+  height: 36px;
   padding: 0 14px;
-  border: 1px solid var(--q-accent);
-  border-radius: var(--q-pill);
-  background: var(--q-accent-muted);
-  color: var(--q-accent-text);
+  border: 1px solid var(--q-btn2-border);
+  border-radius: var(--q-btn);
+  background: transparent;
+  color: var(--q-text);
   font-family: var(--q-ui);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
+  transition: background-color .15s;
 }
+
+.qv-dev .qv-pillbtn:hover:not(:disabled) { background: var(--q-btn2-hover); }
 
 .qv-queue + .qv-text { margin-top: 6px; }
 
@@ -726,11 +765,11 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
 .qv-dev .qv-switch {
   position: relative;
   flex: none;
-  width: 48px;
-  height: 28px;
+  width: 52px;
+  height: 30px;
   border-radius: var(--q-pill);
-  background: var(--q-track);
-  border: 1px solid var(--q-hairline-strong);
+  background: var(--q-input-bg);
+  border: 1.5px solid var(--q-input-border);
   transition: background-color .2s, border-color .2s;
 }
 
@@ -738,15 +777,15 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 20px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
   border-radius: 50%;
-  background: var(--q-text-3);
+  background: var(--q-text-2);
   transition: transform .2s cubic-bezier(.16, 1, .3, 1), background-color .2s;
 }
 
 .qv-switch.is-on { background: var(--q-accent); border-color: var(--q-accent); }
-.qv-switch.is-on .qv-switch__knob { transform: translateX(20px); background: var(--q-accent-on); }
+.qv-switch.is-on .qv-switch__knob { transform: translateX(22px); background: var(--q-accent-on); }
 
 /* --- Motion and contrast preferences ------------------------------------------------------ */
 
@@ -788,6 +827,13 @@ html.is-segmented .qv-page { overscroll-behavior: contain; }
   }
 
   .qv-dev .qv-row.is-lead .qv-fill { background: Highlight; }
+
+  /* The cross is a background image, which forced colours drop: fill the box instead. */
+  .qv-dev .qv-opt.is-on .qv-ring {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    border-color: CanvasText;
+  }
 
   .qv-dev .qv-switch__knob {
     forced-color-adjust: none;
