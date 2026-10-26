@@ -5,7 +5,7 @@
    the shared components (chips, buttons, labels) pick up each world's inks.
    ========================================================================== */
 
-/* --- Fonts: the three product faces, self-hosted ------------------------- */
+/* --- Fonts: the product faces, self-hosted ------------------------- */
 @font-face{
   font-family:"Archivo";
   src:url("/assets/fonts/archivo-latin.woff2") format("woff2");
@@ -30,10 +30,9 @@
   font-display:swap;
 }
 @font-face{
-  font-family:"Source Serif 4";
-  src:url("/assets/fonts/sourceserif4-latin.woff2") format("woff2");
-  font-weight:200 900;
-  font-style:normal;
+  font-family:"QV Geist";
+  src:url("/assets/fonts/geist_variable.ttf") format("truetype-variations");
+  font-weight:100 900;
   font-display:swap;
 }
 
@@ -248,114 +247,112 @@
 }
 
 /* ==========================================================================
-   Quick Vote — the polling station, fine stationery on charcoal (dark only)
+   Quick Vote — the app's own light theme (light only)
    ========================================================================== */
 :root .apps .project[data-product="quick-vote"]{
-  color-scheme:dark;
-  --bg:#111214;
-  --card:#1E1F23;
-  --surface:#26282C;
-  --text:#F2F0EB;
-  --text-2:#A9A7A2;
-  --text-3:#A9A7A2;
-  --hairline:rgba(242,240,235,.12);
-  --hairline-strong:rgba(242,240,235,.26);
-  --accent:#CFCAC0;
-  --accent-text:#E6E1D6;
-  --accent-on:#16171A;
-  --accent-muted:rgba(242,240,235,.08);
-  --warn:#E6E1D6;
-  color:#F2F0EB;
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+  --bg:#F8FAFC;
+  --card:#FFFFFF;
+  --surface:#F1F5F9;
+  --text:#0F172A;
+  --text-2:#475569;
+  --text-3:#5B6B80;
+  --hairline:rgba(15,23,42,.08);
+  --hairline-strong:rgba(15,23,42,.14);
+  --accent:#34D399;
+  --accent-text:#047857;
+  --accent-on:#042F1C;
+  --accent-muted:rgba(52,211,153,.16);
+  --warn:#B45309;
+  color:#0F172A;
+  font-family:var(--serif);
 }
 :root .apps .project[data-product="quick-vote"]::before{
-  background-color:#16171A;
-  background-image:radial-gradient(ellipse 900px 520px at 72% 40%, rgba(255,255,255,.035), transparent 70%), url("/assets/textures/guilloche.svg");
-  background-repeat:no-repeat, repeat;
-  background-size:auto, 240px 120px;
-  border:1px solid rgba(242,240,235,.12);
-  border-radius:4px;
+  background-color:#F8FAFC;
+  background-image:radial-gradient(120% 55% at 50% 0, rgba(16,185,129,.1), transparent 70%), linear-gradient(#F8FAFC, #EEF2F7);
+  background-repeat:no-repeat;
+  border:1px solid rgba(15,23,42,.08);
+  border-radius:20px;
 }
-/* Always the dark screenshot, whatever the site theme. */
+/* Always the light screenshot, whatever the site theme. */
 :root .apps .project[data-product="quick-vote"] .on-dark{
-  display:block;
-}
-:root .apps .project[data-product="quick-vote"] .on-light{
   display:none;
 }
+:root .apps .project[data-product="quick-vote"] .on-light{
+  display:block;
+}
 :root .apps .project[data-product="quick-vote"] .project-name{
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-family:var(--serif);
   font-weight:600;
-  font-variation-settings:"opsz" 60;
   letter-spacing:-.015em;
   line-height:1.05;
-  color:#F2F0EB;
+  color:#0F172A;
 }
 :root .apps .project[data-product="quick-vote"] .cat-label{
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
-  letter-spacing:.12em;
-  color:#A9A7A2;
+  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.08em;
+  color:#5B6B80;
 }
 :root .apps .project[data-product="quick-vote"] p{
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
-  color:#F2F0EB;
+  font-family:var(--serif);
+  color:#0F172A;
   line-height:1.65;
 }
 :root .apps .project[data-product="quick-vote"] .chip{
   padding:4px 13px;
-  border:1px solid rgba(207,202,192,.4);
+  border:1px solid rgba(15,23,42,.14);
   border-radius:999px;
-  background:transparent;
-  color:#A9A7A2;
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  background:#FFFFFF;
+  color:#475569;
+  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:.9rem;
   font-weight:500;
   letter-spacing:.02em;
 }
 :root .apps .project[data-product="quick-vote"] .chip-link:hover{
-  border-color:#CFCAC0;
-  color:#F2F0EB;
+  border-color:#047857;
+  color:#047857;
 }
 :root .apps .project[data-product="quick-vote"] .chip-live::before{
-  background:#CFCAC0;
+  background:#059669;
   box-shadow:none;
   animation:none;
 }
 :root .apps .project[data-product="quick-vote"] .btn{
-  padding:12px 24px;
-  border-radius:4px;
-  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  padding:12px 26px;
+  border-radius:999px;
+  font-family:"QV Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:1.0625rem;
   font-weight:600;
   letter-spacing:.01em;
 }
 :root .apps .project[data-product="quick-vote"] .btn-primary{
-  background:#FBF9F4;
-  border:1px solid #FBF9F4;
-  color:#3E1A5E;
-  box-shadow:0 8px 16px -10px rgba(0,0,0,.6);
+  background:#34D399;
+  border:1px solid #34D399;
+  color:#042F1C;
+  box-shadow:0 10px 24px -14px rgba(5,150,105,.55);
 }
 :root .apps .project[data-product="quick-vote"] .btn-primary:hover{
-  background:#FFFFFF;
-  border-color:#FFFFFF;
+  background:#2FC48C;
+  border-color:#2FC48C;
   filter:none;
 }
 :root .apps .project[data-product="quick-vote"] .btn-secondary{
-  background:transparent;
-  border:1px solid #CFCAC0;
-  color:#F2F0EB;
+  background:#FFFFFF;
+  border:1px solid rgba(15,23,42,.14);
+  color:#0F172A;
 }
 :root .apps .project[data-product="quick-vote"] .btn-secondary:hover{
-  background:rgba(242,240,235,.08);
+  background:#F1F5F9;
   filter:none;
 }
 :root .apps .project[data-product="quick-vote"] :focus-visible{
-  outline:3px solid #E6E1D6;
+  outline:3px solid #047857;
   outline-offset:3px;
 }
 :root .apps .project[data-product="quick-vote"] ::selection{
-  background:#5B2A86;
-  color:#F2F0EB;
+  background:rgba(52,211,153,.35);
+  color:#0F172A;
 }
 
 /* --- Motion: button hover lift (site.css cancels transitions on reduce) -- */
