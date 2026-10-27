@@ -869,23 +869,26 @@ dialog.drawer[data-band]{
 }
 
 /* --- Horizontal panels (html.is-hscroll, set by projects.js) ---------------
-   The hero and the six project rows become full-screen panels in one flex track.
-   .hs is as tall as the scroll needed to cross all panels; .hs-pin sticks under
-   the top bar for that whole stretch, and js/projects.js slides .hs-track left by
-   (scroll progress x panel width). Vertical snapping is native: one .hs-snap span
-   per panel marks where each panel rests. Without the class (no JS, or reduced
+   The six project rows (plus a clone of the first, so the loop is seamless) become
+   full-screen panels in one flex track. .hs is as tall as the scroll needed to cross
+   all panels; .hs-pin sticks under the top bar for that whole stretch, and
+   js/projects.js slides .hs-track left by (scroll progress x panel width). Vertical
+   snapping is native: one .hs-snap span per panel marks where each panel rests.
+   The footer is out of the scroll here and becomes a slim fixed strip, --hs-foot
+   tall, that the panels leave room for. Without the class (no JS, or reduced
    motion) none of this applies and the rows stack as before. */
 html.is-hscroll{
+  --hs-foot:2.75rem;
   scroll-snap-type:y mandatory;
 }
 html.is-hscroll .hs{
   position:relative;
-  height:calc((var(--hs-n) - 1) * (100svh - var(--nav-h)) + 100lvh - var(--nav-h));
+  height:calc((var(--hs-n) - 1) * (100svh - var(--nav-h) - var(--hs-foot)) + 100lvh - var(--nav-h));
 }
 html.is-hscroll .hs-pin{
   position:sticky;
   top:var(--nav-h);
-  height:calc(100lvh - var(--nav-h));
+  height:calc(100lvh - var(--nav-h) - var(--hs-foot));
   overflow:clip;
 }
 html.is-hscroll .hs-track{
@@ -897,7 +900,6 @@ html.is-hscroll .hs-track > .apps,
 html.is-hscroll .hs-track > .apps > .container{
   display:contents;
 }
-html.is-hscroll .hs-track > .hero,
 html.is-hscroll .hs-track .apps .container .project{
   flex:0 0 100%;
   height:100%;
@@ -912,11 +914,6 @@ html.is-hscroll .hs-track .apps .container .project{
   overflow-x:hidden;
   scroll-margin-top:0;
 }
-html.is-hscroll .hs-track > .hero .container{
-  padding-inline:0;
-  margin:0;
-  max-width:none;
-}
 html.is-hscroll .hs-track .apps .project::before{
   inset:0;
 }
@@ -926,14 +923,14 @@ html.is-hscroll .phone-shot{
   width:auto;
   height:auto;
   max-width:300px;
-  max-height:calc(100svh - var(--nav-h) - 6rem);
+  max-height:calc(100svh - var(--nav-h) - var(--hs-foot) - 6rem);
 }
 html.is-hscroll .media-offbridge{
-  width:min(100%, calc((100svh - var(--nav-h) - 6rem) * 100 / 95));
+  width:min(100%, calc((100svh - var(--nav-h) - var(--hs-foot) - 6rem) * 100 / 95));
   margin-inline:auto;
 }
 html.is-hscroll .landscape-shot{
-  max-height:calc(100svh - var(--nav-h) - 6rem);
+  max-height:calc(100svh - var(--nav-h) - var(--hs-foot) - 6rem);
   width:auto;
   max-width:100%;
 }
@@ -947,20 +944,57 @@ html.is-hscroll .landscape-shot{
   html.is-hscroll .landscape-shot{
     max-height:30svh;
   }
-  html.is-hscroll .hs-track > .hero,
   html.is-hscroll .hs-track .apps .container .project{
     gap:1.25rem;
   }
 }
 
+/* The footer no longer scrolls into view, so it stays as a strip under the panels. */
 html.is-hscroll .footer{
-  scroll-snap-align:end;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:9;
+  box-sizing:border-box;
+  height:var(--hs-foot);
+  margin:0;
+  padding-block:0;
+  display:flex;
+  align-items:center;
+  background:var(--bg);
+  border-top:1px solid var(--hairline);
+  font-size:.8rem;
+}
+html.is-hscroll .footer .container{
+  width:100%;
+}
+html.is-hscroll .footer .footer-inner{
+  padding-block:0;
+  height:100%;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  white-space:nowrap;
+  scrollbar-width:none;
+}
+html.is-hscroll .footer a{
+  min-height:0;
+  height:100%;
+}
+html.is-hscroll .footer a:focus-visible{
+  outline-offset:-2px;
+}
+@media (max-width:599px){
+  html.is-hscroll .footer .footer-inner > p,
+  html.is-hscroll .footer .footer-inner > p + span{
+    display:none;
+  }
 }
 html.is-hscroll .hs-snap{
   position:absolute;
   left:0;
   width:1px;
-  height:calc(100svh - var(--nav-h));
+  height:calc(100svh - var(--nav-h) - var(--hs-foot));
   scroll-snap-align:start;
   scroll-snap-stop:always;
   pointer-events:none;

@@ -1,15 +1,17 @@
 /* projects.js - /projects/ only. The top bar and the Projects drawer wear the look of
-   whatever zone is under the bar: the hero and footer (the plain shell) or a project
-   row (its subsite shell, tagged with the row's data-product, plus data-band so the
+   whatever zone is under the bar: the footer (the plain shell) or a project row
+   (its subsite shell, tagged with the row's data-product, plus data-band so the
    bar takes the band's --card colour). css/projects.css does the styling; this file
    only sets the tags.
    Two layouts, one bar:
-   - Horizontal (html.is-hscroll, the default): the hero and the six rows are
-     full-screen panels in a sticky track. Vertical scroll slides the track left;
-     css/projects.css snaps each panel to a .hs-snap span this file creates. The
-     scroll position is a panel index f (0 to n-1); the bar mixes panel floor(f)
-     with the next one by f's fraction, and keeps the last panel's look at the end.
-     Off when prefers-reduced-motion is set or the browser cannot transform.
+   - Horizontal (html.is-hscroll, the default): the six rows are full-screen panels
+     in a sticky track, followed by a clone of the first. Vertical scroll slides the
+     track left; css/projects.css snaps each panel to a .hs-snap span this file
+     creates. The scroll position is a panel index f (0 to n); the bar mixes panel
+     floor(f) with the next one by f's fraction. Resting on the clone (OffBridge
+     again) jumps instantly back to the real first panel, so the loop has no seam.
+     The footer is a fixed strip there, not a scroll stop. Off when
+     prefers-reduced-motion is set or the browser cannot transform.
    - Stacked (no JS, or horizontal off): the rows stack as before. p is how far the
      next zone has risen from the bottom of the viewport (0) to the bar's lower edge
      (1), over a distance no longer than the current zone is tall, rescaled when the
@@ -44,14 +46,14 @@
       key: (product || null) + '|' + (band ? 'band' : '')
     });
   }
-  addZone(document.querySelector('header.hero'), false);
   var rows = document.querySelectorAll('.apps .project');
   for (var i = 0; i < rows.length; i++) addZone(rows[i], true);
   addZone(document.querySelector('footer.footer'), false);
   if (!rows.length) return;
 
-  // Horizontal mode. Panels are the zones minus the footer. enable() runs at the
-  // bottom of the file, once the state below it exists.
+  // Horizontal mode. Panels are the zones minus the footer; hp is the panels as the
+  // horizontal layout sees them, plus the loop clone while enabled. enable() runs at
+  // the bottom of the file, once the state below it exists.
   var root = document.documentElement;
   var hs = document.getElementById('hs');
   var pin = hs ? hs.querySelector('.hs-pin') : null;
@@ -61,6 +63,8 @@
     if (zones[pz].el.tagName !== 'FOOTER') panels.push(zones[pz]);
   }
   var pn = panels.length;
+  var hp = panels;
+  var clone = null;
   var hscroll = false;
   var snaps = [];
   var step = 0;
@@ -79,12 +83,12 @@
     for (var k = 0; k < snaps.length; k++) snaps[k].style.top = (k * step) + 'px';
   }
 
-  // Panel position, 0 to n-1: how many steps the bar's lower edge is below the top of .hs.
+  // Panel position, 0 to n (n = the clone): how many steps the bar's lower edge is below the top of .hs.
   function hsProgress() {
     if (!(step > 0)) return 0;
     var barBottom = bar.getBoundingClientRect().bottom;
     var v = (barBottom - hs.getBoundingClientRect().top) / step;
-    return Math.max(0, Math.min(pn - 1, v));
+    return Math.max(0, Math.min(hp.length - 1, v));
   }
 
   function paint() {
@@ -147,14 +151,19 @@
   var wheelPrev = 0;
   var wheelSpent = false;
   var wheelMoving = false;
+  var waitToken = 0;
 
   // Hold new moves until the scroll we started reaches its target (1s at most).
   function waitFor(target) {
     var t0 = Date.now();
+    var token = ++waitToken;
     wheelMoving = true;
     function poll() {
+      if (token !== waitToken) return;
       if (Math.abs(window.scrollY - target) <= 1 || Date.now() - t0 > 1000) {
         wheelMoving = false;
+        // A wheel step onto the clone wraps at once, without waiting for scrollend.
+        if (hscroll && clone && Math.abs(target - scrollTopFor(pn)) < 1) wrapIfAtClone();
         return;
       }
       window.requestAnimationFrame(poll);
@@ -164,8 +173,8 @@
 
   // True when the panel under the pointer can still scroll its own content that way.
   function panelScrolls(target, down) {
-    for (var k = 0; k < pn; k++) {
-      var el = panels[k].el;
+    for (var k = 0; k < hp.length; k++) {
+      var el = hp[k].el;
       if (el.contains(target)) {
         if (el.scrollHeight <= el.clientHeight + 1) return false;
         return down ? el.scrollTop + el.clientHeight < el.scrollHeight - 1 : el.scrollTop > 0;
@@ -176,6 +185,7 @@
 
   function onWheel(e) {
     if (!hscroll || e.ctrlKey) return;
+    wrapIfAtClone();
     // A modal drawer owns the wheel while it is open.
     if (root.classList.contains('drawer-open')) return;
     if (e.target.closest && e.target.closest('dialog')) return;
@@ -193,14 +203,9 @@
       wheelSpent = true;
       return;
     }
-    // Past the last panel the footer is one more step: down to the bottom of the
-    // page, and back up to the last panel. At the bottom, native handles it.
-    var y = window.scrollY;
-    var lastTop = scrollTopFor(pn - 1);
-    var maxTop = root.scrollHeight - window.innerHeight;
-    var toFooter = down && y >= lastTop - 1;
-    if (toFooter && y >= maxTop - 1) return;
-    var fromFooter = !down && y > lastTop + 1;
+    // Up from the first panel is the top of the page: native handles it. Down from
+    // the last real panel steps onto the clone, which wraps (see wrapIfAtClone).
+    if (!down && window.scrollY <= scrollTopFor(0) + 1) return;
     e.preventDefault();
 
     if (now - wheelLast > WHEEL_GAP || (!wheelMoving && a > 4 && a > wheelPrev * 1.3)) {
@@ -215,26 +220,54 @@
     if (Math.abs(wheelAcc) < WHEEL_STEP) return;
     wheelSpent = true;
     wheelAcc = 0;
-    var top;
-    if (toFooter) {
-      top = maxTop;
-    } else if (fromFooter) {
-      top = lastTop;
-    } else {
-      var k = Math.max(0, Math.min(pn - 1, Math.round(hsProgress()) + (down ? 1 : -1)));
-      top = scrollTopFor(k);
-    }
+    var k = Math.max(0, Math.min(hp.length - 1, Math.round(hsProgress()) + (down ? 1 : -1)));
+    var top = scrollTopFor(k);
     if (Math.abs(window.scrollY - top) <= 1) return;
     window.scrollTo({ top: top, behavior: reduced() ? 'auto' : 'smooth' });
     waitFor(top);
+  }
+
+  // End goes to Spectrum+ (the last real panel), not to the clone at the page end.
+  function onKeyDown(e) {
+    if (!hscroll || e.key !== 'End') return;
+    if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+    if (root.classList.contains('drawer-open')) return;
+    var t = document.activeElement || document.body;
+    if (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    if (t.closest && t.closest('dialog')) return;
+    if (panelScrolls(t, true)) return;
+    e.preventDefault();
+    goTo(pn - 1, !reduced());
   }
 
   function enable() {
     if (hscroll) return;
     hscroll = true;
     root.classList.add('is-hscroll');
-    hs.style.setProperty('--hs-n', String(pn));
-    for (var k = 0; k < pn; k++) {
+    // The loop: a copy of the first panel after the last, with no ids and out of
+    // the tab order and the accessibility tree. It looks like OffBridge to the bar.
+    var host = track.querySelector('.apps > .container');
+    if (host && pn > 1) {
+      clone = panels[0].el.cloneNode(true);
+      clone.removeAttribute('id');
+      var withIds = clone.querySelectorAll('[id]');
+      for (var d = 0; d < withIds.length; d++) withIds[d].removeAttribute('id');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
+      var links = clone.querySelectorAll('a, button');
+      for (var q = 0; q < links.length; q++) links[q].setAttribute('tabindex', '-1');
+      var shown = clone.querySelectorAll('.project-text, .media');
+      for (var w = 0; w < shown.length; w++) shown[w].classList.add('in');
+      host.appendChild(clone);
+      hp = panels.concat([{
+        el: clone,
+        product: panels[0].product,
+        band: panels[0].band,
+        key: panels[0].key
+      }]);
+    }
+    hs.style.setProperty('--hs-n', String(hp.length));
+    for (var k = 0; k < hp.length; k++) {
       var s = document.createElement('span');
       s.className = 'hs-snap';
       s.setAttribute('aria-hidden', 'true');
@@ -251,12 +284,15 @@
     for (var k = 0; k < snaps.length; k++) hs.removeChild(snaps[k]);
     snaps = [];
     step = 0;
+    if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
+    clone = null;
+    hp = panels;
     root.classList.remove('is-hscroll');
     hs.style.removeProperty('--hs-n');
     track.style.transform = '';
   }
 
-  // Index of the panel under the bar (the last panel for the footer).
+  // Index of the panel under the bar (the last panel when below them all).
   function panelUnderBar() {
     var line = bar.getBoundingClientRect().bottom + 1;
     var idx = 0;
@@ -274,7 +310,7 @@
       enable();
       goTo(k, false);
     } else if (!want && hscroll) {
-      var j = Math.round(hsProgress());
+      var j = Math.round(hsProgress()) % pn;
       disable();
       jumpTo(window.scrollY + panels[j].el.getBoundingClientRect().top -
         bar.getBoundingClientRect().bottom, false);
@@ -357,13 +393,13 @@
   }
 
   // Horizontal: panel floor(f) mixed with the next by f's fraction. The footer is
-  // ignored, so the bar keeps the last panel's look to the end.
+  // ignored; the clone shares OffBridge's key, so the loop blends Spectrum+ to OffBridge.
   function measureH() {
     var f = hsProgress();
-    var last = pn - 1;
+    var last = hp.length - 1;
     var i0 = Math.min(Math.floor(f), last);
-    var A = panels[i0];
-    var B = i0 + 1 <= last ? panels[i0 + 1] : null;
+    var A = hp[i0];
+    var B = i0 + 1 <= last ? hp[i0 + 1] : null;
     var t = B ? f - i0 : 0;
     return {
       bg: B ? mix(colourOf(A), colourOf(B), t) : colourOf(A),
@@ -499,9 +535,44 @@
   // bar update stays on the rAF schedule.
   var initY = 0;
 
+  // Resting on the clone: jump back to the real first panel. This runs when the scroll
+  // comes to rest (scrollend, or a timer where that is missing), never mid-flight.
+  // The wheel lock is released (wheelSpent stays, so the rest of the gesture is
+  // still swallowed) and the track and bar are redrawn at once, so there is no flash.
+  function wrapIfAtClone() {
+    if (!hscroll || !clone || !(step > 0)) return;
+    if (Math.abs(window.scrollY - scrollTopFor(pn)) >= 1) return;
+    jumpTo(scrollTopFor(0), false);
+    wheelMoving = false;
+    wheelAcc = 0;
+    waitToken++;
+    paint();
+    update();
+  }
+
+  // Without scrollend: wait for 150ms of no scrolling, and not while a finger is down.
+  var hasScrollEnd = 'onscrollend' in window;
+  var wrapTimer = 0;
+  var touching = false;
+
+  function armWrap() {
+    if (hasScrollEnd) return;
+    window.clearTimeout(wrapTimer);
+    wrapTimer = window.setTimeout(function () {
+      wrapTimer = 0;
+      if (!touching) wrapIfAtClone();
+    }, 150);
+  }
+
+  function onTouch(e) {
+    touching = !!(e.touches && e.touches.length);
+    if (!touching) armWrap();
+  }
+
   function onScroll() {
     paint();
     schedule();
+    armWrap();
   }
 
   function onResize() {
@@ -523,6 +594,14 @@
   window.addEventListener('hashchange', applyHash);
   document.addEventListener('focusin', onFocusIn);
   window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('keydown', onKeyDown);
+  if (hasScrollEnd) {
+    window.addEventListener('scrollend', wrapIfAtClone);
+  } else {
+    window.addEventListener('touchstart', onTouch, { passive: true });
+    window.addEventListener('touchend', onTouch, { passive: true });
+    window.addEventListener('touchcancel', onTouch, { passive: true });
+  }
 
   if (window.matchMedia) {
     var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
