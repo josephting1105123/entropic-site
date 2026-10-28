@@ -1,7 +1,7 @@
 /* Spectrum+ page: download controls, OCC demo, highlighter sweeps. Loaded synchronously in head so the js class lands before first paint. */
 (function () {
   'use strict';
-  var PLAY_URL = null; var APK_URL = null;
+  var PLAY_URL = null; var APK_URL = 'https://github.com/josephting1105123/Spectrum-Plus/releases/latest/download/Spectrum.apk';
   document.documentElement.classList.add('js');
 
   document.addEventListener('DOMContentLoaded', () => {
